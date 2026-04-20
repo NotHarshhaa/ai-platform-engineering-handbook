@@ -21,9 +21,9 @@ Deploy = ship new code               Deploy = ship new model version
 **Three-pipeline architecture:**
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    ML Three-Pipeline System                     │
-│                                                                 │
+┌────────────────────────────────────────────────────────────────┐
+│                    ML Three-Pipeline System                    │
+│                                                                │
 │  ┌──────────────┐    ┌──────────────────┐    ┌──────────────┐  │
 │  │     DATA     │    │    TRAINING      │    │   SERVING    │  │
 │  │   PIPELINE   │───►│    PIPELINE      │───►│   PIPELINE   │  │
@@ -34,7 +34,7 @@ Deploy = ship new code               Deploy = ship new model version
 │  │ • Version    │    │ • Evaluate       │    │ • Rollback   │  │
 │  └──────────────┘    │ • Register       │    └──────────────┘  │
 │                      └──────────────────┘                      │
-└─────────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────────┘
 ```
 
 **End-to-end pipeline DAG:**
@@ -179,19 +179,19 @@ Version bumps are code          Version bumps are model + data
 │              Continuous Training Triggers            │
 ├────────────────────┬─────────────────────────────────┤
 │ Schedule-based     │ Cron: weekly / monthly          │
-│                    │ Regardless of drift              │
+│                    │ Regardless of drift             │
 ├────────────────────┼─────────────────────────────────┤
-│ Drift-based        │ Data distribution shifted        │
-│                    │ PSI score > 0.2 on key features  │
+│ Drift-based        │ Data distribution shifted       │
+│                    │ PSI score > 0.2 on key features │
 ├────────────────────┼─────────────────────────────────┤
-│ Performance-based  │ Live accuracy < threshold        │
-│                    │ Business metric degraded         │
+│ Performance-based  │ Live accuracy < threshold       │
+│                    │ Business metric degraded        │
 ├────────────────────┼─────────────────────────────────┤
-│ Data-volume based  │ N new labeled samples available  │
-│                    │ New cohort data arrived          │
+│ Data-volume based  │ N new labeled samples available │
+│                    │ New cohort data arrived         │
 ├────────────────────┼─────────────────────────────────┤
-│ Event-based        │ Major product change             │
-│                    │ Market shift, new segment launch │
+│ Event-based        │ Major product change            │
+│                    │ Market shift, new segment launch│
 └────────────────────┴─────────────────────────────────┘
 ```
 
@@ -391,21 +391,21 @@ ML models require a **multi-layer testing strategy** — different from traditio
 ```
                     ▲
                    ╱ ╲
-                  ╱A/B ╲            ← Production tests
-                 ╱ Tests ╲             (live traffic split)
-                ╱─────────╲
-               ╱  Shadow   ╲         ← Pre-production tests
-              ╱   Testing   ╲          (same requests, logged)
-             ╱───────────────╲
-            ╱  Integration    ╲       ← Pipeline tests
-           ╱    Tests          ╲        (end-to-end runs)
-          ╱─────────────────────╲
-         ╱   Model Quality Tests  ╲   ← Metric + behavior tests
-        ╱  (metrics, bias, calib)  ╲
-       ╱───────────────────────────╲
-      ╱      Unit Tests              ╲ ← Code tests
-     ╱  (transforms, utilities, etc)  ╲
-    ▼───────────────────────────────────▼
+                  ╱A/B╲   ← Production tests
+                 ╱Tests╲    (live traffic split)
+                ╱───────╲
+               ╱ Shadow  ╲  ← Pre-production tests
+              ╱  Testing  ╲   (same requests, logged)
+             ╱─────────────╲
+            ╱  Integration  ╲  ← Pipeline tests
+           ╱    Tests        ╲   (end-to-end runs)
+          ╱───────────────────╲
+         ╱ Model Quality Tests ╲  ← Metric + behavior tests
+        ╱ (metrics, bias, calib)╲
+       ╱─────────────────────────╲
+      ╱      Unit Tests           ╲ ← Code tests
+     ╱(transforms, utilities, etc) ╲
+    ▼───────────────────────────────▼
 ```
 
 **Test types with purpose:**
@@ -533,7 +533,7 @@ Automated evaluation answers **"is this model good enough to deploy?"** without 
 ┌──────────────────────────────────────────────────────────┐
 │                 Automated Evaluation Suite               │
 ├─────────────────┬────────────────────────────────────────┤
-│ 1. Performance  │ Accuracy, AUC, F1, RMSE on test set   │
+│ 1. Performance  │ Accuracy, AUC, F1, RMSE on test set    │
 ├─────────────────┼────────────────────────────────────────┤
 │ 2. Comparison   │ Challenger vs Champion (prod model)    │
 ├─────────────────┼────────────────────────────────────────┤
@@ -704,16 +704,16 @@ Raw Data Sources (databases, event streams, APIs)
     └──────────┬──────────┘
                │
     ┌──────────▼──────────┐
-    │   Feature Store      │  → Feast, Tecton, Hopsworks
-    │                      │    point-in-time correct lookups
-    │  ┌────────┐          │    offline store (training)
-    │  │Offline │          │    online store (serving)
-    │  │ Store  │          │
-    │  └────────┘          │
-    │  ┌────────┐          │
-    │  │Online  │          │
-    │  │ Store  │          │
-    │  └────────┘          │
+    │   Feature Store     │  → Feast, Tecton, Hopsworks
+    │                     │    point-in-time correct lookups
+    │  ┌────────┐         │    offline store (training)
+    │  │Offline │         │    online store (serving)
+    │  │ Store  │         │
+    │  └────────┘         │
+    │  ┌────────┐         │
+    │  │Online  │         │
+    │  │ Store  │         │
+    │  └────────┘         │
     └──────────┬──────────┘
                │
       ┌────────┴──────────┐

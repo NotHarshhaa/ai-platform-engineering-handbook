@@ -487,7 +487,7 @@ With Feature Store:
 │  └───────────────────┘    └──────────────────────────┘  │
 │                                                         │
 │  ┌───────────────────┐    ┌──────────────────────────┐  │
-│  │  Offline Store    │    │  Online Store             │  │
+│  │  Offline Store    │    │  Online Store            │  │
 │  │                   │    │                          │  │
 │  │  • S3 / GCS       │    │  • Redis / DynamoDB      │  │
 │  │  • Parquet files  │    │  • Low-latency reads     │  │
@@ -561,7 +561,7 @@ The online and offline stores serve **fundamentally different access patterns** 
 │ Access pattern   │ Bulk scan, joins      │ Key-value lookup      │
 │ Latency          │ Minutes to hours      │ < 10 milliseconds     │
 │ Data volume      │ Years of history      │ Latest values only    │
-│ Storage          │ S3, GCS, data lake    │ Redis, DynamoDB, Bigtable│
+│ Storage          │ S3, GCS, data lake    │Redis,DynamoDB,Bigtable│
 │ Query type       │ SQL, Spark, Arrow     │ GET user_id=123       │
 │ Consistency      │ Eventually consistent │ Strongly consistent   │
 │ Cost             │ Low per GB            │ High per GB           │
@@ -634,21 +634,21 @@ Production monitoring answers **"is the model still doing its job?"** after depl
 ├───────────────────┬────────────────────────────────────┤
 │ Layer 4           │ Business Metrics                   │
 │ (slowest signal)  │ Actual outcomes: revenue, churn    │
-│                   │ rate, conversion — weeks delay      │
+│                   │ rate, conversion — weeks delay     │
 ├───────────────────┼────────────────────────────────────┤
 │ Layer 3           │ Model Performance                  │
 │                   │ Accuracy, AUC, F1 on labeled data  │
-│                   │ Requires ground truth labels        │
+│                   │ Requires ground truth labels       │
 ├───────────────────┼────────────────────────────────────┤
 │ Layer 2           │ Prediction Monitoring              │
 │ (faster signal)   │ Output score distribution          │
-│                   │ Confidence histogram, prediction    │
-│                   │ rate — no labels needed             │
+│                   │ Confidence histogram, prediction   │
+│                   │ rate — no labels needed            │
 ├───────────────────┼────────────────────────────────────┤
 │ Layer 1           │ Input Monitoring                   │
 │ (fastest signal)  │ Feature distributions at inference │
-│                   │ Drift detection per feature         │
-│                   │ Missing values, schema issues       │
+│                   │ Drift detection per feature        │
+│                   │ Missing values, schema issues      │
 └───────────────────┴────────────────────────────────────┘
 ```
 

@@ -88,16 +88,16 @@ resource "aws_instance" "web" {
 ## 3. Terraform Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    Your Machine / CI                    │
-│                                                         │
+┌────────────────────────────────────────────────────────┐
+│                    Your Machine / CI                   │
+│                                                        │
 │   .tf files ──► Terraform Core ──► Execution Plan      │
-│                      │                                  │
+│                      │                                 │
 │              ┌───────┴────────┐                        │
 │              ▼                ▼                        │
 │         State File      Provider Plugins               │
 │       (terraform.tfstate) (aws, gcp, azure...)         │
-└──────────────────────────┬──────────────────────────────┘
+└──────────────────────────┬─────────────────────────────┘
                            │ API calls
           ┌────────────────┼────────────────┐
           ▼                ▼                ▼

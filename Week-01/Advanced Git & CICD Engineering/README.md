@@ -16,7 +16,7 @@ Git is fundamentally a **content-addressable filesystem** — every piece of dat
 ┌─────────────────────────────────────────────────────────────┐
 │                  Git Object Model                           │
 │                                                             │
-│  blob     → stores file content (no filename, no metadata) │
+│  blob     → stores file content (no filename, no metadata)  │
 │  tree     → stores directory structure (names + blob refs)  │
 │  commit   → stores snapshot (tree + parent + metadata)      │
 │  tag      → stores annotated tag (points to any object)     │
@@ -1763,50 +1763,50 @@ Developer commits with Conventional Commits format
 Git Push → Webhook fires
               │
     ┌─────────▼──────────┐
-    │    Commit Stage     │  < 5 min
-    │  Lint, Unit Tests   │
-    │  Secrets Scan, SAST │
+    │    Commit Stage    │  < 5 min
+    │  Lint, Unit Tests  │
+    │  Secrets Scan, SAST│
     └─────────┬──────────┘
               │
     ┌─────────▼──────────┐
-    │    Build Stage      │  < 5 min
-    │  Docker build       │
-    │  Image scan, Sign   │
-    │  Push (SHA tag)     │
+    │    Build Stage     │  < 5 min
+    │  Docker build      │
+    │  Image scan, Sign  │
+    │  Push (SHA tag)    │
     └─────────┬──────────┘
               │
     ┌─────────▼──────────┐
-    │  Integration Stage  │  < 20 min
-    │  Deploy to dev      │
-    │  Integration tests  │
-    │  Contract tests     │
+    │  Integration Stage │  < 20 min
+    │  Deploy to dev     │
+    │  Integration tests │
+    │  Contract tests    │
     └─────────┬──────────┘
               │
     ┌─────────▼──────────┐
-    │  Staging Deploy     │  < 10 min
-    │  E2E tests          │
-    │  Performance check  │
+    │  Staging Deploy    │  < 10 min
+    │  E2E tests         │
+    │  Performance check │
     └─────────┬──────────┘
               │
     ┌─────────▼──────────┐
-    │  Release (if tagged)│
-    │  SemVer bump        │
-    │  Changelog + Tag    │
-    │  Artifact publish   │
+    │  Release(if tagged)│
+    │  SemVer bump       │
+    │  Changelog + Tag   │
+    │  Artifact publish  │
     └─────────┬──────────┘
               │
     ┌─────────▼──────────┐
-    │  Production Deploy  │
-    │  Canary 1%→100%     │
-    │  Metric gates       │
-    │  Auto-rollback      │
+    │  Production Deploy │
+    │  Canary 1%→100%    │
+    │  Metric gates      │
+    │  Auto-rollback     │
     └─────────┬──────────┘
               │
     ┌─────────▼──────────┐
-    │  Observability      │
-    │  DORA metrics       │
-    │  Pipeline dashboard │
-    │  Alert on failure   │
+    │  Observability     │
+    │  DORA metrics      │
+    │  Pipeline dashboard│
+    │  Alert on failure  │
     └────────────────────┘
 ```
 

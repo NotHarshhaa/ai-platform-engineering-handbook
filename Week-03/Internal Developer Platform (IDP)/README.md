@@ -34,13 +34,13 @@ slow onboarding
 ┌─────────────────────────────────────────────────────────────┐
 │               Value Delivered by Platform Eng               │
 ├──────────────────────┬──────────────────────────────────────┤
-│ Developer Velocity   │ New service → prod in hours not weeks │
-│ Cognitive Load       │ Devs don't need to know K8s deeply    │
-│ Consistency          │ All services follow same patterns      │
-│ Security             │ Compliance baked in, not bolted on     │
-│ Reliability          │ Proven patterns reduce incidents       │
-│ Onboarding           │ New engineers productive in days       │
-│ Cost                 │ Shared infra, no per-team overhead     │
+│ Developer Velocity   │ New service → prod in hours not weeks│
+│ Cognitive Load       │ Devs don't need to know K8s deeply   │
+│ Consistency          │ All services follow same patterns    │
+│ Security             │ Compliance baked in, not bolted on   │
+│ Reliability          │ Proven patterns reduce incidents     │
+│ Onboarding           │ New engineers productive in days     │
+│ Cost                 │ Shared infra, no per-team overhead   │
 └──────────────────────┴──────────────────────────────────────┘
 ```
 
@@ -99,16 +99,16 @@ DevOps and Platform Engineering are **complementary, not competing** — Platfor
 
 ```
 ┌───────────────────┬─────────────────────┬─────────────────────┐
-│                   │      DevOps          │  Platform Eng        │
+│                   │      DevOps         │  Platform Eng       │
 ├───────────────────┼─────────────────────┼─────────────────────┤
-│ Focus             │ Culture + practices  │ Products + tooling  │
-│ Who does it       │ Every team          │ Dedicated team       │
-│ Scope             │ Team-level          │ Org-level            │
-│ Delivery          │ Each team's pipeline│ Shared platform      │
-│ Infra             │ Each team manages   │ Abstracted, shared   │
-│ Audience          │ Dev+Ops together    │ Developers as users  │
-│ Goal              │ Remove silos        │ Remove cognitive load│
-│ Measure           │ DORA metrics        │ DORA + DevEx metrics │
+│ Focus             │ Culture + practices │ Products + tooling  │
+│ Who does it       │ Every team          │ Dedicated team      │
+│ Scope             │ Team-level          │ Org-level           │
+│ Delivery          │ Each team's pipeline│ Shared platform     │
+│ Infra             │ Each team manages   │ Abstracted, shared  │
+│ Audience          │ Dev+Ops together    │ Developers as users │
+│ Goal              │ Remove silos        │Remove cognitive load│
+│ Measure           │ DORA metrics        │ DORA + DevEx metrics│
 └───────────────────┴─────────────────────┴─────────────────────┘
 ```
 
@@ -169,29 +169,29 @@ An IDP is a **curated, self-service layer on top of your infrastructure and tool
 **IDP architecture layers:**
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    IDP Layer Model                          │
-│                                                             │
+┌────────────────────────────────────────────────────────────┐
+│                    IDP Layer Model                         │
+│                                                            │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │           Developer Interface Layer                  │   │
+│  │           Developer Interface Layer                 │   │
 │  │  Backstage UI │ CLI tool │ API │ ChatOps (Slack bot)│   │
 │  └───────────────────────────┬─────────────────────────┘   │
-│                              │                              │
+│                              │                             │
 │  ┌───────────────────────────▼─────────────────────────┐   │
-│  │              Orchestration Layer                     │   │
-│  │   Service catalog │ Templates │ Workflows │ Policies │   │
+│  │              Orchestration Layer                    │   │
+│  │   Service catalog │ Templates │ Workflows │ Policies│   │
 │  └───────────────────────────┬─────────────────────────┘   │
-│                              │                              │
+│                              │                             │
 │  ┌───────────────────────────▼─────────────────────────┐   │
-│  │             Integration Layer                        │   │
-│  │  GitHub │ ArgoCD │ Terraform │ Vault │ Datadog       │   │
+│  │             Integration Layer                       │   │
+│  │  GitHub │ ArgoCD │ Terraform │ Vault │ Datadog      │   │
 │  └───────────────────────────┬─────────────────────────┘   │
-│                              │                              │
+│                              │                             │
 │  ┌───────────────────────────▼─────────────────────────┐   │
-│  │           Infrastructure Layer                       │   │
-│  │  Kubernetes │ AWS/GCP/Azure │ Databases │ Networks   │   │
+│  │           Infrastructure Layer                      │   │
+│  │  Kubernetes │ AWS/GCP/Azure │ Databases │ Networks  │   │
 │  └─────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────┘
 ```
 
 **Core IDP capabilities:**
@@ -460,27 +460,27 @@ You build on top:
 **Backstage architecture:**
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Backstage Platform                       │
-│                                                             │
+┌────────────────────────────────────────────────────────────┐
+│                    Backstage Platform                      │
+│                                                            │
 │  ┌──────────────────────────────────────────────────────┐  │
-│  │                   Frontend (React)                    │  │
+│  │                   Frontend (React)                   │  │
 │  │  Catalog │ Templates │ TechDocs │ Plugins Dashboard  │  │
 │  └──────────────────────┬───────────────────────────────┘  │
-│                         │                                   │
+│                         │                                  │
 │  ┌──────────────────────▼───────────────────────────────┐  │
-│  │                 Backend (Node.js)                     │  │
+│  │                 Backend (Node.js)                    │  │
 │  │  ┌────────────┐ ┌──────────┐ ┌────────────────────┐  │  │
-│  │  │  Catalog   │ │  Search  │ │   Plugin Backend    │  │  │
-│  │  │  Engine    │ │  Engine  │ │   (extensible)      │  │  │
+│  │  │  Catalog   │ │  Search  │ │   Plugin Backend   │  │  │
+│  │  │  Engine    │ │  Engine  │ │   (extensible)     │  │  │
 │  │  └────────────┘ └──────────┘ └────────────────────┘  │  │
 │  └──────────────────────┬───────────────────────────────┘  │
-│                         │                                   │
+│                         │                                  │
 │  ┌──────────────────────▼───────────────────────────────┐  │
 │  │            Integration Layer (Plugins)               │  │
 │  │  GitHub │ K8s │ ArgoCD │ PagerDuty │ Datadog │ Vault │  │
 │  └──────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────┘
          │                    │                    │
          ▼                    ▼                    ▼
       GitHub             Kubernetes            AWS/GCP

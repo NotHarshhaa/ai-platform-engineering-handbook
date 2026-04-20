@@ -7,9 +7,9 @@
 The ML lifecycle is an **iterative, end-to-end process** from business problem to production model — rarely linear, always cyclical.
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                   ML Lifecycle Loop                         │
-│                                                             │
+┌────────────────────────────────────────────────────────────┐
+│                   ML Lifecycle Loop                        │
+│                                                            │
 │   Business      Data         Feature      Model            │
 │   Problem  ───► Collection ► Engineering ► Training        │
 │      ▲               │            │            │           │
@@ -20,7 +20,7 @@ The ML lifecycle is an **iterative, end-to-end process** from business problem t
 │      │                            │                        │
 │   Monitor  ◄──── Deploy  ◄──── Register                    │
 │   (drift)       (serve)       (artifact)                   │
-└─────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────┘
 ```
 
 **ML Lifecycle phases:**
