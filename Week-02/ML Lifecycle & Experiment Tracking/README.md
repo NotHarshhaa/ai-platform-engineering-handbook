@@ -6,6 +6,24 @@
 
 The ML lifecycle is an **iterative, end-to-end process** from business problem to production model — rarely linear, always cyclical.
 
+The ML lifecycle is the **complete journey from a business problem to a deployed, monitored model** — and critically, it never truly ends. Unlike traditional software where you ship a feature and move on, ML systems require continuous attention because the world keeps changing.
+
+**Why it's a cycle, not a line:**
+
+Most people picture ML as a straight path: get data, train model, deploy, done. In reality it looks more like a spiral. You deploy a model, discover it degrades over time as user behavior shifts, retrain it with fresh data, discover the problem framing itself needs adjusting, and the whole process begins again — hopefully faster each iteration because you've built better tooling and understanding.
+
+**The phases and what actually happens in each:**
+
+The lifecycle begins with **business understanding**, where the hardest work often happens invisibly. Turning a vague business goal like "reduce churn" into a precise ML problem statement — what exactly to predict, for whom, how far in advance, using what data — determines everything downstream. A poorly framed problem produces a technically excellent model that solves the wrong thing.
+
+**Data work** follows and consistently takes far longer than anyone expects, often consuming 60-80% of total project time. This includes finding relevant data sources, understanding their quirks, cleaning inconsistencies, and making critical decisions about what time period to use for training.
+
+**Feature engineering** transforms raw data into the signals your model can actually learn from. This is where domain expertise becomes critical — knowing that "days since last login" matters more than raw login timestamps, or that "support tickets per month" is more predictive than total support tickets.
+
+**Training and evaluation** is where most people think ML lives, but it's actually one of the smaller phases. You select algorithms, tune hyperparameters, and evaluate on held-out data. The evaluation must honestly answer: does this model actually work well enough to justify deployment?
+
+**Deployment and monitoring** closes the loop. Getting a model into production is a substantial engineering challenge, and keeping it performing well over time requires continuous vigilance — watching for data drift, performance degradation, and changing business conditions.
+
 ```
 ┌────────────────────────────────────────────────────────────┐
 │                   ML Lifecycle Loop                        │
@@ -51,6 +69,28 @@ No one knows what changed      Every experiment logged
 ---
 
 ## 2. Problem Framing & Business Understanding
+
+Problem framing is the **translation layer between business intent and mathematical specification** — and getting it wrong is the most expensive mistake in ML, because you only discover the error after months of work.
+
+**The gap between business language and ML language:**
+
+A business stakeholder says "predict which customers will churn." This sounds straightforward but contains dozens of hidden decisions. What counts as churn — cancellation, inactivity, downgrade? Over what time horizon — 30 days, 90 days, 12 months? Predict for which customers — all of them, only active ones, only those who've been customers for 6+ months? Using data from when — up to the moment of prediction, or only data available 24 hours before?
+
+Each decision changes the model you build, the data you need, and ultimately whether the business can act on the predictions.
+
+**The cost asymmetry question:**
+
+One of the most important problem framing decisions is understanding the cost of different types of errors. In a fraud detection system, missing actual fraud (false negative) might cost thousands of dollars and destroy customer trust, while incorrectly flagging a legitimate transaction (false positive) costs a few minutes of customer service time. This asymmetry should drive every decision about model thresholds, training data balance, and evaluation metrics.
+
+Teams that skip this conversation and optimize for accuracy end up with models that are statistically impressive but operationally wrong.
+
+**Baseline establishment:**
+
+Before any ML work begins, you must understand what you're competing against. The baseline might be a simple rule — "flag any transaction over $10,000" — or a previous model, or even no automated system at all. If your sophisticated ML model only marginally outperforms a simple rule that took an analyst one afternoon to write, you need to question whether the ML complexity is justified.
+
+**Feasibility constraints:**
+
+Not every business problem should be solved with ML. Before committing, you need honest answers to: Is there enough labeled data, or can you realistically obtain it? Is there sufficient signal in the available features — does the data actually contain information predictive of what you want to predict? Can predictions be made quickly enough (real-time fraud detection has milliseconds; monthly churn scoring has days)? Is the relationship between inputs and outputs stable enough that a model trained on historical data will work on future data?
 
 The most important step — **wrong problem framing = perfect solution to the wrong problem**.
 
@@ -113,6 +153,30 @@ Feasibility
 
 ## 3. Data Collection & Data Versioning
 
+Data is simultaneously the most valuable asset in ML and the most overlooked engineering challenge. The model is only as good as the data it learns from, and that data is far more complex to manage correctly than most teams initially appreciate.
+
+**Where data actually comes from:**
+
+Production databases are the most common source but rarely in a form suitable for ML. They're optimized for transactional workloads, not analytical queries. Customer records might be spread across a dozen tables with complex relationships that need to be carefully joined while avoiding information leakage from the future.
+
+Event streams capture user behavior in real time — clicks, purchases, support interactions — but require careful timestamp handling to avoid using events that wouldn't have been available at prediction time. A model trained on "events up to today" will seem to work perfectly but fail completely in production when it only has access to events up to the moment of prediction.
+
+Human-labeled data is the gold standard for many problems but is expensive and slow to produce. Every labeling decision contains human judgment — two annotators might disagree on whether a support ticket represents "billing" or "technical" — and those disagreements compound across thousands of examples to create systematic noise in your training data.
+
+**Why data versioning is non-negotiable:**
+
+Imagine training a model in January on the current dataset and getting 91% accuracy. You update the dataset in March and retrain — accuracy drops to 87%. Is this because the new model code is worse, the hyperparameters are different, the data distribution shifted, or a preprocessing bug was introduced? Without data versioning, you genuinely cannot answer this question.
+
+Data versioning means treating datasets like software versions. Every training run is associated with an exact, reproducible snapshot of the data used. If you need to reproduce a result from three months ago, you can retrieve exactly the data that produced it.
+
+**The practical challenge:**
+
+Raw datasets are often enormous — terabytes of transaction records or user events. You can't version these the way you version code files. The solution is content-addressed storage combined with lightweight metadata files. The metadata file (which is tiny and lives in your Git repository) contains a cryptographic hash of the dataset and a pointer to where it's stored. The actual data lives in object storage. To "version" the dataset, you update the metadata file. This gives you version control semantics without storing multiple copies of enormous files.
+
+**Data quality as a first-class concern:**
+
+Bad data silently poisons models. A model trained on data with systematic errors will learn those errors and confidently produce wrong predictions. Critical quality dimensions include completeness (are required fields present?), accuracy (do values reflect reality?), consistency (does the same entity have consistent values across sources?), and timeliness (is the data fresh enough for the use case?). These must be measured and monitored, not assumed.
+
 **Data is the foundation** — model quality is bounded by data quality.
 
 **Data collection sources:**
@@ -168,6 +232,24 @@ With versioning (DVC / LakeFS / Delta Lake):
 
 ## 4. Data Preprocessing Pipelines
 
+Raw data is almost never in the right form for model training. Preprocessing transforms messy, heterogeneous reality into the clean, consistent numerical representations that learning algorithms require. Done incorrectly, preprocessing is the single most common source of subtle, hard-to-detect bugs in ML systems.
+
+**The fundamental preprocessing challenge:**
+
+Every transformation applied to training data must be applied identically to data at serving time. If you standardize age by subtracting the mean and dividing by the standard deviation computed from training data, then at serving time you must use those exact same training-time statistics — not recompute them from the serving data. This sounds obvious but is violated constantly in practice, causing what's known as training-serving skew: the model performs well in evaluation but mysteriously worse in production.
+
+**What preprocessing actually involves:**
+
+Missing values require explicit handling strategies, not just deletion. Deleting rows with any missing value might eliminate the most valuable training examples — in medical datasets, missing lab values are often clinically significant. Imputing with the column mean is simple but ignores feature relationships. Imputing with a model trained on other features preserves more information. The choice matters and must be documented.
+
+Scaling and normalization ensure that features with large numeric ranges don't dominate features with small ranges. A feature representing annual income in dollars (range: 20,000-500,000) would completely overwhelm a feature representing age in years (range: 18-90) in many algorithms, even if age is far more predictive. Standardization (zero mean, unit variance) or normalization (to a fixed range like 0-1) addresses this, but again — the scaling parameters fit on training data must be preserved and applied to serving data.
+
+Categorical encoding converts text categories into numbers. The challenge is handling categories that appear at serving time but weren't in training data. A model trained before a new product category was launched will encounter that category at prediction time and must handle it gracefully — either with a special "unknown" category or by other means.
+
+**The pipeline as a software artifact:**
+
+The preprocessing logic should be implemented as a reusable, testable pipeline — not a notebook full of ad-hoc transformations. This pipeline is itself a deployable artifact that gets versioned, tested, and deployed alongside the model. When you deploy a new model version, you deploy its associated preprocessing pipeline, ensuring transformations remain consistent between training and serving.
+
 Pipelines ensure preprocessing is **consistent, reproducible, and deployable**.
 
 **Preprocessing steps by data type:**
@@ -194,106 +276,33 @@ Image Data
 └── Denoising        → Gaussian blur, median filter
 ```
 
-**Sklearn Pipeline (the right way):**
-
-```python
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import (
-    StandardScaler, OneHotEncoder, OrdinalEncoder
-)
-from sklearn.impute import SimpleImputer
-
-# Define column groups
-numeric_features = ['age', 'income', 'tenure']
-categorical_features = ['country', 'plan_type']
-ordinal_features = ['satisfaction_score']
-
-# Numeric pipeline
-numeric_pipeline = Pipeline([
-    ('imputer', SimpleImputer(strategy='median')),
-    ('scaler', StandardScaler()),
-])
-
-# Categorical pipeline
-categorical_pipeline = Pipeline([
-    ('imputer', SimpleImputer(strategy='most_frequent')),
-    ('encoder', OneHotEncoder(handle_unknown='ignore', sparse=False)),
-])
-
-# Combine all
-preprocessor = ColumnTransformer([
-    ('num', numeric_pipeline, numeric_features),
-    ('cat', categorical_pipeline, categorical_features),
-])
-
-# Full pipeline including model
-full_pipeline = Pipeline([
-    ('preprocessor', preprocessor),
-    ('classifier', XGBClassifier(n_estimators=300, learning_rate=0.05)),
-])
-
-# Fit once → transforms + model trained together
-full_pipeline.fit(X_train, y_train)
-
-# Predict → same transforms applied automatically
-preds = full_pipeline.predict(X_test)
-
-# Save entire pipeline (preprocessing + model)
-import joblib
-joblib.dump(full_pipeline, 'model_pipeline.pkl')
-```
-
 > **Critical:** Always fit preprocessing on **training data only**, then transform both train and test. Fitting on all data = **data leakage**.
 
 ---
 
 ## 5. Feature Engineering Fundamentals
 
+Feature engineering is **the art of transforming raw data into representations that make patterns visible to learning algorithms**. It's where domain knowledge has the highest leverage — a feature created by someone who deeply understands the business problem can make a weak algorithm perform well, while a data scientist with no domain knowledge might train a sophisticated model on uninformative representations and achieve mediocre results.
+
+**The philosophy behind feature engineering:**
+
+Algorithms learn correlations between inputs and outputs. Feature engineering is the process of creating inputs that have the strongest possible correlation with the output you're trying to predict. Raw data often contains the signal you need but in a form the algorithm cannot easily extract. A date field contains day-of-week information, seasonality information, recency information — but a raw timestamp integer expresses none of this in a learnable way. Feature engineering extracts and makes explicit what's implicit.
+
+**Temporal features and why they're tricky:**
+
+Time-based features are among the most powerful and most dangerous. Calculating "days since last purchase" is straightforward — but you must calculate it relative to the prediction date, not the current date. If you're building a churn model and training on historical data, "days since last purchase" for a training example from January must be calculated as of January, not as of today when you're running the training job. Using the wrong reference point introduces leakage and produces models that look excellent in training but fail completely in production.
+
+**Aggregation features:**
+
+Many of the most predictive features aren't single measurements but summaries of behavior over time. "Total orders in the last 30 days," "average order value in the last 90 days," "number of support tickets in the last 7 days" — these aggregations distill behavioral patterns that raw event logs can't directly express. The challenge is computing these aggregations correctly and efficiently, especially when you need them both for training (historical snapshots) and serving (real-time or near-real-time updates).
+
+**Feature selection — less is often more:**
+
+Not all features help. Including many low-quality or redundant features can degrade model performance, increase training time, slow inference, and create maintenance burden. Features that are highly correlated with each other add noise without adding signal. Features with near-zero variance carry essentially no information. Features computed from data sources that are unreliable or frequently missing in production become liabilities that cause serving failures.
+
+The goal isn't the most features — it's the most informative features.
+
 Features are the signals your model learns from. **Better features > better algorithms**.
-
-**Feature engineering techniques:**
-
-```python
-import pandas as pd
-import numpy as np
-
-df = pd.DataFrame(...)   # raw data
-
-# ── Temporal features ────────────────────────────────────
-df['hour_of_day']    = df['timestamp'].dt.hour
-df['day_of_week']    = df['timestamp'].dt.dayofweek
-df['is_weekend']     = df['day_of_week'].isin([5, 6]).astype(int)
-df['month']          = df['timestamp'].dt.month
-df['days_since_reg'] = (df['timestamp'] - df['reg_date']).dt.days
-
-# ── Interaction features ─────────────────────────────────
-df['revenue_per_user']  = df['revenue'] / (df['users'] + 1)
-df['clicks_per_view']   = df['clicks'] / (df['views'] + 1)
-df['age_income_ratio']  = df['age'] * df['income']
-
-# ── Aggregation features (group stats) ───────────────────
-user_stats = df.groupby('user_id').agg(
-    total_purchases   = ('purchase', 'sum'),
-    avg_order_value   = ('order_value', 'mean'),
-    days_since_last   = ('timestamp', lambda x: (now - x.max()).days),
-    purchase_freq     = ('purchase', lambda x: x.sum() / x.count()),
-).reset_index()
-
-# ── Text features ─────────────────────────────────────────
-df['text_length']       = df['review'].str.len()
-df['word_count']        = df['review'].str.split().str.len()
-df['has_negative_word'] = df['review'].str.contains(
-    'bad|terrible|awful', case=False).astype(int)
-
-# ── Polynomial features ──────────────────────────────────
-from sklearn.preprocessing import PolynomialFeatures
-poly = PolynomialFeatures(degree=2, interaction_only=True)
-X_poly = poly.fit_transform(X[['age', 'income', 'tenure']])
-
-# ── Target encoding (careful — use cross-val fold approach) ─
-df['country_target_enc'] = df.groupby('country')['churn'].transform('mean')
-```
 
 **Feature selection methods:**
 
@@ -318,6 +327,28 @@ Embedded Methods (during training)
 
 ## 6. Training & Validation Strategies
 
+Training and validation strategy determines **whether your evaluation of model quality is honest** — whether the performance numbers you see before deployment reflect what you'll actually see in production. Poor evaluation strategy is one of the most common reasons models fail to meet expectations after deployment.
+
+**The fundamental evaluation principle:**
+
+The model must never, during training or evaluation, see any information it wouldn't have access to at prediction time in production. Violating this principle — called data leakage — produces models that appear to perform extraordinarily well but are actually memorizing future information that isn't available when predictions need to be made.
+
+**Why a single train-test split is insufficient:**
+
+Splitting your data into training and test sets and evaluating once gives you one estimate of performance, but it's sensitive to exactly how that split happened. If your test set happened to contain mostly easy examples, your estimate will be optimistically biased. If it contained mostly hard examples, pessimistically biased. Cross-validation addresses this by creating multiple train-test splits, training and evaluating on each, and averaging the results — giving a more reliable estimate of true generalization performance.
+
+**The time dimension in validation:**
+
+For most real business problems, data has a temporal structure that must be respected in validation. If you randomly shuffle all your customer data and split into train/test, training examples from 2024 might be mixed with test examples from 2022. This means the model is trained on "future" data relative to some of its test examples — a form of leakage that makes your model look better than it is.
+
+Time-series validation (also called temporal cross-validation or walk-forward validation) strictly maintains temporal ordering: the model is always trained on past data and evaluated on future data, mimicking the actual deployment scenario where you train on historical data and predict future outcomes.
+
+**Hyperparameter tuning and its pitfalls:**
+
+Hyperparameters are the configuration choices you make before training: how deep should the decision trees be, how many hidden layers in the neural network, what learning rate to use. Finding good hyperparameters requires trying many combinations, but each trial uses the validation set for feedback. By the time you've tried hundreds of combinations, the validation set has effectively become part of the training process — your performance estimate is now optimistically biased.
+
+The solution is a three-way split: training data for model learning, validation data for hyperparameter tuning, and a completely held-out test set touched only once at the very end to produce your final unbiased performance estimate. This final test set result is the honest number you should use to decide whether to deploy.
+
 Choosing the right validation strategy is **critical to honest model evaluation**.
 
 **Train/Validation/Test split:**
@@ -330,131 +361,29 @@ All Data (100%)
                            (touch ONCE at the end)
 ```
 
-**Cross-validation strategies:**
-
-```python
-from sklearn.model_selection import (
-    KFold, StratifiedKFold, TimeSeriesSplit,
-    GroupKFold, cross_val_score
-)
-
-# Standard K-Fold
-kf = KFold(n_splits=5, shuffle=True, random_state=42)
-
-# Stratified K-Fold (preserves class distribution — use for classification)
-skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-
-# Time Series Split (no future leakage)
-tscv = TimeSeriesSplit(n_splits=5)
-# Fold 1: train=[0..100],  val=[101..120]
-# Fold 2: train=[0..120],  val=[121..140]
-# Fold 3: train=[0..140],  val=[141..160]
-# ← always train on past, validate on future
-
-# Group K-Fold (same user/entity not in train AND val)
-gkf = GroupKFold(n_splits=5)
-scores = cross_val_score(model, X, y,
-    cv=gkf, groups=df['user_id'])
-```
-
-**Hyperparameter tuning strategies:**
-
-```python
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from optuna import create_study
-
-# Grid Search — exhaustive (small search spaces)
-grid = GridSearchCV(
-    XGBClassifier(),
-    param_grid={
-        'max_depth': [3, 5, 7],
-        'learning_rate': [0.01, 0.1],
-        'n_estimators': [100, 300, 500],
-    },
-    cv=5, scoring='roc_auc', n_jobs=-1
-)
-
-# Random Search — faster (large search spaces)
-random_search = RandomizedSearchCV(
-    XGBClassifier(),
-    param_distributions={
-        'max_depth': randint(3, 10),
-        'learning_rate': uniform(0.01, 0.3),
-        'n_estimators': randint(100, 1000),
-    },
-    n_iter=50, cv=5, scoring='roc_auc'
-)
-
-# Optuna — Bayesian optimization (most efficient)
-def objective(trial):
-    params = {
-        'max_depth':     trial.suggest_int('max_depth', 3, 10),
-        'learning_rate': trial.suggest_float('lr', 0.01, 0.3, log=True),
-        'n_estimators':  trial.suggest_int('n_estimators', 100, 1000),
-    }
-    model = XGBClassifier(**params)
-    return cross_val_score(model, X_train, y_train,
-                           cv=5, scoring='roc_auc').mean()
-
-study = create_study(direction='maximize')
-study.optimize(objective, n_trials=100)
-```
-
 ---
 
 ## 7. Model Evaluation Metrics
 
-**Classification metrics:**
+Evaluation metrics translate model behavior into numbers — and choosing the wrong metric is like optimizing your product for a metric that doesn't reflect actual customer value. The metric you optimize becomes the model's objective, so it must genuinely align with what matters in your use case.
 
-```python
-from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score,
-    f1_score, roc_auc_score, average_precision_score,
-    confusion_matrix, classification_report
-)
+**Why accuracy is almost never the right metric:**
 
-# Confusion matrix anatomy
-#                  Predicted
-#              Positive  Negative
-# Actual Pos |   TP    |   FN   |  ← missed (false negative)
-# Actual Neg |   FP    |   TN   |  ← false alarm
+Accuracy measures the fraction of predictions that are correct. In a dataset where 95% of examples are class A and 5% are class B, a model that always predicts class A achieves 95% accuracy — and is completely useless. Most real ML problems have imbalanced classes: fraud is rare, cancer is rare, equipment failures are rare. In all these cases, accuracy rewards a model for ignoring the minority class entirely.
 
-# Core metrics
-Accuracy   = (TP + TN) / (TP + TN + FP + FN)  # don't use on imbalanced!
-Precision  = TP / (TP + FP)   # of predicted positives, how many right?
-Recall     = TP / (TP + FN)   # of actual positives, how many caught?
-F1         = 2 * (P * R) / (P + R)  # harmonic mean of precision & recall
-ROC-AUC    = area under ROC curve (TPR vs FPR at all thresholds)
-PR-AUC     = area under Precision-Recall (better for imbalanced)
+**The precision-recall trade-off:**
 
-# When to use what
-Precision → when FP is costly   (spam filter: don't block real email)
-Recall    → when FN is costly   (cancer detection: don't miss cases)
-F1        → balanced trade-off
-ROC-AUC   → overall discriminative ability
-PR-AUC    → imbalanced datasets (rare events)
-```
+Precision answers: of all the times the model said "positive," how often was it right? Recall answers: of all the actual positives in reality, how many did the model find? These two metrics exist in fundamental tension — you can always increase recall by predicting positive more aggressively, but this reduces precision as you start catching many false positives along with the true ones.
 
-**Regression metrics:**
+The right balance depends entirely on the cost structure of your problem. In cancer screening, missing a real case (low recall) is catastrophic, so you accept lower precision — flagging cases for follow-up even when some turn out to be benign. In a fraud alert system that requires expensive manual review, false positives cost real money, so you optimize for high precision even if you miss some fraud.
 
-```python
-from sklearn.metrics import (
-    mean_absolute_error, mean_squared_error,
-    r2_score, mean_absolute_percentage_error
-)
+**Threshold as a design decision:**
 
-MAE   = mean_absolute_error(y_true, y_pred)
-# → average absolute error, same unit as target, robust to outliers
+Classification models typically output a probability score — the likelihood that an example belongs to the positive class. Converting this to a binary decision requires choosing a threshold: predict positive if score > 0.5, or 0.7, or 0.3. The threshold choice directly controls the precision-recall trade-off and should be made explicitly based on business requirements rather than defaulting to 0.5. Different thresholds serve different operational contexts — a high-stakes individual decision might require 0.9 confidence, while a bulk email campaign might use 0.3.
 
-RMSE  = mean_squared_error(y_true, y_pred, squared=False)
-# → penalizes large errors more, sensitive to outliers
+**Calibration — does the probability mean what you think:**
 
-MAPE  = mean_absolute_percentage_error(y_true, y_pred)
-# → percentage error, scale-independent, bad if y_true near 0
-
-R²    = r2_score(y_true, y_pred)
-# → proportion of variance explained (1.0 = perfect, 0 = baseline mean)
-```
+A model that outputs 0.7 for a thousand predictions — if it's well calibrated — should be right about 700 times. Poorly calibrated models output scores that don't correspond to actual probabilities. Calibration matters when the probability itself is used to make decisions (how much credit to extend, how much fraud prevention effort to apply) rather than just the binary prediction.
 
 **Ranking metrics (recommendation systems):**
 
@@ -469,6 +398,30 @@ MRR           → mean reciprocal rank (first relevant result)
 ---
 
 ## 8. Overfitting & Underfitting Concepts
+
+Overfitting and underfitting represent the **two failure modes of learning** — learning too much (memorizing noise) or learning too little (failing to capture real patterns). Understanding where your model sits on this spectrum and knowing how to move it is fundamental to ML practice.
+
+**The intuition behind the bias-variance trade-off:**
+
+Imagine you're trying to draw a curve through a set of data points. A straight line (simple model) might not bend enough to follow the actual pattern in the data — it's too rigid, too biased toward simplicity. This is underfitting. A curve with hundreds of wiggles might pass through every single training point perfectly — but those wiggles reflect noise in the specific training examples you happened to collect, not real patterns. On new data, those wiggles lead to terrible predictions. This is overfitting.
+
+The goal is a model complex enough to capture real structure but simple enough to ignore noise.
+
+**Why training performance lies:**
+
+A model's performance on its own training data is almost never a reliable indicator of how it will perform on new data. A sufficiently complex model will achieve near-perfect training performance on any dataset — it can simply memorize the training examples. What you care about is generalization: how well does the model perform on data it hasn't seen? This is why you always evaluate on held-out data that wasn't used during training.
+
+**Signs and causes of overfitting:**
+
+The telltale signature of overfitting is a large gap between training performance and validation performance — the model performs dramatically better on data it was trained on than on new data. Common causes include a model that's too complex relative to the amount of training data, training for too many iterations (the model keeps improving on training data while validation performance plateaus or degrades), noisy labels in training data (the model learns the noise as if it were signal), and too many features relative to training examples.
+
+**Regularization — imposing simplicity:**
+
+Regularization techniques add a cost to model complexity during training, discouraging the model from using its full capacity to memorize training data. L1 regularization pushes weights toward zero, effectively performing automatic feature selection by making many weights exactly zero. L2 regularization shrinks all weights but rarely to exactly zero. Dropout, used in neural networks, randomly disables neurons during training, forcing the network to learn robust representations that don't depend on any single unit. Early stopping halts training when validation performance stops improving, before the model has time to memorize the training data.
+
+**Diagnosing underfitting:**
+
+Underfitting is simpler to recognize — both training and validation performance are poor, and there's not a large gap between them. The model isn't complex enough or hasn't been given enough information to learn the patterns in the data. Solutions include using a more complex model architecture, engineering more informative features, reducing regularization strength, training for more iterations, or collecting more or higher-quality data.
 
 ```
          Underfitting      Just Right      Overfitting
@@ -495,25 +448,6 @@ High Variance → model too sensitive to training data
                fix: more data, regularization, simpler model
 ```
 
-**Detecting overfitting:**
-
-```python
-import matplotlib.pyplot as plt
-
-train_scores = []
-val_scores = []
-epochs = range(1, 101)
-
-for epoch in epochs:
-    model.fit(X_train, y_train, epochs=1)
-    train_scores.append(model.evaluate(X_train, y_train))
-    val_scores.append(model.evaluate(X_val, y_val))
-
-# Overfitting pattern:
-# train_loss: 0.8 → 0.3 → 0.1 → 0.05 (keeps falling)
-# val_loss:   0.8 → 0.4 → 0.5 → 0.6  (starts rising = overfit)
-```
-
 **Regularization techniques:**
 
 ```
@@ -534,6 +468,26 @@ Cross-Validation  → honest estimate of generalization
 ---
 
 ## 9. Experiment Tracking Concepts
+
+Experiment tracking is the **systematic recording of every ML experiment** — what you tried, what parameters you used, what results you got, and where the outputs are stored. Without it, ML development becomes archaeology: months later, you can't explain why a model performs the way it does or reconstruct the conditions that produced your best result.
+
+**The experiment management problem:**
+
+A typical ML project involves dozens to hundreds of training runs. You try different algorithms, different hyperparameter values, different feature sets, different preprocessing choices. Each run produces a model file, evaluation metrics, and various outputs. Without systematic tracking, this information lives in notebooks with names like "final_v2_actually_final_REAL.ipynb," on individual laptops, in mental notes that get forgotten. When someone asks "why does the production model perform this way?" or "can we reproduce the results from last quarter?" the honest answer is often "we don't know" or "probably not."
+
+**What must be tracked for every experiment:**
+
+Parameters represent everything you configured before training began: algorithm choice, hyperparameter values, random seeds, data version used, feature set version, preprocessing configuration. These are the inputs to the experiment. Without recording them, you can't reproduce the experiment or understand why one run outperformed another.
+
+Metrics represent what you measured after training: validation accuracy, AUC, F1 score, precision, recall at various thresholds, training loss curves, validation loss curves. Metrics need to be recorded in a way that makes comparison across runs easy — not scattered across different output files.
+
+Artifacts are the files produced by training: the trained model itself, preprocessing transformers, plots like confusion matrices and ROC curves, feature importance visualizations, and any other outputs. These need to be stored in a way that connects them to the specific experiment that produced them.
+
+Context connects the experiment to the broader development story: who ran it and when, what Git commit the code was at, what motivated the experiment (following up on a previous finding, testing a hypothesis), and any qualitative notes about what you observed.
+
+**The compound benefit of tracking:**
+
+Experiment tracking becomes dramatically more valuable over time. When you've tracked fifty experiments, you can query across them: "show me all experiments that used feature set v7, sorted by validation AUC" or "compare experiments where I used XGBoost vs LightGBM." This transforms trial-and-error into a systematic learning process where each experiment builds on the insight from all previous ones.
 
 Experiment tracking is the **lab notebook of ML** — every run recorded, comparable, reproducible.
 
@@ -581,6 +535,24 @@ Experiment Record
 
 ## 10. Reproducibility in ML
 
+Reproducibility means **given the same code, same data, and same configuration, you can recreate the exact same results**. It's simultaneously one of the most important properties of ML systems and one of the most frequently neglected — until someone asks you to reproduce a result and you discover you can't.
+
+**Why ML reproducibility is uniquely difficult:**
+
+Software engineering has a relatively straightforward reproducibility story: given the same source code, you get the same compiled binary. ML adds several additional sources of non-determinism. Randomness is baked into the process — random initialization of model weights, random shuffling of training data, random dropout during training. Different hardware produces different floating-point arithmetic results. Parallel training produces different results depending on how operations happen to be scheduled. Library versions subtly change numerical behavior. Even the operating system can introduce variance.
+
+**The layers of reproducibility:**
+
+Algorithmic reproducibility requires setting all random seeds at the start of every experiment — the seed for Python's random module, numpy's random generator, the ML framework's random operations, and any GPU-specific random operations. These must all be set explicitly and recorded as experiment parameters.
+
+Data reproducibility requires that you know exactly what data was used. Not "the customer dataset from January" but "the customer dataset at commit hash abc1234 of our data repository, downloaded from S3 path s3://data/customers/v3.parquet with SHA-256 hash def5678." Without this level of precision, "the same data" might actually be subtly different data after a pipeline bug was fixed or new records were added.
+
+Environment reproducibility requires that the exact same software versions are used. A different version of numpy, scikit-learn, or CUDA can change numerical results enough to matter. Container-based reproducibility (Docker images with pinned dependencies) provides strong environmental reproducibility — the training environment is itself a versioned artifact.
+
+**Practical reproducibility in teams:**
+
+Perfect mathematical reproducibility (bit-for-bit identical results) is extremely difficult to achieve across different hardware and over time. Practical reproducibility — close enough that the conclusions remain valid — is achievable and worth investing in. The key question to ask is: if someone else runs this training job with these instructions, will they get a model with similar performance characteristics and behaviors? For most purposes, this level of reproducibility is sufficient and far more achievable than perfect bit-for-bit reproduction.
+
 **Reproducibility = same code + same data + same config → same result.**
 
 ```
@@ -592,27 +564,6 @@ Reproducibility Killers:
 ├── Hyperparameters not recorded
 ├── Data preprocessing inconsistency
 └── Model architecture not saved
-```
-
-**Making experiments reproducible:**
-
-```python
-import random, os
-import numpy as np
-import torch
-
-def set_all_seeds(seed: int = 42):
-    """Fix all random seeds for reproducibility."""
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    # Deterministic operations (slower but reproducible)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-
-set_all_seeds(42)
 ```
 
 **Environment reproducibility:**
@@ -656,6 +607,26 @@ Pipeline  ✅ Preprocessing steps saved with model
 
 ## 11. Model Artifact Management
 
+A model artifact is **everything needed to reproduce a prediction** — not just the model weights, but the preprocessing logic, configuration, metadata, and documentation that together constitute a deployable, understandable model.
+
+**Why "just save the model file" is insufficient:**
+
+The model weights file is the most visible artifact but far from the complete picture. A weights file without the preprocessing pipeline is useless — you can't make predictions without knowing how to transform raw inputs into the feature format the model expects. A model without documentation of its expected input schema becomes a mystery when the original developer leaves. A model without performance metrics makes it impossible to compare against future candidates or assess production degradation.
+
+**What constitutes a complete model artifact:**
+
+The model weights or parameters are the learned representation — what the training process actually produced. For a decision tree, this is the tree structure and threshold values. For a neural network, this is all the weight matrices. This is the core artifact that determines predictions.
+
+The preprocessing pipeline includes every transformer fit during training: the scaler's mean and standard deviation values, the encoder's category-to-integer mappings, the imputer's fill values. These transformers were fit on training data and must be applied consistently to new data. Saving only the model weights and recreating the preprocessing "from scratch" virtually guarantees subtle differences that degrade performance.
+
+The feature schema documents exactly what the model expects as input: which features, in what order, with what data types, with what valid ranges. This is the contract between the model and the systems that call it. When this contract changes — a new feature added, a feature removed, a type changed — it's a breaking change that requires coordinated updates.
+
+Performance metadata captures how the model performed during evaluation: accuracy metrics, threshold values, evaluation methodology, test set composition. This information answers questions like "is the production model still performing as expected?" and "how does this new candidate compare to what's currently deployed?"
+
+**Artifact storage and retrieval:**
+
+Model artifacts need to be stored in a way that makes specific versions retrievable by content (a hash of the artifact) and by version identifier (a human-readable version number or tag). Object storage like S3 provides the durability and scalability, while a model registry (like MLflow's model registry) provides the metadata layer that makes artifacts discoverable and manageable.
+
 A model artifact is everything needed to **reproduce and serve predictions**.
 
 **Complete model artifact bundle:**
@@ -684,48 +655,27 @@ model_artifact_v2.4.1/
     └── requirements.txt       # serving dependencies
 ```
 
-**Saving and loading with MLflow:**
-
-```python
-import mlflow
-import mlflow.sklearn
-
-with mlflow.start_run():
-    # Train
-    model = XGBClassifier(**best_params)
-    model.fit(X_train, y_train)
-
-    # Log metrics
-    mlflow.log_metrics({
-        'val_auc':       roc_auc_score(y_val, model.predict_proba(X_val)[:,1]),
-        'val_f1':        f1_score(y_val, model.predict(X_val)),
-        'val_precision': precision_score(y_val, model.predict(X_val)),
-    })
-
-    # Log full sklearn pipeline (preprocessing + model)
-    mlflow.sklearn.log_model(
-        full_pipeline,
-        artifact_path="model",
-        registered_model_name="ChurnPredictor",
-        input_example=X_val.head(5),      # documents expected input
-        signature=mlflow.models.infer_signature(X_val, y_pred),
-    )
-
-    # Log custom artifacts
-    mlflow.log_artifact("confusion_matrix.png")
-    mlflow.log_artifact("feature_importance.html")
-    mlflow.log_params(best_params)
-    mlflow.set_tags({
-        'dataset_version': 'v3',
-        'feature_set':     'v7',
-        'git_commit':      git_hash,
-        'team':            'data-science',
-    })
-```
-
 ---
 
 ## 12. ML Metadata Management
+
+ML metadata is the **provenance record of your ML system** — the complete lineage of information that answers: where did this model come from, what data trained it, who approved it, what decisions were made along the way, and what has it done since deployment?
+
+**The lineage problem at scale:**
+
+As ML systems grow, the number of experiments, models, datasets, and deployments multiplies rapidly. A year into active development, you might have hundreds of model versions, dozens of dataset versions, thousands of training runs, and multiple models in production simultaneously. Without metadata management, answering basic questions becomes nearly impossible: "The model in production — what data trained it?" "We found a bug in feature computation — which deployed models are affected?" "Regulators need to know what factors drove this customer's credit decision — what features were most important?"
+
+**What ML metadata encompasses:**
+
+Data metadata tracks everything about the datasets used across the ML lifecycle. This includes where data came from, when it was collected, what transformations were applied, what its statistical properties are, who owns it, and how long it should be retained. Crucially, it connects datasets to the models trained on them, enabling you to answer "if we retrain this model with better data, how many current models would be affected?"
+
+Experiment metadata connects training runs to their context: which code version was used, which dataset, which configuration, when it ran, how long it took, what hardware was used, and what results it produced. This is the layer that makes experiment tracking searchable and comparable.
+
+Model metadata captures the lifecycle of model versions: when each version was created, what experiment produced it, what evaluations it passed, who reviewed it, when it was promoted to each stage, when it was deployed, and when (if ever) it was retired. This creates an audit trail that satisfies both operational ("what changed and when?") and compliance ("can we explain decisions made by this model?") requirements.
+
+**Metadata as organizational memory:**
+
+The most underappreciated value of metadata management is institutional knowledge preservation. When a senior ML engineer leaves, their mental model of "why we made this feature engineering choice" or "why we use this particular validation approach" doesn't leave with them — it's encoded in the metadata. New team members can trace the history of decisions and understand the reasoning, rather than having to rediscover lessons already learned.
 
 Metadata is the **provenance record** of your ML system — answers "where did this model come from?"
 
@@ -761,30 +711,25 @@ Deployment Metadata
 └── Monitoring      (drift alert threshold: 0.05)
 ```
 
-**ML Metadata Store (MLMD):**
-
-```python
-from ml_metadata import metadata_store
-from ml_metadata.proto import metadata_store_pb2
-
-# TFX / Kubeflow Pipelines use MLMD for lineage
-# Example: querying artifact lineage
-store = metadata_store.MetadataStore(connection_config)
-
-# Get all artifacts produced by a pipeline run
-artifacts = store.get_artifacts_by_type('Model')
-for artifact in artifacts:
-    lineage = store.get_lineage_subgraph(
-        query_nodes=[artifact.id],
-        direction='BACKWARD',
-        max_num_hops=5
-    )
-    # → shows: raw data → cleaning → features → training → model
-```
-
 ---
 
 ## 13. MLflow Tracking & Registry
+
+MLflow is the most widely adopted open-source platform for ML lifecycle management, providing a unified system for experiment tracking, model packaging, and model registry in a single integrated tool.
+
+**MLflow's four core components and how they fit together:**
+
+The **Tracking** component is where experiment management lives. Every training run creates a record in the tracking server containing all logged parameters, metrics recorded at each step (enabling loss curves), artifacts produced, and tags describing the run's context. The tracking UI provides a dashboard where you can filter and compare runs across experiments, visualize how metrics evolved during training, and drill down into any specific run's details. This is the day-to-day working interface for data scientists exploring the solution space.
+
+The **Projects** component standardizes how ML code is packaged and executed. A project is a directory with a configuration file specifying the environment it needs (conda environment or Docker image) and the entry points that can be run. This means "reproduce this training run" becomes a single command rather than a multi-page installation guide.
+
+The **Models** component defines a standard format for packaging trained models so they can be loaded and used consistently across different deployment contexts. A packaged MLflow model includes the model itself, the environment specification needed to serve it, example inputs and their expected outputs, and the model signature defining expected input and output schemas. This standardization means the same packaged model can be served via REST API, loaded in a Python script, or deployed to cloud inference services without format conversion.
+
+The **Registry** component provides the governance layer for model versions moving from experimentation toward production. The registry maintains a catalog of named models, each with multiple versions. Each version has a lifecycle stage: None (just registered), Staging (being evaluated for production), Production (currently serving users), or Archived (retired). The registry captures who promoted each version, when, and any annotations they added. This creates the audit trail that production ML systems require.
+
+**How teams use MLflow in practice:**
+
+The typical workflow begins with data scientists logging experiments during development — automatically capturing every hyperparameter tried and every metric computed. As promising experiments emerge, the best model versions get registered to the model registry under a meaningful name. The MLOps or platform team then takes over, running additional validation against the registered model, reviewing the attached metadata, and promoting it through staging to production. Any serving system that needs the current production model queries the registry by name and stage rather than hardcoding a specific version — this means updating the production model requires only changing the registry, not modifying serving configuration.
 
 MLflow is the most widely used open-source ML platform.
 
@@ -794,91 +739,6 @@ MLflow Components
 ├── Projects    → reproducible runs (MLproject file)
 ├── Models      → model packaging format (mlflow.pyfunc)
 └── Registry    → model versioning + lifecycle management
-```
-
-**MLflow Tracking — complete example:**
-
-```python
-import mlflow
-from mlflow.tracking import MlflowClient
-
-# Connect to tracking server
-mlflow.set_tracking_uri("http://mlflow-server:5000")
-mlflow.set_experiment("churn-prediction-v2")
-
-with mlflow.start_run(run_name="xgboost-optuna-trial-47") as run:
-
-    # Log all hyperparameters
-    mlflow.log_params({
-        'model_type':    'XGBoost',
-        'max_depth':     6,
-        'learning_rate': 0.05,
-        'n_estimators':  500,
-        'subsample':     0.8,
-        'colsample':     0.8,
-    })
-
-    # Train model
-    model.fit(X_train, y_train,
-              eval_set=[(X_val, y_val)],
-              callbacks=[mlflow_callback])  # logs metrics per epoch
-
-    # Log final metrics
-    mlflow.log_metrics({
-        'train_auc': 0.971,
-        'val_auc':   0.943,
-        'val_f1':    0.871,
-        'val_recall': 0.884,
-        'threshold': 0.47,
-    })
-
-    # Log model
-    mlflow.xgboost.log_model(model, "xgboost_model")
-
-    # Log plots as artifacts
-    fig = plot_confusion_matrix(y_val, preds)
-    mlflow.log_figure(fig, "confusion_matrix.png")
-
-    print(f"Run ID: {run.info.run_id}")
-```
-
-**MLflow Model Registry — lifecycle management:**
-
-```python
-client = MlflowClient()
-
-# Register model from run
-model_version = mlflow.register_model(
-    model_uri=f"runs:/{run_id}/model",
-    name="ChurnPredictor"
-)
-
-# Transition through stages
-client.transition_model_version_stage(
-    name="ChurnPredictor",
-    version=model_version.version,
-    stage="Staging",
-    archive_existing_versions=False
-)
-
-# After validation, promote to Production
-client.transition_model_version_stage(
-    name="ChurnPredictor",
-    version=model_version.version,
-    stage="Production",
-    archive_existing_versions=True     # archive previous prod version
-)
-
-# Add description
-client.update_model_version(
-    name="ChurnPredictor",
-    version=model_version.version,
-    description="XGBoost + Optuna HPO. val_AUC=0.943. Trained on dataset_v3."
-)
-
-# Load production model anywhere
-model = mlflow.pyfunc.load_model("models:/ChurnPredictor/Production")
-predictions = model.predict(X_new)
 ```
 
 **MLflow UI — what you see:**
@@ -906,6 +766,28 @@ Model Registry
 ---
 
 ## 14. DVC for Data Version Control
+
+DVC (Data Version Control) brings **Git-like version control to data and ML pipelines**, solving the problem that Git is excellent for code but completely unsuitable for the large binary files that constitute ML datasets and model artifacts.
+
+**Why Git alone doesn't work for ML:**
+
+Git tracks changes to files by storing complete snapshots of each version. For a 10-line Python script, this is trivially efficient. For a 50GB dataset, storing multiple versions in Git makes the repository enormous, slow to clone, and expensive to host. Git also has no concept of pipeline dependencies — it doesn't know that changing your preprocessing script means the training step needs to re-run, or that model artifacts become stale when the data they were trained on changes.
+
+**DVC's architecture — Git for metadata, object storage for data:**
+
+DVC's insight is elegant: let Git track small metadata files that describe and point to datasets, while the actual data lives in external storage (S3, GCS, Azure Blob, or local). When you add a dataset to DVC, it computes a content hash of the dataset, moves the actual file to DVC's cache, and creates a tiny metadata file (with a .dvc extension) that contains the hash and storage location. This metadata file goes into Git. The actual data goes to your configured remote storage.
+
+The result: your Git repository stays lean and fast, containing only the lightweight pointers. To reproduce a specific version, you check out the historical metadata files from Git, then use DVC to fetch the corresponding actual data from remote storage. The content hash guarantees you get exactly the right data — if anyone has modified the data since it was stored, the hash won't match and DVC will alert you.
+
+**DVC pipelines — reproducible ML workflows:**
+
+DVC's pipeline feature lets you define your entire ML workflow as a directed acyclic graph where each stage declares its inputs (data files, code files, parameters), outputs (processed data, model files, metrics), and the command that runs the stage. DVC uses file content hashes to determine which stages need to re-run when inputs change.
+
+If you change a preprocessing parameter, DVC knows that the preprocessing stage must re-run, and consequently that training must re-run (since it depends on preprocessed data), but that data validation (which depends only on raw data) does not need to re-run. This intelligent caching dramatically accelerates experimentation — you only pay the compute cost for stages that actually changed.
+
+**Experiments with DVC:**
+
+DVC Experiments provides a lightweight experiment management layer built on top of the pipeline system. Running an experiment with different parameters creates a separate experiment record that tracks what parameters were different and what results were produced, without creating separate Git branches or commits. You can run multiple experiments in parallel, compare their results in a table, and promote the best one to become the new baseline — all with simple commands.
 
 DVC (Data Version Control) brings **Git-like versioning to datasets and models**.
 
@@ -1050,6 +932,26 @@ dvc exp branch exp-depth-6 feature/optimized-depth
 
 ## 15. Model Versioning Strategies
 
+Model versioning is the practice of **treating every trained model version as a distinct, identifiable artifact with its own lifecycle** — rather than simply overwriting the "current model" with a new one each time you retrain.
+
+**Why model versioning matters beyond the obvious:**
+
+The obvious reason is rollback: if you deploy a new model and it performs poorly, you want to revert to the previous version. But model versioning provides much deeper value. It enables accountability — you can answer exactly which model version made a specific prediction at any point in history. It enables gradual promotion — a new version can be tested in shadow mode, then canary, then full production without losing track of what's running where. It enables comparative analysis — you can run A/B tests where different user cohorts receive predictions from different model versions simultaneously, with their version assignment logged for later analysis.
+
+**Semantic versioning applied to models:**
+
+Semantic versioning from software engineering (MAJOR.MINOR.PATCH) translates meaningfully to models, though the semantics adapt to ML concerns. A MAJOR version bump indicates a breaking change in the model's interface — the input feature schema changed, the output format changed, or the model's fundamental behavior changed so dramatically that downstream systems need to be updated. A MINOR version bump indicates a meaningful improvement: retraining on new data, adding new features, changing the algorithm — same interface, better performance. A PATCH bump covers minor fixes: threshold recalibration, bug fixes in preprocessing, minor adjustments that don't substantively change model behavior.
+
+**The model lifecycle stages:**
+
+Most mature ML platforms implement a staged lifecycle analogous to software release stages. A newly registered model version starts in a development or candidate stage where it exists in the registry but isn't serving any real traffic. It moves to staging when it's ready for formal evaluation — integration testing, load testing, shadow deployment, formal performance review against the current production model. It moves to production when all validation gates have been passed and appropriate approvals obtained. It moves to archived when it's been replaced by a newer production version — crucially, archived doesn't mean deleted. Archived versions are retained according to the organization's retention policy, enabling rollback and serving as a historical record.
+
+**Champion-challenger management:**
+
+A particularly powerful versioning pattern is the champion-challenger framework. The champion is the currently deployed production model. Challengers are candidate models that have been trained and evaluated but not yet promoted. Multiple challengers can exist simultaneously — one team might be testing a new algorithm while another experiments with an expanded feature set. Each challenger undergoes rigorous evaluation against the champion before any promotion decision is made.
+
+The promotion decision itself should be explicit and documented: which metrics were compared, who reviewed the results, what the review concluded, and who authorized the promotion. This documentation becomes part of the model version's metadata, creating the audit trail that allows you to understand any production model's history at any future point.
+
 **Versioning models is as critical as versioning code.**
 
 **Semantic versioning for models:**
@@ -1087,55 +989,6 @@ Dataset v3 (2.4M rows, Jan 2024)
     └──► Feature Pipeline v8 (new features)
               │
               └──► Experiment Run #61 ──► Model v3.0.0-dev
-```
-
-**Complete model versioning strategy:**
-
-```python
-# Model card — document every production model version
-model_card = {
-    "model_name":    "ChurnPredictor",
-    "version":       "2.4.1",
-    "stage":         "Production",
-
-    "training": {
-        "dataset":       "customer_events_v3",
-        "dataset_hash":  "sha256:abc123...",
-        "train_rows":    1_920_000,
-        "train_period":  "2023-01-01 to 2023-12-31",
-        "algorithm":     "XGBoost 2.0.3",
-        "hyperparams":   {"lr": 0.05, "depth": 6, "n_est": 500},
-        "git_commit":    "abc1234def5678",
-        "mlflow_run_id": "8f3a2b1c4d5e6f7a",
-    },
-
-    "performance": {
-        "val_auc":       0.943,
-        "val_f1":        0.871,
-        "val_precision": 0.881,
-        "val_recall":    0.862,
-        "threshold":     0.47,
-    },
-
-    "deployment": {
-        "deployed_at":   "2024-01-20T09:00:00Z",
-        "endpoint":      "https://api/v1/predict/churn",
-        "p50_latency_ms": 12,
-        "p99_latency_ms": 45,
-    },
-
-    "limitations": [
-        "Trained on US customers only",
-        "May underperform on accounts < 30 days old",
-        "Does not account for macro-economic changes",
-    ],
-
-    "retraining_triggers": [
-        "val_auc drops below 0.91",
-        "Data drift score > 0.15 (PSI)",
-        "Monthly scheduled retraining",
-    ]
-}
 ```
 
 ---
