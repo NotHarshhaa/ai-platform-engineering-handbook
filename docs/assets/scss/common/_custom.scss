@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+// Put your custom SCSS code here
+.container-fw {
+    max-width: 100% !important;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+// Prevent navbar brand from wrapping and breaking layout on mobile viewports
+@media (max-width: 991.98px) {
+    header.navbar > .container-fluid,
+    header.navbar > .container-fw,
+    header.navbar > .container {
+        flex-wrap: nowrap !important;
+    }
+    .navbar-brand {
+        font-size: 1.1rem !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        flex-shrink: 1 !important;
+        min-width: 0 !important;
+    }
+}
+
+// Make the main content area wider when TOC is disabled
+.docs-content.mx-xl-auto {
+    @include media-breakpoint-up(lg) {
+        flex: 0 0 85% !important;
+        max-width: 85% !important;
+    }
+    @include media-breakpoint-up(xl) {
+        flex: 0 0 85% !important;
+        max-width: 85% !important;
+    }
+}
+
+// Syllabus portal list adjustments (remove default bullets, add timeline styling)
+.syllabus-portal {
+    ul {
+        list-style-type: none !important;
+        padding-left: 0 !important;
+    }
+    
+    // Main days item
+    > ul > li {
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        font-size: 1.15rem;
+        
+        a {
+            color: var(--bs-primary);
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    
+    // Sub-items (nested details)
+    ul ul {
+        padding-left: 1.25rem !important;
+        margin-top: 0.5rem;
+        font-weight: normal;
+        font-size: 0.95rem;
+        color: var(--bs-secondary);
+        border-left: 2px solid var(--bs-border-color);
+        
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
