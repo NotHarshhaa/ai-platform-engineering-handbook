@@ -37,5 +37,8 @@
   },
   "engines": {
     "node": ">=24.13.0"
+  },
+  "hugo-bin": {
+    "buildTags": "extended"
   }
 }
