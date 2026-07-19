@@ -1,6 +1,6 @@
 # 🚀 **AI Platform Engineering Handbook**
 
-A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineering, and AI Platform Integration.
+A comprehensive 60-day journey through Advanced DevOps, MLOps, Platform Engineering, AI Platform Integration, AI Platform Operations, Generative AI Engineering, and Advanced AI Application Deployment.
 
 ---
 
@@ -9,7 +9,13 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 ✅ Week 1 – Advanced DevOps  
 ✅ Week 2 – MLOps Engineering  
 ✅ Week 3 – Platform Engineering  
-✅ Week 4 – AI Platform Integration
+✅ Week 4 – AI Platform Integration  
+✅ Week 5 – AI Platform Operations  
+✅ Week 6 – Generative AI Engineering  
+✅ Week 7 – Advanced AI Application Deployment  
+✅ Week 8 – Generative AI Platform Operations  
+✅ Week 9 – AI Ops & Monitoring  
+✅ Week 10 – Enterprise AI Engineering
 
 ---
 
@@ -377,15 +383,343 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 
 ---
 
+# 📅 **Week 5 – Generative AI Fundamentals**
+
+## 🎯 **Focus: Understanding Large Language Models (LLMs)**
+
+### 🗓 **Day 31–32: Foundations of Generative AI**
+
+* Evolution of AI → ML → Deep Learning → Generative AI
+* Transformer Architecture
+* Attention Mechanism
+* Tokens & Tokenization
+* Embeddings
+* Positional Encoding
+* Context Windows
+* Prompt Completion
+* Text Generation Process
+* Temperature
+* Top-k Sampling
+* Top-p Sampling
+* Hallucinations
+* Inference vs Training
+* Foundation Models
+* Open-source vs Closed-source Models
+
+---
+
+### 🗓 **Day 33–34: Prompt Engineering**
+
+* Prompt Engineering Fundamentals
+* Zero-shot Prompting
+* One-shot Prompting
+* Few-shot Prompting
+* Chain of Thought
+* Self Consistency
+* Tree of Thoughts
+* ReAct Prompting
+* Structured Outputs
+* JSON Mode
+* Function Calling
+* Prompt Templates
+* Prompt Chaining
+* Prompt Evaluation
+* Prompt Security
+* Prompt Injection
+* Jailbreak Prevention
+
+---
+
+### 🗓 **Day 35: LLM APIs**
+
+* OpenAI APIs
+* Anthropic APIs
+* Gemini APIs
+* Azure OpenAI
+* Ollama
+* vLLM
+* OpenRouter
+* Token Usage
+* Streaming Responses
+* Rate Limits
+* API Cost Optimization
+* Model Selection Strategies
+
+---
+
+# 📅 **Week 6 – Retrieval Augmented Generation (RAG)**
+
+## 🎯 **Focus: Building Knowledge-Aware AI Systems**
+
+### 🗓 **Day 36–37: RAG Foundations**
+
+* What is RAG
+* Why RAG Exists
+* Vector Embeddings
+* Embedding Models
+* Semantic Search
+* Similarity Search
+* Chunking Strategies
+* Metadata Filtering
+* Hybrid Search
+* Sparse vs Dense Retrieval
+* Context Assembly
+* Grounding AI Responses
+
+---
+
+### 🗓 **Day 38–39: Vector Databases**
+
+* Vector Database Architecture
+* Pinecone
+* Qdrant
+* ChromaDB
+* Weaviate
+* Milvus
+* FAISS
+* Index Types
+* ANN Search
+* Collection Design
+* Vector Storage Optimization
+
+---
+
+### 🗓 **Day 40: Advanced RAG**
+
+* Multi-document RAG
+* Parent-Child Retrieval
+* Recursive Retrieval
+* Query Transformation
+* Re-ranking
+* Context Compression
+* Citation Generation
+* Multi-modal RAG
+* Graph RAG
+* Agentic RAG
+* RAG Evaluation
+
+---
+
+# 📅 **Week 7 – AI Agents & Agentic AI**
+
+## 🎯 **Focus: Autonomous AI Systems**
+
+### 🗓 **Day 41–42: AI Agent Fundamentals** 
+
+* What is an AI Agent
+* AI Agent Architecture
+* Agent Loop
+* Perception
+* Reasoning
+* Planning
+* Acting
+* Reflection
+* Memory
+* Environment
+* Agent Lifecycle
+* Single Agent Systems
+* Multi-Agent Systems
+
+---
+
+### 🗓 **Day 43–44: Agent Frameworks**
+
+* LangChain
+* LangGraph
+* AutoGen
+* CrewAI
+* OpenAI Agents SDK
+* Google ADK
+* Semantic Kernel
+* PydanticAI
+* SmolAgents
+* Agno
+* DSPy
+* Mastra
+* Atomic Agents
+
+---
+
+### 🗓 **Day 45: Agent Patterns**
+
+* ReAct Pattern
+* Planner Pattern
+* Executor Pattern
+* Router Pattern
+* Supervisor Pattern
+* Reflection Pattern
+* Debate Pattern
+* Human-in-the-Loop
+* Swarm Agents
+* Hierarchical Agents
+* Event-driven Agents
+
+---
+
+# 📅 **Week 8 – Agent Memory, Tools & MCP**
+
+## 🎯 **Focus: Building Production AI Agents**
+
+### 🗓 **Day 46–47: Memory Systems**
+
+* Short-term Memory
+* Long-term Memory
+* Episodic Memory
+* Semantic Memory
+* Conversation Memory
+* Knowledge Memory
+* Vector Memory
+* Memory Compression
+* Memory Retrieval
+* Memory Persistence
+
+---
+
+### 🗓 **Day 48–49: Tool Calling**
+
+* Function Calling
+* Tool Selection
+* Structured Outputs
+* API Integration
+* REST Tools
+* Database Tools
+* Search Tools
+* Browser Tools
+* File System Tools
+* Code Execution
+* Error Recovery
+* Retry Strategies
+
+---
+
+### 🗓 **Day 50: Model Context Protocol (MCP)**
+
+* MCP Fundamentals
+* MCP Architecture
+* MCP Client
+* MCP Server
+* MCP Resources
+* MCP Prompts
+* MCP Tools
+* Transport Layer
+* stdio Transport
+* SSE Transport
+* Authentication
+* Security
+* Enterprise MCP Design
+
+---
+
+# 📅 **Week 9 – AI Engineering & LLMOps**
+
+## 🎯 **Focus: Operating AI Systems at Scale**
+
+### 🗓 **Day 51–52**
+
+* LLMOps Fundamentals
+* Prompt Versioning
+* Model Registry
+* AI CI/CD
+* Prompt Testing
+* Regression Testing
+* AI Evaluation
+* Prompt Optimization
+* Cost Optimization
+* Latency Optimization
+
+---
+
+### 🗓 **Day 53–54**
+
+* AI Observability
+* LangSmith
+* LangFuse
+* Phoenix
+* Weights & Biases
+* MLflow for LLMs
+* OpenTelemetry for AI
+* AI Tracing
+* AI Metrics
+* Failure Analysis
+* Production Monitoring
+
+---
+
+### 🗓 **Day 55**
+
+* AI Guardrails
+* Toxicity Detection
+* PII Detection
+* Content Moderation
+* Hallucination Detection
+* Groundedness Evaluation
+* Bias Detection
+* AI Governance
+* AI Compliance
+
+---
+
+# 📅 **Week 10 – Enterprise Agentic Systems**
+
+## 🎯 **Focus: Designing Enterprise AI Platforms**
+
+### 🗓 **Day 56–57**
+
+* Enterprise AI Architecture
+* AI Gateway
+* Multi-model Routing
+* AI Service Mesh
+* AI API Gateway
+* Model Routing
+* Caching Strategies
+* Session Management
+* Rate Limiting
+* Cost Allocation
+
+---
+
+### 🗓 **Day 58–59**
+
+* Enterprise Agent Design
+* DevOps Agents
+* SRE Agents
+* Security Agents
+* Platform Engineering Agents
+* Coding Agents
+* Documentation Agents
+* Incident Response Agents
+* Multi-Agent Collaboration
+* Workflow Orchestration
+
+---
+
+### 🗓 **Day 60**
+
+* End-to-End Agentic System Design
+* Production Deployment
+* Scalability
+* Reliability
+* Fault Tolerance
+* AI Disaster Recovery
+* High Availability
+* AI Architecture Reviews
+* Capstone Project
+* Portfolio Preparation
+
+---
+
 ## 🎯 **Learning Outcomes**
 
-Upon completion of this 30-day intensive program, you will have:
+Upon completion of this comprehensive multi-week program, you will have:
 
-- **Advanced DevOps Skills**: Production-grade CI/CD, container security, and Kubernetes expertise
-- **MLOps Proficiency**: Complete ML lifecycle management from experiment to production
-- **Platform Engineering Excellence**: Infrastructure as Code, GitOps, and internal developer platforms
-- **AI Platform Integration**: End-to-end AI infrastructure design and deployment strategies
-- **Career Readiness**: Professional positioning, portfolio development, and interview preparation
+- **Advanced DevOps Mastery**: Expertise in production-grade CI/CD, container security, advanced Kubernetes, Helm, infrastructure automation, and deployment patterns.
+- **End-to-End MLOps Proficiency**: Full lifecycle ML management—from experimentation, tracking, and model packaging to production deployment, monitoring, and automated retraining.
+- **Platform Engineering Excellence**: Deep experience with Infrastructure as Code, GitOps, building and operating internal developer platforms, and scaling cloud-native systems.
+- **AI & LLM Platform Integration**: Practical skills designing, implementing, and optimizing AI/LLM pipelines, APIs, vector databases, RAG systems, and multi-model orchestration for real-world enterprise use.
+- **Agentic System Design**: Foundations and practice designing, deploying, and scaling agent-based AI systems for coding, SRE, operations, and workflow automation.
+- **Comprehensive Observability & Security**: Monitoring, logging, distributed tracing, threat modeling, incident response, and robust platform security practices for ML and AI infra.
+- **Production-Ready Architecture**: Ability to design and document scalable, reliable, and secure cloud architectures for ML/AI at scale.
+- **Career & Portfolio Preparation**: Professional positioning as a DevOps/MLOps/Platform/AI engineer—resume, technical portfolio, hands-on projects, and interview readiness.
 
 ---
 
@@ -395,7 +729,7 @@ Upon completion of this 30-day intensive program, you will have:
 - Familiarity with cloud computing fundamentals
 - Experience with at least one programming language
 - Basic knowledge of Linux/Unix systems
-- Enthusiasm for learning cutting-edge DevOps and AI infrastructure technologies
+- Genuine enthusiasm for learning modern DevOps, MLOps, and cutting-edge AI/LLM infrastructure & engineering systems
 
 ---
 
