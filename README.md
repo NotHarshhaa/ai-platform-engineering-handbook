@@ -93,8 +93,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Persistent Volumes & Storage Classes
 * StatefulSets vs Deployments
 * Kubernetes Networking Basics
-* **Policy as Code in Kubernetes (OPA/Gatekeeper Basics)**
-* **Network Policies & Pod Security Standards**
 
 ---
 
@@ -113,12 +111,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Alerting & Incident Response
 * Monitoring Kubernetes Workloads
 * SLOs, SLAs & SLIs
-* **DORA Metrics (Deployment Frequency, Lead Time, MTTR, Change Failure Rate)**
-* **Error Budgets & SRE Principles**
-
-### 🏗️ **Week 1 Capstone Project**
-
-> **Build a production-grade CI/CD pipeline** with GitHub Actions that includes: multi-stage Docker builds, image scanning (Trivy), OCI image signing (Cosign), push to registry, Kubernetes deployment via Helm, and Prometheus + Grafana observability stack — all triggered on PR merge.
 
 ---
 
@@ -164,9 +156,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * API Performance Optimization
 * GPU vs CPU Serving Considerations
 * Scaling ML Inference Services
-* **GPU Infrastructure Basics (CUDA, NVIDIA Device Plugin for Kubernetes)**
-* **Node Selectors & Tolerations for GPU Workloads**
-* **Multi-Instance GPU (MIG) Concepts**
 
 ---
 
@@ -189,7 +178,7 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 
 ---
 
-## 🗓 **Day 14: Data Validation, LLM Ops & Monitoring**
+## 🗓 **Day 14: Data Validation & Monitoring**
 
 * Data Quality Validation Concepts
 * Schema Validation
@@ -204,17 +193,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Responsible AI Concepts
 * Alerting on ML Degradation
 * Feedback Loops in ML Systems
-* **LLM Ops Introduction**
-  * Prompt Versioning & Management
-  * LLM Observability & Tracing (LangSmith, Langfuse, Phoenix)
-  * Token Cost Tracking & Budgeting
-  * Output Validation & Guardrails
-  * Hallucination Detection Strategies
-  * LLM Evaluation Frameworks (RAGAS, DeepEval)
-
-### 🏗️ **Week 2 Capstone Project**
-
-> **Build an end-to-end MLOps pipeline**: train a model tracked in MLflow, package it as a FastAPI service containerized with Docker, set up DVC for data versioning, automate CI with GitHub Actions (lint, test, build, push), and deploy to Kubernetes with automated drift alerting via Grafana.
 
 ---
 
@@ -242,14 +220,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Infrastructure Versioning Strategy
 * Managing Multi-Environment Infrastructure
 * Terraform Security Best Practices
-* **Crossplane: Kubernetes-Native Infrastructure Provisioning**
-* **Comparing Terraform vs Crossplane vs Pulumi**
-* **FinOps & Cloud Cost Management**
-  * Cloud Cost Visibility & Tagging Strategies
-  * Rightsizing Compute Resources
-  * Cost Allocation with Kubernetes (Kubecost Concepts)
-  * Reserved Instances & Savings Plans
-  * Budget Alerts & Cost Anomaly Detection
 
 ---
 
@@ -270,8 +240,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Rollback Strategies in GitOps
 * Multi-Cluster Deployment Patterns
 * Observability in GitOps Workflows
-* **Flux CD as an Alternative to ArgoCD**
-* **Progressive Delivery with Argo Rollouts**
 
 ---
 
@@ -292,16 +260,7 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Standardization & Governance
 * Platform API Design Concepts
 * Scaling Engineering Teams with IDP
-* **Measuring Platform Success: DORA Metrics & Platform KPIs**
-* **Service Mesh Fundamentals (Istio / Linkerd)**
-  * Sidecar Proxy Architecture
-  * mTLS Between Services
-  * Traffic Management & Observability via Service Mesh
-* **Developer Portal & API Catalog Design**
-
-### 🏗️ **Week 3 Capstone Project**
-
-> **Design and deploy a mini Internal Developer Platform**: Terraform modules for multi-environment infra (dev/staging/prod), ArgoCD managing application deployments via GitOps, Backstage service catalog with a working software template, and Crossplane provisioning a cloud resource on demand — all governed by OPA policies.
+* Measuring Platform Success Metrics
 
 ---
 
@@ -329,19 +288,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Multi-Environment Architecture Design
 * High Availability & Fault Tolerance Design
 * Performance Optimization Strategies
-* **RAG (Retrieval-Augmented Generation) Architecture**
-  * Vector Database Concepts (Pinecone, Weaviate, Qdrant, pgvector)
-  * Embedding Pipeline Design
-  * Chunking Strategies for Documents
-  * Hybrid Search (Keyword + Semantic)
-  * RAG Evaluation & Quality Metrics
-  * Serving RAG Pipelines in Production
-* **LLM Infrastructure Patterns**
-  * Self-Hosted vs Managed LLM APIs
-  * vLLM & TGI for High-Throughput Serving
-  * LLM Gateway & Rate Limiting
-  * Prompt Caching Strategies
-  * Multi-Model Routing Architecture
 
 ---
 
@@ -360,11 +306,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Load Testing Concepts
 * Chaos Engineering Basics
 * Deployment Observability
-* **GPU-Aware Autoscaling (KEDA + GPU Metrics)**
-* **LLM-Specific Deployment Patterns**
-  * Token-per-Second Latency Targets
-  * Batching Strategies for Inference (Dynamic Batching)
-  * Quantization & Model Compression Concepts (INT8, FP16, GGUF)
 
 ---
 
@@ -385,12 +326,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Compliance & Audit Logging
 * Access Control & Identity Management
 * Zero Trust Architecture Concepts
-* **AI-Specific Governance**
-  * Model Access Control & API Key Management
-  * PII Detection & Data Redaction in LLM Pipelines
-  * AI Audit Trails & Compliance Logging
-  * Responsible AI Policies & Model Cards
-  * Input/Output Filtering & Content Moderation
 
 ---
 
@@ -408,8 +343,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * API Documentation Standards
 * README Structure for Engineering Projects
 * Operational Runbooks
-* **RAG & LLM System Architecture Documentation**
-* **C4 Model for Software Architecture Diagrams**
 
 ---
 
@@ -424,12 +357,10 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * LinkedIn Optimization Strategy
 * Preparing Impact-Based Project Descriptions
 * Salary Negotiation Preparation
-* **Positioning for AI Platform / ML Infrastructure Roles**
-* **Open Source Contributions as a Portfolio Signal**
 
 ---
 
-## 🗓 **Day 30: Interview Preparation, System Design & Final Capstone**
+## 🗓 **Day 30: Interview Preparation & System Design**
 
 * DevOps Scenario-Based Questions
 * MLOps Architecture Interview Questions
@@ -443,13 +374,6 @@ A comprehensive 30-day journey through Advanced DevOps, MLOps, Platform Engineer
 * Trade-Off Analysis in Architecture
 * Performance Bottleneck Debugging
 * Mock Interview Simulation Topics
-* **LLM System Design Interview Patterns**
-* **RAG System Design & Evaluation Questions**
-* **FinOps & Cost Optimization Scenarios**
-
-### 🏗️ **Final Capstone Project**
-
-> **Deploy a production-ready AI Platform end-to-end**: A RAG-powered Q&A service backed by a vector database, served via a FastAPI + vLLM stack, containerized and deployed to Kubernetes with ArgoCD, monitored via OpenTelemetry + Grafana, secured with OPA policies and Vault secret management, and tracked end-to-end with LLM observability (Langfuse). Cost dashboards via Kubecost, full CI/CD pipeline, and a Backstage catalog entry — ready to demo in interviews.
 
 ---
 
@@ -460,22 +384,8 @@ Upon completion of this 30-day intensive program, you will have:
 - **Advanced DevOps Skills**: Production-grade CI/CD, container security, and Kubernetes expertise
 - **MLOps Proficiency**: Complete ML lifecycle management from experiment to production
 - **Platform Engineering Excellence**: Infrastructure as Code, GitOps, and internal developer platforms
-- **AI Platform Integration**: End-to-end AI infrastructure design, RAG systems, and LLM deployment strategies
-- **GPU & Inference Engineering**: GPU-aware Kubernetes scheduling, model optimization, and high-throughput serving
-- **FinOps Awareness**: Cloud cost visibility, rightsizing, and budget governance
-- **Security & Governance**: DevSecOps, AI-specific compliance, and zero-trust architecture
+- **AI Platform Integration**: End-to-end AI infrastructure design and deployment strategies
 - **Career Readiness**: Professional positioning, portfolio development, and interview preparation
-
----
-
-## 🗺️ **Weekly Capstone Summary**
-
-| Week | Capstone Project |
-|------|-----------------|
-| Week 1 | Production CI/CD pipeline with security scanning, image signing & Kubernetes observability |
-| Week 2 | End-to-end MLOps pipeline with MLflow, FastAPI serving, DVC & drift alerting |
-| Week 3 | Mini Internal Developer Platform with Terraform, ArgoCD, Backstage & OPA |
-| Week 4 (Final) | Production RAG-powered AI platform on Kubernetes with full observability, security & CI/CD |
 
 ---
 
@@ -483,29 +393,9 @@ Upon completion of this 30-day intensive program, you will have:
 
 - Basic understanding of software development and deployment concepts
 - Familiarity with cloud computing fundamentals
-- Experience with at least one programming language (Python preferred for MLOps weeks)
+- Experience with at least one programming language
 - Basic knowledge of Linux/Unix systems
 - Enthusiasm for learning cutting-edge DevOps and AI infrastructure technologies
-
----
-
-## 🛠️ **Recommended Toolchain**
-
-| Category | Tools |
-|----------|-------|
-| CI/CD | GitHub Actions, GitLab CI |
-| Containers | Docker, Podman, Buildah |
-| Orchestration | Kubernetes, Helm, Kustomize |
-| GitOps | ArgoCD, Flux CD |
-| IaC | Terraform, Crossplane |
-| MLOps | MLflow, DVC, BentoML, FastAPI |
-| LLM Serving | vLLM, TGI, Ollama |
-| LLM Observability | Langfuse, LangSmith, Phoenix |
-| Vector DBs | Qdrant, Weaviate, pgvector |
-| Observability | Prometheus, Grafana, OpenTelemetry, Jaeger |
-| Security | Trivy, Cosign, OPA/Gatekeeper, HashiCorp Vault |
-| FinOps | Kubecost, AWS Cost Explorer |
-| IDP | Backstage |
 
 ---
 
@@ -514,37 +404,37 @@ Upon completion of this 30-day intensive program, you will have:
 1. **Clone this repository** to your local machine
 2. **Follow the weekly schedule** systematically
 3. **Complete hands-on exercises** for each topic
-4. **Build the weekly capstone projects** to grow your portfolio
+4. **Build your portfolio** with practical projects
 5. **Join the community** for collaborative learning
 
 ---
 
-## **⭐ Support & Author**
+## **⭐ Support & Author**  
 
-## **⭐ Hit the Star!**
+## **⭐ Hit the Star!**  
 
-If you find this repository helpful and plan to use it for learning, please consider giving it a star ⭐. Your support motivates me to keep improving and adding more valuable content! 🚀
-
----
-
-## 🛠️ **Author & Community**
-
-This project is crafted with passion by **[Harshhaa](https://github.com/NotHarshhaa)** 💡.
-
-I'd love to hear your feedback! Feel free to open an issue, suggest improvements, or just drop by for a discussion. Let's build a strong DevOps community together!
+If you find this repository helpful and plan to use it for learning, please consider giving it a star ⭐. Your support motivates me to keep improving and adding more valuable content! 🚀  
 
 ---
 
-## 📧 **Let's Connect!**
+## 🛠️ **Author & Community**  
 
-Stay connected and explore more DevOps content with me:
+This project is crafted with passion by **[Harshhaa](https://github.com/NotHarshhaa)** 💡.  
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/harshhaa-vardhan-reddy) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NotHarshhaa) [![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/prodevopsguy) [![Dev.to](https://img.shields.io/badge/Dev.to-0A0A0A?style=for-the-badge&logo=dev.to&logoColor=white)](https://dev.to/notharshhaa) [![Hashnode](https://img.shields.io/badge/Hashnode-2962FF?style=for-the-badge&logo=hashnode&logoColor=white)](https://hashnode.com/@prodevopsguy)
+I’d love to hear your feedback! Feel free to open an issue, suggest improvements, or just drop by for a discussion. Let’s build a strong DevOps community together!  
 
 ---
 
-## 📢 **Stay Updated!**
+## 📧 **Let's Connect!**  
 
-Want to stay up to date with the latest DevOps trends, best practices, and project updates? Follow me on my blogs and social channels!
+Stay connected and explore more DevOps content with me:  
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/harshhaa-vardhan-reddy)  [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NotHarshhaa)  [![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/prodevopsguy)  [![Dev.to](https://img.shields.io/badge/Dev.to-0A0A0A?style=for-the-badge&logo=dev.to&logoColor=white)](https://dev.to/notharshhaa)  [![Hashnode](https://img.shields.io/badge/Hashnode-2962FF?style=for-the-badge&logo=hashnode&logoColor=white)](https://hashnode.com/@prodevopsguy)  
+
+---
+
+## 📢 **Stay Updated!**  
+
+Want to stay up to date with the latest DevOps trends, best practices, and project updates? Follow me on my blogs and social channels!  
 
 ![Follow Me](https://imgur.com/2j7GSPs.png)
