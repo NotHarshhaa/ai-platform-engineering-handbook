@@ -1,0 +1,108 @@
+---
+title: "Agent Memory Systems"
+description: "AI Platform Engineering Handbook - Week 8 - Agent Memory Systems"
+weight: 80
+toc: true
+---
+
+---
+
+## 1. Short-term Memory
+
+Short-term memory refers to the information an agent needs to keep track of just within its current, ongoing task or conversation — everything that's happened so far in this particular session, held onto just long enough to be useful for the immediate work at hand, without necessarily needing to be remembered forever afterward.
+
+Think about what this actually includes in practice: the original goal or question the user gave the agent, every action the agent has taken so far during this task, every result or observation that came back from those actions, and the general flow of back-and-forth that's happened up to this exact moment. Without this, an agent working through a multi-step task would be a bit like someone trying to solve a puzzle while suffering from amnesia every thirty seconds — it might repeat an action it already tried, contradict something it said just a moment earlier, or completely lose track of what it was originally even trying to accomplish partway through.
+
+In practice, for most language-model-based agents, short-term memory is typically implemented in a fairly direct way — by keeping a running record of everything that's happened so far in the current task, and including that entire record as part of what gets sent to the language model with each new step. This connects directly back to something we discussed in the earlier LLM API explanation: since a language model has no memory of its own between separate calls, the "memory" has to be recreated each time by literally resending the relevant history along with the new request. The obvious limitation here is the context window we've discussed before — there's a maximum amount of text a model can process in one go, so short-term memory can't just grow forever without eventually running into that ceiling, which is exactly why techniques like memory compression (which we'll get to shortly) become important for longer-running tasks.
+
+---
+
+## 2. Long-term Memory
+
+Long-term memory is the counterpart to short-term memory, and it refers to information an agent retains and can draw on well beyond just the current task — persisting across entirely separate conversations, sessions, or even much longer stretches of time, sometimes indefinitely.
+
+The distinction matters a lot in practice. Imagine you're using a personal AI assistant regularly over many weeks. Short-term memory would let it keep track of what you're discussing right now, within today's conversation. Long-term memory is what would let it remember, days or weeks later, that you mentioned you're vegetarian, or that you prefer concise answers, or that you're currently working on a specific ongoing project — details that were shared at some earlier point, potentially in a completely separate conversation, but that remain genuinely useful and relevant going forward.
+
+Unlike short-term memory, which can reasonably just be "everything that's happened so far in this session," long-term memory can't work the same way, because the total volume of everything an agent has ever encountered across all of its interactions would very quickly become far too large to include in full with every single new request — it would blow past any context window almost immediately, and most of it wouldn't even be relevant to what's currently being discussed anyway. Because of this, long-term memory systems generally need a more deliberate approach: information worth remembering gets stored somewhere persistent (often in a vector database, which we'll connect to shortly), and then, when it's actually needed, only the specific relevant pieces get retrieved and pulled back in, rather than the agent trying to carry its entire accumulated history around with it at all times.
+
+---
+
+## 3. Episodic Memory
+
+Episodic memory refers to an agent remembering specific past events or experiences — particular things that happened, at a particular point in time, often including details about the surrounding context of that specific occurrence. The term is actually borrowed directly from human psychology, where "episodic memory" describes your ability to recall a specific personal experience, like remembering the actual event of your first day at a new job, as opposed to just abstractly knowing a general fact.
+
+For an AI agent, episodic memory might look like remembering that "on this particular date, the user asked for help planning a trip to Japan, and here's the specific sequence of things we discussed and decided," or "the last time I tried to use this particular tool with these particular inputs, it failed with this specific error." This is meaningfully different from just knowing a general fact — it's remembering an actual specific occurrence, complete with its own particular details and context, that happened at a specific point in the agent's history.
+
+This kind of memory tends to be genuinely valuable for a few practical reasons. It lets an agent learn from its own specific past experiences — if a particular approach failed in a very similar past situation, recalling that specific episode can help the agent avoid repeating the same mistake. It also supports genuine continuity in an ongoing relationship with a user — being able to reference "last time we talked about this, you mentioned..." makes an agent feel meaningfully more attentive and personalized, rather than treating every single interaction as a completely isolated, disconnected event with no sense of an ongoing shared history.
+
+---
+
+## 4. Semantic Memory
+
+Semantic memory, again borrowing its name directly from human psychology, refers to general knowledge and facts that an agent knows or has learned — not tied to any one specific past event or experience, but rather abstracted, general knowledge that holds true across many different situations.
+
+To make the distinction with episodic memory really clear, consider this comparison: episodic memory would be "I remember the specific conversation last Tuesday where the user told me they're allergic to peanuts." Semantic memory would be the resulting general fact itself, now detached from that specific originating conversation: "this user is allergic to peanuts." The specific episode where that fact was learned might eventually fade in relevance or even get discarded entirely, but the extracted, general fact itself remains and continues to be useful going forward, independent of the specific original moment it came from.
+
+In practice, well-designed agent memory systems often deliberately extract semantic memory out of episodic experiences over time — noticing that a particular fact or preference has come up, pulling it out as a standalone, general piece of knowledge, and storing it in a way that's easy to retrieve and apply later, separate from all the specific surrounding conversational detail of exactly when and how it was originally mentioned. This mirrors how human memory itself tends to work too — you probably don't remember the exact specific moment and conversation where you first learned that your friend doesn't like coffee, but you retain and use that general fact about them going forward regardless, long after the specific memory of that original conversation has faded.
+
+---
+
+## 5. Conversation Memory
+
+Conversation memory refers specifically to an agent's ability to keep track of the back-and-forth history of an ongoing dialogue with a user — remembering what's been said so far in this particular exchange, so that later messages can build naturally and coherently on earlier ones, rather than each new message being treated as a completely fresh, disconnected interaction with no awareness of what came before it.
+
+This is genuinely one of the most immediately noticeable and important forms of memory for anyone actually using an AI system in a conversational way. Without it, if you said "my name is Alex" in one message and then asked "what's my name?" in your very next message, the AI would have no way of answering correctly, because it would have no memory whatsoever of your first message by the time it received your second one. Conversation memory is what allows for genuinely natural, flowing dialogue, where you can reference something you said a few messages ago, ask a follow-up question without having to fully restate all the necessary context every single time, or have the AI gradually build up an increasingly complete and accurate understanding of what you're trying to accomplish as the conversation naturally continues and develops.
+
+In its simplest and most common form, conversation memory is implemented by keeping the full transcript of the conversation so far, and including that entire transcript as part of what gets sent to the language model with each new message, exactly as we described in the short-term memory section above. For very long conversations, though, this simple approach can eventually bump into the practical limits of the context window we've discussed several times now, which is where techniques like summarizing or otherwise compressing older parts of the conversation become genuinely necessary to keep things manageable.
+
+---
+
+## 6. Knowledge Memory
+
+Knowledge memory refers to a broader store of factual, reference-type information that an agent can draw on — not necessarily tied to any specific conversation or specific user at all, but rather general, reusable knowledge relevant to whatever domain the agent operates in.
+
+This connects very directly and naturally back to everything we discussed in the RAG explanations earlier in this series. A customer support agent's knowledge memory might be an entire company's product documentation and policy manuals. A coding assistant's knowledge memory might be a codebase's documentation, or a library's technical reference material. A research assistant's knowledge memory might be a curated collection of relevant academic papers or trusted reference sources. This is genuinely the same underlying idea as the "knowledge base" we discussed extensively in the RAG explanations — it's knowledge memory specifically viewed and understood through the lens of an agent's overall memory system, rather than as a completely separate, unrelated concept.
+
+The important distinction to hold onto here is that knowledge memory is generally more static and shared than something like conversation memory or episodic memory — while a specific user's conversation history or personal preferences are unique to that individual, an agent's knowledge memory (like a shared company manual, or reference documentation) is typically the same underlying resource that gets drawn upon and reused across many different users and many different conversations, rather than being personal or unique to any one specific individual's ongoing interaction history with the agent.
+
+---
+
+## 7. Vector Memory
+
+Vector memory refers to a specific, extremely common way of technically implementing long-term memory (and often episodic, semantic, and knowledge memory too) using exactly the vector embeddings and vector databases we covered in detail in the earlier explanations on RAG foundations and vector databases.
+
+Here's how the pieces connect together. Instead of storing an agent's accumulated memories as a simple, growing list of plain text that just keeps getting longer and longer over time, each individual memory (a fact, a past conversation snippet, a learned preference) gets converted into a vector embedding — that numeric representation of its meaning, exactly as we discussed earlier — and stored in a vector database. Then, whenever the agent actually needs to recall something relevant to its current situation, it doesn't have to scan through absolutely everything it's ever learned; instead, it converts its current context or question into a vector too, and performs the same kind of similarity search we discussed at length in the RAG explanations, quickly retrieving just the specific memories that are actually most relevant to what's happening right now.
+
+This is genuinely one of the most practical and widely used solutions to the fundamental challenge we identified earlier with long-term memory — the simple fact that an agent's total accumulated history over time can become far too large to ever include in full with every single request. Vector memory elegantly sidesteps this problem by allowing the agent to efficiently and quickly search through a potentially enormous amount of accumulated history, and pull back only the small handful of specific, genuinely relevant memories that actually matter for the current moment — essentially applying the exact same "search for what's relevant rather than including everything" philosophy that underpins RAG in general, just now applied specifically to an agent's own personal memory and accumulated history, rather than to a separate external document collection.
+
+---
+
+## 8. Memory Compression
+
+Memory compression refers to the set of techniques used to shrink down accumulated memory — whether that's a long ongoing conversation, or a large collection of past episodic memories — so that it takes up meaningfully less space, while still retaining the most genuinely important and useful information.
+
+Why is this necessary at all? We've now run into the same underlying tension repeatedly throughout this whole explanation: context windows are limited in size, and including too much raw, uncompressed information isn't just expensive in terms of cost (remember, you're generally billed based on tokens, as we discussed in the earlier LLM APIs explanation), it can also genuinely make an agent perform worse, since important details risk getting buried and effectively lost among a large amount of less critical accumulated history.
+
+A few common approaches are used to tackle this. **Summarization** is probably the most straightforward and widely used technique — periodically, instead of keeping the full, exact, word-for-word history of everything that's happened so far, the system generates a condensed summary that captures the key points and important details, and then continues going forward using that shorter summary in place of the full original detail, freeing up a meaningful amount of space while still preserving the genuinely essential information. **Selective retention** is another approach, where instead of summarizing absolutely everything indiscriminately, the system makes more deliberate, active decisions about which specific pieces of information are actually worth keeping around at all (based on relevance, importance, or how recently they came up), and simply discards or lets go of the rest entirely, rather than trying to preserve some compressed version of everything regardless of its importance. **Hierarchical compression** takes this idea a step further, applying increasingly aggressive compression the further back in time something goes — recent events might be kept in full, complete detail, while older events get progressively more heavily summarized and condensed the further back into the past they recede, mirroring, in a rough way, how human memory itself also tends to naturally retain vivid, detailed memories of very recent events while gradually blurring and generalizing much older ones over time.
+
+The core underlying goal across all of these different compression techniques is the same: preserving as much of the genuinely useful "signal" as possible, while shedding as much of the less important, space-consuming "noise" as you reasonably can, so an agent's memory stays both manageable in size and still genuinely useful for informing its ongoing decisions and behavior.
+
+---
+
+## 9. Memory Retrieval
+
+Memory retrieval refers to the actual process of pulling the right, relevant memories back out at exactly the moment they're genuinely needed — which is really the natural and necessary complement to everything we've discussed so far about storing and compressing memory in the first place. Having a large, well-organized, well-compressed store of memories is only genuinely useful if the agent can reliably find and surface the specific right pieces at the right moment when they're actually needed.
+
+This connects very directly back to the vector memory and similarity search concepts we covered above and in the earlier RAG explanations — in practice, memory retrieval very often works by converting the agent's current situation or question into a vector, and then searching the stored memory for the pieces whose embeddings are most similar in meaning, exactly like we described with semantic search generally. But retrieval can also draw on other useful signals beyond pure semantic similarity alone — for example, weighting more **recent** memories somewhat more heavily than very old ones (since more recent context is often, though certainly not always, more relevant to the current moment), or weighting memories that have proven to be particularly **important** or frequently useful in the past more heavily than ones that have rarely, if ever, actually turned out to matter.
+
+Getting memory retrieval genuinely right is a real and non-trivial design challenge, and it's worth appreciating why. Retrieve too little, or retrieve the wrong specific memories, and the agent effectively behaves as if it never actually had that stored information in the first place, even though it was technically sitting there in storage the whole time, simply because it never actually got surfaced and used at the moment it was actually needed. Retrieve too much, or retrieve a lot of irrelevant, low-value memories alongside the genuinely useful ones, and you run straight back into the same context-window bloat and "signal buried in noise" problems that compression was specifically trying to solve in the first place. Well-designed memory retrieval systems are constantly trying to strike a careful, deliberate balance between these two competing failure modes.
+
+---
+
+## 10. Memory Persistence
+
+Memory persistence refers to actually ensuring that an agent's memory genuinely survives and remains available over time — rather than being lost the moment a particular session ends, a program restarts, or the underlying computer running the agent gets shut down and later started back up again.
+
+This might sound like an obvious, almost trivial requirement, but it's actually a real and important practical engineering consideration, and it's worth understanding why it doesn't just automatically happen on its own. If an agent's memory is only ever held in temporary, working computer memory (often referred to as RAM) during a session, and never gets specifically and deliberately saved somewhere more durable, then all of that accumulated memory simply vanishes completely the moment that particular session or process ends — meaning the agent would effectively wake up with total, complete amnesia every single time it's started back up again, no matter how much useful, valuable context and information it had previously accumulated during earlier sessions.
+
+Achieving genuine memory persistence means deliberately saving an agent's memory to some form of durable, longer-term storage — this is very often the vector database we discussed at length earlier (for long-term, semantic, and episodic memory), but it can also include more traditional databases for storing more clearly structured facts, or simply saving data to files on disk for smaller and simpler systems. This durable storage needs to reliably survive restarts, crashes, and any updates made to the underlying system running the agent, so that when the agent starts back up again later, it can reliably reload and reconnect with everything it had previously learned and stored, rather than starting over again completely from scratch. For any genuinely production-grade agent system — one that's actually meant to provide real, ongoing value to real users over an extended period of time, rather than existing purely as a short-lived, one-off demonstration or experiment — reliable memory persistence is a genuinely essential, foundational requirement, not an optional nice-to-have feature to consider adding on only later, as an afterthought, once everything else about the system is already working well.

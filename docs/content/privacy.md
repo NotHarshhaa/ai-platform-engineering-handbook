@@ -14,8 +14,8 @@ params:
     robots: "" # custom robot tags (optional)
 ---
 
-We value your privacy and are committed to protecting your personal data. This Privacy Policy explains what information we collect, how we use it, and the choices you have.
+Your privacy is important to us. This Privacy Policy outlines what information we collect through your use of our site, how that information is used, and your rights regarding your data.
 
-We only collect the information necessary to provide and improve our services, such as basic usage analytics and any details you choose to share with us (for example, via forms or support requests). We do not sell your personal data.
+We collect only the information required to operate, maintain, and enhance your experience on our website—this may include basic analytics and details you provide when interacting with us, such as through contact forms or support requests. We do not sell your personal information to third parties.
 
-If you have any questions about this policy or how we handle your data, please contact us using the details provided on this site.
+If you have questions or concerns about your privacy or how your data is handled, please reach out to us using the contact information available on our website.
