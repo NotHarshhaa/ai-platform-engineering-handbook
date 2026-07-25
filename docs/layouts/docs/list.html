@@ -1,0 +1,55 @@
+{{ define "main" }}
+{{ $weeks := .Sections.ByWeight }}
+{{ $firstLesson := site.GetPage "/docs/week-01/advanced-git-cicd-engineering" }}
+<div class="course-index">
+  <section class="course-index__hero">
+    <div class="course-index__shell course-index__hero-grid">
+      <div>
+        <p class="course-index__eyebrow"><span></span> AI Platform Engineering Handbook</p>
+        <h1>Build the systems behind <em>production AI.</em></h1>
+        <p>Move through the complete path—from cloud-native delivery and MLOps to RAG, agentic systems, AI security, infrastructure, and product engineering.</p>
+        {{ with $firstLesson }}<a class="course-index__button" href="{{ .RelPermalink }}">Begin the handbook <span aria-hidden="true">→</span></a>{{ end }}
+      </div>
+      <div class="course-index__progress" aria-label="Handbook coverage">
+        <div class="course-index__progress-head"><span>Published curriculum</span><strong>{{ len $weeks }} stages</strong></div>
+        <div class="course-index__bar"><span></span></div>
+        <div class="course-index__progress-meta"><span>DevOps foundations</span><span>Enterprise AI systems</span></div>
+        <div class="course-index__signal-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="course-index__catalogue">
+    <div class="course-index__shell">
+      <div class="course-index__section-head">
+        <div><p class="course-index__eyebrow course-index__eyebrow--dark"><span></span> Explore the curriculum</p><h2>Choose a stage. Build the capability.</h2></div>
+        <p>Each week connects a practical engineering discipline to the systems you will deploy and operate next.</p>
+      </div>
+      <div class="course-index__grid">
+        {{ range $weeks }}
+        {{ $topics := .RegularPages.ByWeight }}
+        <article class="course-index__card">
+          <div class="course-index__card-top"><span class="course-index__week">{{ .Title }}</span><span class="course-index__count">{{ len $topics }} modules</span></div>
+          <h3>{{ replaceRE "^Week [0-9]+ - " "" .Title }}</h3>
+          <ul>
+            {{ range first 3 $topics }}<li><a href="{{ .RelPermalink }}">{{ .Title }} <span aria-hidden="true">↗</span></a></li>{{ end }}
+          </ul>
+          <a class="course-index__explore" href="{{ .RelPermalink }}">View week <span aria-hidden="true">→</span></a>
+        </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="course-index__bottom">
+    <div class="course-index__shell">
+      <div><p class="course-index__eyebrow course-index__eyebrow--dark"><span></span> Learn by building</p><h2>Use the handbook as your platform engineering field guide.</h2></div>
+      <div class="course-index__bottom-links">
+        <a href="/docs/week-06/advanced-rag/"><span>01</span><strong>Design grounded RAG systems</strong><b aria-hidden="true">→</b></a>
+        <a href="/docs/week-08/model-context-protocol-mcp/"><span>02</span><strong>Connect agents with MCP</strong><b aria-hidden="true">→</b></a>
+        <a href="/docs/week-12/production-ai-serving/"><span>03</span><strong>Operate performant AI services</strong><b aria-hidden="true">→</b></a>
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}

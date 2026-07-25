@@ -1,34 +1,123 @@
 {{ define "main" }}
-<section class="section container-fluid mt-n3 pb-3">
-  <div class="row justify-content-center">
-    <div class="col-lg-12 text-center">
-      <h1>{{ .Title }}</h1>
+<div class="handbook-home">
+  <section class="handbook-hero">
+    <div class="handbook-shell handbook-hero__grid">
+      <div class="handbook-hero__copy">
+        <p class="eyebrow"><span class="eyebrow__signal"></span> Production-grade learning path</p>
+        <h1>Engineer the platforms that power <em>AI at scale.</em></h1>
+        <p class="handbook-hero__lede">A practical handbook for moving from cloud-native foundations to MLOps, RAG, agentic systems, AI security, and production infrastructure.</p>
+        <div class="handbook-hero__actions">
+          <a class="handbook-button handbook-button--primary" href="/docs/week-01/advanced-git-cicd-engineering/">Start with DevOps <span aria-hidden="true">→</span></a>
+          <a class="handbook-button handbook-button--quiet" href="#roadmap">Explore the roadmap <span aria-hidden="true">↓</span></a>
+        </div>
+        <dl class="handbook-stats" aria-label="Handbook at a glance">
+          <div><dt>14</dt><dd>published weeks</dd></div>
+          <div><dt>45</dt><dd>deep-dive modules</dd></div>
+          <div><dt>1</dt><dd>connected path</dd></div>
+        </dl>
+      </div>
+      <div class="handbook-hero__visual" aria-label="Learning path from DevOps to enterprise AI">
+        <div class="hero-orbit hero-orbit--one"></div>
+        <div class="hero-orbit hero-orbit--two"></div>
+        <div class="hero-grid-lines"></div>
+        <div class="hero-path">
+          <div class="hero-path__label">YOUR LEARNING PATH</div>
+          <div class="hero-node hero-node--active"><span>01</span><strong>DevOps</strong><small>Build the base</small></div>
+          <div class="hero-node"><span>02</span><strong>MLOps</strong><small>Ship models</small></div>
+          <div class="hero-node"><span>03</span><strong>RAG + Agents</strong><small>Build intelligence</small></div>
+          <div class="hero-node"><span>04</span><strong>Enterprise AI</strong><small>Operate at scale</small></div>
+        </div>
+        <div class="hero-status"><span class="status-dot"></span> Curriculum online <strong>•</strong> Start anywhere</div>
+      </div>
     </div>
-    <div class="col-lg-12 text-center">
-      <p class="lead">{{ .Params.lead | safeHTML }}</p>
-      <a class="btn btn-primary btn-cta rounded-pill btn-lg my-3" href="/docs/week-01/advanced-git-cicd-engineering/" role="button">Get Started</a>
-      {{ .Content }}
+  </section>
+
+  <section class="handbook-section handbook-intro">
+    <div class="handbook-shell handbook-intro__grid">
+      <p class="section-kicker">A connected curriculum</p>
+      <div>
+        <h2>From reliable delivery to <span>intelligent systems.</span></h2>
+        <p>The handbook follows the work of a modern platform engineer: establish secure delivery foundations, operationalize machine learning, build knowledge-aware applications, then run trusted AI services in production.</p>
+      </div>
+      <a class="text-link" href="/docs/">Browse all documentation <span aria-hidden="true">↗</span></a>
     </div>
-  </div>
-</section>
-{{ end }}
-{{ define "sidebar-prefooter" }}
-  {{ if site.Params.doks.backgroundDots -}}
-  <div class="d-flex justify-content-start">
-    <div class="bg-dots"></div>
-  </div>
-  {{ end -}}
+  </section>
+
+  <section class="handbook-section handbook-roadmap" id="roadmap">
+    <div class="handbook-shell">
+      <div class="section-heading">
+        <div><p class="section-kicker">The roadmap</p><h2>Build capability in the right order.</h2></div>
+        <p>Each stage connects core engineering practices to the systems you will design and operate next.</p>
+      </div>
+      <div class="roadmap-grid">
+        <article class="roadmap-card roadmap-card--foundation">
+          <div class="roadmap-card__top"><span class="roadmap-index">01 — 04</span><span class="roadmap-badge">Foundation</span></div>
+          <h3>Cloud-native engineering</h3>
+          <p>Master dependable delivery, container security, Kubernetes operations, MLOps workflows, IaC, GitOps, and internal platforms.</p>
+          <ul><li>Advanced Git &amp; CI/CD</li><li>Docker, Kubernetes &amp; observability</li><li>Terraform, ArgoCD &amp; developer platforms</li></ul>
+          <a href="/docs/week-01/">Explore Weeks 1–4 <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="roadmap-card roadmap-card--genai">
+          <div class="roadmap-card__top"><span class="roadmap-index">05 — 06</span><span class="roadmap-badge">Intelligence</span></div>
+          <h3>Generative AI &amp; RAG</h3>
+          <p>Learn the building blocks behind grounded AI applications, from model APIs and prompting to retrieval and evaluation.</p>
+          <ul><li>Transformers, embeddings &amp; prompt systems</li><li>Vector databases &amp; hybrid retrieval</li><li>Advanced RAG, citations &amp; evaluation</li></ul>
+          <a href="/docs/week-05/">Explore Weeks 5–6 <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="roadmap-card roadmap-card--agents">
+          <div class="roadmap-card__top"><span class="roadmap-index">07 — 10</span><span class="roadmap-badge">Autonomy</span></div>
+          <h3>Agents &amp; LLMOps</h3>
+          <p>Design agentic workflows with memory, tools, MCP, observability, governance, and enterprise architecture.</p>
+          <ul><li>Agent patterns &amp; leading frameworks</li><li>Memory systems, tool calling &amp; MCP</li><li>LLMOps, guardrails &amp; multi-agent systems</li></ul>
+          <a href="/docs/week-07/">Explore Weeks 7–10 <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="roadmap-card roadmap-card--scale">
+          <div class="roadmap-card__top"><span class="roadmap-index">11 — 15</span><span class="roadmap-badge">Scale</span></div>
+          <h3>Trusted production AI</h3>
+          <p>Take AI systems to production with security, GPU infrastructure, optimized serving, fine-tuning, and product delivery.</p>
+          <ul><li>AI security, red teaming &amp; governance</li><li>GPU systems, vLLM &amp; distributed serving</li><li>PEFT, alignment &amp; AI product engineering</li></ul>
+          <a href="/docs/week-11/">Explore Weeks 11–15 <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="handbook-section handbook-focus">
+    <div class="handbook-shell handbook-focus__grid">
+      <div class="focus-panel">
+        <p class="section-kicker">What you will practice</p>
+        <h2>Work with the systems behind useful AI.</h2>
+        <p>This is not a collection of isolated tools. The material connects architecture, operations, security, and product decisions into an engineering discipline.</p>
+        <a class="text-link" href="/docs/week-04/end-to-end-ai-platform-architecture/">See the platform architecture track <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="focus-list">
+        <a href="/docs/week-02/model-packaging-serving/" class="focus-item"><span>01</span><div><h3>Deploy models with confidence</h3><p>Version, package, test, scale, and monitor ML inference services.</p></div><b aria-hidden="true">↗</b></a>
+        <a href="/docs/week-06/advanced-rag/" class="focus-item"><span>02</span><div><h3>Ground AI in knowledge</h3><p>Use retrieval, re-ranking, citations, and evaluation to earn trust.</p></div><b aria-hidden="true">↗</b></a>
+        <a href="/docs/week-08/model-context-protocol-mcp/" class="focus-item"><span>03</span><div><h3>Build agents with real tools</h3><p>Connect memory, structured outputs, tool calling, and MCP safely.</p></div><b aria-hidden="true">↗</b></a>
+        <a href="/docs/week-12/production-ai-serving/" class="focus-item"><span>04</span><div><h3>Run performant AI infrastructure</h3><p>Understand GPU capacity, continuous batching, KV cache, and serving engines.</p></div><b aria-hidden="true">↗</b></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="handbook-section handbook-featured">
+    <div class="handbook-shell">
+      <div class="section-heading section-heading--compact"><div><p class="section-kicker">Start a deep dive</p><h2>Choose your next system.</h2></div><a class="text-link" href="/docs/">View all modules <span aria-hidden="true">↗</span></a></div>
+      <div class="featured-grid">
+        <a class="featured-card" href="/docs/week-03/gitops-continuous-delivery/"><span class="featured-card__eyebrow">Platform delivery</span><h3>GitOps &amp; Continuous Delivery</h3><p>Design declarative, self-healing delivery systems for modern platforms.</p><span class="featured-card__arrow" aria-hidden="true">→</span></a>
+        <a class="featured-card" href="/docs/week-09/ai-observability-production-monitoring/"><span class="featured-card__eyebrow">Reliable AI</span><h3>AI Observability &amp; Monitoring</h3><p>Trace, measure, diagnose, and improve systems after they reach users.</p><span class="featured-card__arrow" aria-hidden="true">→</span></a>
+        <a class="featured-card" href="/docs/week-11/ai-security-fundamentals/"><span class="featured-card__eyebrow">Secure by design</span><h3>AI Security Fundamentals</h3><p>Understand the LLM attack surface, prompt injection, and AI risk management.</p><span class="featured-card__arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="handbook-cta">
+    <div class="handbook-shell handbook-cta__inner">
+      <div><p class="section-kicker">Build your path</p><h2>Start with the foundations.<br />Grow into AI platform engineering.</h2></div>
+      <a class="handbook-button handbook-button--light" href="/docs/week-01/advanced-git-cicd-engineering/">Begin Week 1 <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</div>
 {{ end }}
 
-{{ define "sidebar-footer" }}
-{{ if site.Params.doks.sectionFooter -}}
-<section class="section section-md container-fluid bg-light">
-  <div class="row justify-content-center text-center">
-    <div class="col-lg-7">
-      <h2 class="mt-2">Start building with Doks today</h2>
-      <a class="btn btn-primary rounded-pill px-4 my-2" href="/docs/{{ if site.Params.doks.docsVersioning }}{{ site.Params.doks.docsVersion }}/{{ end }}prologue/introduction/" role="button">Get Started</a>
-    </div>
-  </div>
-</section>
-{{ end -}}
-{{ end }}
+{{ define "sidebar-prefooter" }}{{ end }}
+{{ define "sidebar-footer" }}{{ end }}

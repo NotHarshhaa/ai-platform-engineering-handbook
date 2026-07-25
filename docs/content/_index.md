@@ -1,14 +1,14 @@
 ---
 title: "AI Platform Engineering Handbook"
-description: "A comprehensive 60-day journey through Advanced DevOps, MLOps, Platform Engineering, AI Platform Integration, AI Platform Operations, Generative AI Engineering, and Advanced AI Application Deployment."
-lead: "Your production-ready guide to building, deploying, scaling, and securing AI and MLOps platforms."
+description: "Build reliable AI platforms with a practical path through DevOps, MLOps, RAG, agents, security, infrastructure, and delivery."
+lead: "A connected, production-ready guide to building, deploying, scaling, and securing AI and MLOps platforms."
 date: 2026-06-14T22:45:30+05:30
 lastmod: 2026-06-14T22:45:30+05:30
 draft: false
 params:
   seo:
     title: "AI Platform Engineering Handbook"
-    description: "Master DevOps, MLOps, Platform Engineering, AI Platform Integration, AI Platform Operations, Generative AI Engineering, and Advanced AI Application Deployment in 60 days."
+    description: "Practical guide to DevOps, MLOps, platform engineering, RAG, agents, AI security, infrastructure, and product delivery."
     canonical: ""
     robots: ""
 ---
