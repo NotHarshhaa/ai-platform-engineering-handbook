@@ -830,3 +830,56 @@
         .navbar #offcanvasNavMain #buttonColorMode, .navbar #offcanvasNavMain #socialMenu .nav-link { border-color: #35516d; background: #162c44; color: #b4c9df; }
     }
 }
+
+
+
+// Homepage author section
+.handbook-home {
+    .handbook-author { background: #fff; }
+    .handbook-author__grid { display: grid; grid-template-columns: minmax(280px, .7fr) minmax(0, 1.3fr); gap: clamp(3rem, 9vw, 9rem); align-items: center; }
+    .handbook-author__identity { display: flex; gap: 1.15rem; align-items: center; }
+    .handbook-author__monogram { display: grid; width: clamp(5.25rem, 9vw, 7rem); aspect-ratio: 1; place-items: center; border: 1px solid #a4d7eb; border-radius: 1rem; background: linear-gradient(135deg, #123c71, #0ca7ba); color: #fff; box-shadow: 0 15px 30px rgba(19, 83, 143, .16); font-size: clamp(1.35rem, 2.3vw, 2rem); font-weight: 780; letter-spacing: -.06em; }
+    .handbook-author__identity .section-kicker { margin-bottom: .38rem; }
+    .handbook-author__role { margin: 0; color: var(--handbook-muted); font-size: .84rem; line-height: 1.45; }
+    .handbook-author__copy h2 { margin-bottom: .9rem; color: var(--handbook-ink); font-size: clamp(2rem, 3.4vw, 3rem); font-weight: 720; letter-spacing: .08em; line-height: 1; }
+    .handbook-author__copy > p { max-width: 690px; margin-bottom: 1.2rem; color: var(--handbook-muted); font-size: 1.02rem; line-height: 1.68; }
+    .handbook-author__topics { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.35rem; }
+    .handbook-author__topics span { padding: .36rem .6rem; border: 1px solid #cfe0ee; border-radius: 999px; background: #f4f9fd; color: #376185; font-size: .7rem; font-weight: 700; letter-spacing: .04em; }
+    .handbook-author__github { display: inline-flex; gap: .55rem; align-items: center; padding-bottom: .22rem; border-bottom: 1px solid #9bc3ef; color: var(--handbook-blue); font-size: .9rem; font-weight: 750; text-decoration: none; }
+    .handbook-author__github:hover { border-color: var(--handbook-blue); color: #0d3eaa; text-decoration: none; }
+
+    @media (max-width: 767.98px) { .handbook-author__grid { grid-template-columns: 1fr; gap: 1.8rem; } }
+}
+
+[data-bs-theme="dark"] .handbook-home {
+    .handbook-author { background: #101c2b; }
+    .handbook-author__monogram { border-color: #326d93; box-shadow: none; }
+    .handbook-author__topics span { border-color: #314c67; background: #152941; color: #b8d1e7; }
+    .handbook-author__github { border-color: #4f81b7; color: #9fc8ff; }
+}
+
+
+
+// GitHub avatar in homepage author section
+.handbook-home .handbook-author__avatar {
+    width: clamp(5.25rem, 9vw, 7rem);
+    aspect-ratio: 1;
+    overflow: hidden;
+    flex: 0 0 auto;
+    border: 1px solid #a4d7eb;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #123c71, #0ca7ba);
+    box-shadow: 0 15px 30px rgba(19, 83, 143, .16);
+}
+
+.handbook-home .handbook-author__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+[data-bs-theme="dark"] .handbook-home .handbook-author__avatar {
+    border-color: #326d93;
+    box-shadow: none;
+}
