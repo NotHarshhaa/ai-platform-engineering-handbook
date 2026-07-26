@@ -388,6 +388,76 @@
 
 
 // Documentation reading experience
+
+// Documentation sidebar hide/show control
+.docs-page-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: .5rem;
+    margin-left: auto;
+}
+
+.docs-sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    min-height: 2.35rem;
+    padding: .48rem .7rem;
+    border: 1px solid #cbdbea;
+    border-radius: .5rem;
+    background: #fff;
+    color: #285071;
+    font-size: .76rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    transition: border-color .18s ease, background-color .18s ease, color .18s ease;
+}
+
+.docs-sidebar-toggle > span:first-child {
+    width: .85rem;
+    color: #175cdf;
+    font-size: 1.05rem;
+    line-height: .8;
+    text-align: center;
+}
+
+.docs-sidebar-toggle:hover {
+    border-color: #9ec1eb;
+    background: #edf4ff;
+    color: #175cdf;
+}
+
+.docs-sidebar-toggle:focus-visible {
+    outline: 3px solid rgba(23, 92, 223, .3);
+    outline-offset: 2px;
+}
+
+@include media-breakpoint-up(lg) {
+    body.docs-sidebar-hidden .docs-sidebar { display: none !important; }
+
+    body.docs-sidebar-hidden .docs-content {
+        flex: 1 1 0 !important;
+        max-width: none !important;
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .docs-sidebar-toggle { display: none; }
+}
+
+[data-bs-theme="dark"] .docs-sidebar-toggle {
+    border-color: #34516e;
+    background: #152a42;
+    color: #b4c9df;
+}
+
+[data-bs-theme="dark"] .docs-sidebar-toggle > span:first-child { color: #9fc8ff; }
+[data-bs-theme="dark"] .docs-sidebar-toggle:hover { border-color: #4d7197; background: #1a3b5c; color: #c8e0fb; }
+
+
+// Documentation reading experience
 .docs-content {
     --article-ink: #22354d;
     --article-muted: #65778f;
@@ -908,5 +978,136 @@
         .course-index__progress { max-width: 620px; }
         .course-index__section-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
         .course-index__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+}
+
+
+
+// Responsive fit safeguards
+// Grid children default to their content's intrinsic width. Reset that behavior for
+// the custom landing pages so long headings, links, and cards cannot widen the
+// viewport at narrow mobile and tablet widths.
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+    html, body { overflow-x: clip; }
+}
+
+.wrap, .content, .handbook-home, .course-index {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.handbook-home {
+    .handbook-shell,
+    .handbook-hero__grid,
+    .handbook-intro__grid,
+    .handbook-focus__grid,
+    .handbook-author__grid,
+    .roadmap-grid,
+    .featured-grid { min-width: 0; }
+
+    .handbook-hero__grid > *,
+    .handbook-intro__grid > *,
+    .handbook-focus__grid > *,
+    .handbook-author__grid > *,
+    .roadmap-grid > *,
+    .featured-grid > *,
+    .focus-item > * { min-width: 0; }
+
+    .handbook-hero h1,
+    .handbook-intro h2,
+    .section-heading h2,
+    .focus-panel h2,
+    .handbook-author__copy h2,
+    .handbook-cta h2 { overflow-wrap: anywhere; }
+
+    .handbook-hero__visual { max-width: 100%; }
+    .hero-status { max-width: calc(100% - 2rem); }
+}
+
+.course-index {
+    .course-index__shell,
+    .course-index__hero-grid,
+    .course-index__grid,
+    .course-index__bottom > .course-index__shell { min-width: 0; }
+
+    .course-index__hero-grid > *,
+    .course-index__grid > *,
+    .course-index__bottom > .course-index__shell > *,
+    .course-index__card-top > *,
+    .course-index__bottom-links a > * { min-width: 0; }
+
+    h1, h2, h3,
+    .course-index__card li a { overflow-wrap: anywhere; }
+
+    .course-index__progress { width: 100%; max-width: 100%; }
+}
+
+// A portrait tablet cannot comfortably support the multi-column intro, focus,
+// and author rows. Use the same clear reading order as mobile before restoring
+// the two-column desktop layout at 992px.
+@media (max-width: 991.98px) {
+    .handbook-home {
+        .handbook-intro__grid,
+        .handbook-focus__grid,
+        .handbook-author__grid { grid-template-columns: minmax(0, 1fr); }
+
+        .handbook-intro__grid .text-link { grid-column: auto; }
+        .handbook-focus__grid { gap: 2rem; }
+        .handbook-author__grid { gap: 2rem; }
+    }
+}
+
+@media (max-width: 767.98px) {
+    .handbook-home {
+        .handbook-shell { padding-inline: 1rem; }
+        .handbook-hero__grid { gap: 1.5rem; }
+        .handbook-hero__copy { padding: 0; }
+        .handbook-hero h1 { font-size: clamp(2.35rem, 12vw, 3.35rem); letter-spacing: -.055em; }
+        .handbook-hero__lede { font-size: 1rem; }
+        .handbook-hero__visual { min-height: 19rem; }
+        .hero-path { padding: 1.65rem 1.15rem 1.15rem; }
+        .hero-path::before { top: 4.75rem; bottom: 2.65rem; left: 1.92rem; }
+        .hero-status { right: 1rem; left: 1rem; justify-content: center; font-size: .66rem; }
+        .handbook-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+        .handbook-stats div { padding-left: .65rem; }
+        .handbook-stats dt { font-size: 1.25rem; }
+        .handbook-stats dd { font-size: .7rem; overflow-wrap: anywhere; }
+        .focus-item { grid-template-columns: 1.55rem minmax(0, 1fr) .75rem; gap: .65rem; }
+        .handbook-author__identity { align-items: flex-start; }
+        .handbook-author__github { max-width: 100%; overflow-wrap: anywhere; }
+    }
+
+    .course-index {
+        .course-index__shell { padding-inline: 1rem; }
+        .course-index__hero-grid { gap: 1.5rem; padding-block: 3rem; }
+        h1 { font-size: clamp(2.35rem, 12vw, 3.35rem); letter-spacing: -.055em; }
+        .course-index__progress { padding: 1.1rem; }
+        .course-index__progress-head,
+        .course-index__progress-meta { gap: .5rem; }
+        .course-index__progress-meta { flex-wrap: wrap; }
+        .course-index__card { padding: 1.15rem; }
+        .course-index__card-top { align-items: flex-start; }
+        .course-index__count { text-align: right; }
+        .course-index__bottom-links a { grid-template-columns: 1.35rem minmax(0, 1fr) .75rem; gap: .6rem; }
+    }
+}
+
+@media (max-width: 430px) {
+    .handbook-home {
+        .handbook-hero__actions { gap: .65rem; }
+        .handbook-button { min-width: 0; padding-inline: 1rem; }
+        .handbook-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .handbook-stats div:last-child { grid-column: 1 / -1; }
+        .handbook-author__identity { gap: .85rem; }
+    }
+
+    .course-index {
+        .course-index__button { display: flex; justify-content: center; width: 100%; min-width: 0; }
+        .course-index__progress-head { align-items: flex-start; flex-direction: column; }
     }
 }
