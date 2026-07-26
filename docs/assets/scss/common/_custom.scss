@@ -441,6 +441,15 @@
         flex: 1 1 0 !important;
         max-width: none !important;
     }
+
+    // Normal pages retain a readable 78ch measure. When the reader explicitly
+    // hides navigation, use the newly available column for article text too.
+    body.docs-sidebar-hidden .docs-content > p,
+    body.docs-sidebar-hidden .docs-content > ul,
+    body.docs-sidebar-hidden .docs-content > ol,
+    body.docs-sidebar-hidden .docs-content .page-header h1 {
+        max-width: none;
+    }
 }
 
 @include media-breakpoint-down(lg) {
