@@ -883,3 +883,30 @@
     border-color: #326d93;
     box-shadow: none;
 }
+
+
+// Tablet layouts: both portrait (768px) and landscape (1024px) need the
+// single-column hero and reduced grid density before the desktop layout fits.
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .handbook-home {
+        .handbook-shell { padding-inline: clamp(1.5rem, 3vw, 2.25rem); }
+        .handbook-hero__grid { grid-template-columns: minmax(0, 1fr); justify-content: stretch; gap: 1.5rem; min-height: auto; padding: clamp(3.5rem, 6vw, 4.5rem) 0; }
+        .handbook-hero__copy { padding: 0; }
+        .handbook-hero__visual { width: 100%; max-width: 42rem; min-height: 22.5rem; margin-inline: auto; }
+        .handbook-intro__grid { grid-template-columns: minmax(0, .55fr) minmax(0, 1.45fr); gap: clamp(1.5rem, 3vw, 2.25rem); }
+        .handbook-intro__grid .text-link { grid-column: 2; }
+        .section-heading { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        .section-heading > p { margin-bottom: 0; }
+        .roadmap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .handbook-focus__grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 4vw, 3rem); }
+        .focus-panel { position: static; }
+    }
+
+    .course-index {
+        .course-index__hero-grid, .course-index__bottom > .course-index__shell { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+        .course-index__hero-grid { min-height: auto; padding: 3.8rem clamp(0rem, 4vw, 3rem); }
+        .course-index__progress { max-width: 620px; }
+        .course-index__section-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        .course-index__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+}
