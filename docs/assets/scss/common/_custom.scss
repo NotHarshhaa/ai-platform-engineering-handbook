@@ -240,6 +240,14 @@
 
 
 // Documentation sidebar
+:root {
+    --docs-sticky-top: 4.25rem;
+}
+
+@media (max-width: 991.98px) {
+    :root { --docs-sticky-top: 3.8rem; }
+}
+
 .docs-sidebar .section-nav,
 .doks-sidebar .section-nav {
     --sidebar-ink: #24364e;
@@ -357,16 +365,24 @@
 }
 
 @include media-breakpoint-up(lg) {
-    .docs-sidebar .section-nav {
+    .docs-sidebar {
+        align-self: flex-start;
         position: sticky;
-        top: 5.75rem;
-        max-height: calc(100vh - 6.75rem);
+        top: var(--docs-sticky-top);
+        z-index: 1000;
+        height: auto;
+        max-height: calc(100vh - var(--docs-sticky-top));
         overflow-y: auto;
         scrollbar-color: #b6c6d9 transparent;
     }
 
-    .docs-sidebar .section-nav::-webkit-scrollbar { width: 6px; }
-    .docs-sidebar .section-nav::-webkit-scrollbar-thumb { border-radius: 999px; background: #b6c6d9; }
+    .docs-sidebar::-webkit-scrollbar { width: 6px; }
+    .docs-sidebar::-webkit-scrollbar-thumb { border-radius: 999px; background: #b6c6d9; }
+
+    .docs-sidebar .docs-links {
+        max-height: none;
+        overflow-y: visible;
+    }
 }
 
 [data-bs-theme="dark"] {
@@ -616,8 +632,10 @@
     --toc-accent: #175cdf;
     align-self: flex-start;
     position: sticky;
-    top: 5.75rem;
-    max-height: calc(100vh - 6.75rem);
+    top: var(--docs-sticky-top);
+    z-index: 1000;
+    height: auto;
+    max-height: calc(100vh - var(--docs-sticky-top));
     margin-top: 1.25rem;
     overflow-y: auto;
     scrollbar-color: #b8c9dc transparent;
@@ -669,10 +687,10 @@
 
 .docs-content .toc-mobile-sticky {
     position: sticky;
-    top: 4.7rem;
-    z-index: 9;
+    top: var(--docs-sticky-top);
+    z-index: 1000;
     margin: 0 0 2rem;
-    background: transparent;
+    background: var(--bs-body-bg);
 
     details {
         overflow: hidden;
@@ -996,18 +1014,24 @@
 // Grid children default to their content's intrinsic width. Reset that behavior for
 // the custom landing pages so long headings, links, and cards cannot widen the
 // viewport at narrow mobile and tablet widths.
+// Keep overflow-x off html/body — it breaks position: sticky for sidebars and navbar.
 html, body {
     max-width: 100%;
-    overflow-x: hidden;
-}
-
-@supports (overflow: clip) {
-    html, body { overflow-x: clip; }
 }
 
 .wrap, .content, .handbook-home, .course-index {
     min-width: 0;
     max-width: 100%;
+}
+
+.handbook-home,
+.course-index {
+    overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+    .handbook-home,
+    .course-index { overflow-x: hidden; }
 }
 
 .handbook-home {
