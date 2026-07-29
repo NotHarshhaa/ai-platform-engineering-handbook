@@ -63,3 +63,42 @@
     initSidebarToggle();
   }
 })();
+
+// Theme toggle — handle clicks on the button itself so icon styling cannot break it.
+(() => {
+  const initThemeToggle = () => {
+    const button = document.getElementById('buttonColorMode');
+    if (!button || button.dataset.themeToggleBound === 'true') return;
+
+    button.dataset.themeToggleBound = 'true';
+
+    const resolveTheme = () => {
+      const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+      if (current === 'auto') {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      return current;
+    };
+
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+      try {
+        window.localStorage.setItem('theme', theme);
+      } catch {
+        // Theme still switches when storage is unavailable.
+      }
+      document.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+    };
+
+    button.addEventListener('click', () => {
+      const next = resolveTheme() === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThemeToggle, { once: true });
+  } else {
+    initThemeToggle();
+  }
+})();

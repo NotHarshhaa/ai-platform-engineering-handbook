@@ -2,9 +2,10 @@
 
 // Put your custom SCSS code here
 .container-fw {
-    max-width: 100% !important;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    max-width: none !important;
+    width: 100%;
+    padding-left: clamp(1rem, 2vw, 2rem);
+    padding-right: clamp(1rem, 2vw, 2rem);
 }
 
 // Prevent navbar brand from wrapping and breaking layout on mobile viewports
@@ -371,17 +372,37 @@
         top: var(--docs-sticky-top);
         z-index: 1000;
         height: auto;
+        min-width: 0;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .docs-sidebar .section-nav,
+    .docs-sidebar .docs-links {
         max-height: calc(100vh - var(--docs-sticky-top));
+        margin-right: 0;
+        overflow-x: hidden;
         overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
         scrollbar-color: #b6c6d9 transparent;
     }
 
-    .docs-sidebar::-webkit-scrollbar { width: 6px; }
-    .docs-sidebar::-webkit-scrollbar-thumb { border-radius: 999px; background: #b6c6d9; }
+    .docs-sidebar .section-nav::-webkit-scrollbar,
+    .docs-sidebar .docs-links::-webkit-scrollbar { width: 4px; }
 
-    .docs-sidebar .docs-links {
-        max-height: none;
-        overflow-y: visible;
+    .docs-sidebar .section-nav::-webkit-scrollbar-thumb,
+    .docs-sidebar .docs-links::-webkit-scrollbar-thumb {
+        border-radius: 999px;
+        background: #b6c6d9;
+    }
+
+    .docs-sidebar .section-nav summary,
+    .docs-sidebar .docs-links summary,
+    .docs-sidebar .section-nav a,
+    .docs-sidebar .docs-links a {
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 }
 
@@ -457,15 +478,6 @@
         flex: 1 1 0 !important;
         max-width: none !important;
     }
-
-    // Normal pages retain a readable 78ch measure. When the reader explicitly
-    // hides navigation, use the newly available column for article text too.
-    body.docs-sidebar-hidden .docs-content > p,
-    body.docs-sidebar-hidden .docs-content > ul,
-    body.docs-sidebar-hidden .docs-content > ol,
-    body.docs-sidebar-hidden .docs-content .page-header h1 {
-        max-width: none;
-    }
 }
 
 @include media-breakpoint-down(lg) {
@@ -483,6 +495,74 @@
 
 
 // Documentation reading experience
+
+// Use the full viewport width on docs pages instead of a centered 1200px column.
+body.docs {
+    .wrap.container-fluid {
+        width: 100%;
+        max-width: 100%;
+        padding-inline: clamp(1rem, 2vw, 2rem);
+    }
+
+    .wrap.container-fluid > .content {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .row.flex-xl-nowrap {
+        width: 100%;
+        margin-inline: 0;
+        --bs-gutter-x: #{clamp(1rem, 2vw, 1.75rem)};
+    }
+
+    .container-fw.col {
+        flex: 1 1 0 !important;
+        width: auto !important;
+        max-width: none !important;
+        margin-inline: 0 !important;
+        justify-content: flex-start !important;
+        gap: clamp(1rem, 2vw, 2rem);
+        padding-inline: 0;
+
+        .docs-toc { margin-left: 0; }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    body.docs .docs-sidebar {
+        flex: 0 0 clamp(260px, 20vw, 320px) !important;
+        width: clamp(260px, 20vw, 320px) !important;
+        max-width: none !important;
+    }
+
+    body.docs.docs-sidebar-hidden .container-fw.col {
+        flex: 1 1 0 !important;
+        max-width: none !important;
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    body.docs .docs-toc {
+        flex: 0 0 clamp(220px, 15vw, 280px) !important;
+        width: clamp(220px, 15vw, 280px) !important;
+        max-width: none !important;
+    }
+
+    body.docs .docs-content {
+        flex: 1 1 0 !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+}
+
+@include media-breakpoint-between(lg, xl) {
+    body.docs .docs-content {
+        flex: 1 1 0 !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+}
+
 .docs-content {
     --article-ink: #22354d;
     --article-muted: #65778f;
@@ -491,6 +571,7 @@
     --article-soft: #f5f9fd;
     --article-accent: #175cdf;
     align-self: flex-start;
+    min-width: 0;
     margin-top: 1.25rem;
     margin-bottom: 3rem;
     padding: clamp(1.75rem, 3vw, 3rem);
@@ -510,7 +591,7 @@
     }
 
     .page-header h1 {
-        max-width: 900px;
+        max-width: none;
         margin: 0;
         color: #112f56;
         font-size: clamp(2rem, 3.1vw, 3.2rem);
@@ -534,7 +615,10 @@
 
     .page-header #ai-dropdown .dropdown-toggle::after { display: none; }
 
-    > p, > ul, > ol { max-width: 78ch; }
+    > p, > ul, > ol, > h2, > h3, > h4, > blockquote, > pre {
+        max-width: none;
+        width: 100%;
+    }
 
     > p {
         color: #3f5168;
@@ -763,6 +847,10 @@
 }
 
 [data-bs-theme="dark"] {
+    body.docs .wrap.container-fluid {
+        background: #0c1520;
+    }
+
     .docs-content {
         --article-ink: #d6e1ee;
         --article-muted: #9fb0c4;
@@ -878,8 +966,100 @@
     .navbar-nav .nav-link { padding: .48rem .72rem; border-radius: .4rem; color: #61738b; font-size: .84rem; font-weight: 650; transition: color .18s ease, background-color .18s ease; }
     .navbar-nav .nav-link:hover { color: #175cdf; background: #eef5ff; }
     .navbar-nav .nav-link.active { color: #175cdf; background: #e2eeff; }
-    #searchToggleDesktop, #buttonColorMode, #socialMenu .nav-link { display: grid; width: 2.15rem; height: 2.15rem; margin: 0 .12rem; padding: 0 !important; place-items: center; border: 1px solid transparent; border-radius: .45rem; color: #46617f; }
-    #searchToggleDesktop:hover, #buttonColorMode:hover, #socialMenu .nav-link:hover { border-color: #d7e3f1; background: #f0f6fc; color: #175cdf; }
+
+    @include media-breakpoint-up(lg) {
+        > .container-fluid {
+            display: flex;
+            align-items: center;
+        }
+
+        #offcanvasNavMain {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        #offcanvasNavMain .offcanvas-body {
+            flex: 1 1 auto;
+            align-items: center;
+            justify-content: flex-end;
+            gap: .35rem;
+        }
+
+        #offcanvasNavMain .navbar-nav {
+            align-items: center;
+            margin: 0 auto 0 0;
+        }
+
+        #searchToggleDesktop,
+        #buttonColorMode,
+        #socialMenu {
+            align-self: center;
+            margin: 0 !important;
+        }
+
+        #socialMenu {
+            display: inline-flex;
+            align-items: center;
+            padding: 0;
+        }
+
+        #socialMenu .nav-item {
+            margin: 0 !important;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    #searchToggleDesktop,
+    #buttonColorMode,
+    #socialMenu .nav-link,
+    #socialMenu .social-link {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 2.15rem;
+        height: 2.15rem;
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 0;
+        border: 1px solid transparent;
+        border-radius: .45rem;
+        color: #46617f;
+    }
+
+    #buttonColorMode {
+        position: relative;
+    }
+
+    #searchToggleDesktop svg,
+    #socialMenu .nav-link svg,
+    #socialMenu .social-link svg {
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin: 0;
+    }
+
+    #buttonColorMode svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin: 0;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    #searchToggleDesktop:hover,
+    #buttonColorMode:hover,
+    #socialMenu .nav-link:hover,
+    #socialMenu .social-link:hover {
+        border-color: #d7e3f1;
+        background: #f0f6fc;
+        color: #175cdf;
+    }
 }
 
 @media (max-width: 991.98px) {
@@ -914,8 +1094,15 @@
     .sticky-top > .navbar .navbar-nav .nav-link { color: #a6b9ce; }
     .sticky-top > .navbar .navbar-nav .nav-link:hover { background: #173555; color: #91beff; }
     .sticky-top > .navbar .navbar-nav .nav-link.active { background: #1b416f; color: #add0ff; }
-    .sticky-top > .navbar #searchToggleDesktop, .sticky-top > .navbar #buttonColorMode, .sticky-top > .navbar #socialMenu .nav-link { color: #a8bed5; }
-    .sticky-top > .navbar #searchToggleDesktop:hover, .sticky-top > .navbar #buttonColorMode:hover, .sticky-top > .navbar #socialMenu .nav-link:hover { border-color: #355270; background: #163450; color: #9fc8ff; }
+    .sticky-top > .navbar #searchToggleDesktop,
+    .sticky-top > .navbar #buttonColorMode,
+    .sticky-top > .navbar #socialMenu .nav-link,
+    .sticky-top > .navbar #socialMenu .social-link { color: #a8bed5; }
+
+    .sticky-top > .navbar #searchToggleDesktop:hover,
+    .sticky-top > .navbar #buttonColorMode:hover,
+    .sticky-top > .navbar #socialMenu .nav-link:hover,
+    .sticky-top > .navbar #socialMenu .social-link:hover { border-color: #355270; background: #163450; color: #9fc8ff; }
 
     .course-index__catalogue { background: #0b1726; } .course-index__bottom { background: #101e2e; } .course-index__card { border-color: #2b4058; background: #122237; } .course-index__card h3 { color: #e0ebf7; } .course-index__card li { border-color: #243a51; } .course-index__card li a { color: #abbccc; } .course-index__section-head h2, .course-index__bottom h2, .course-index__bottom-links strong { color: #e1ebf7; } .course-index__section-head > p { color: #a9bacd; } .course-index__bottom-links { border-color: #2a4058; } .course-index__bottom-links a { border-color: #2a4058; color: #e1ebf7; }
 
