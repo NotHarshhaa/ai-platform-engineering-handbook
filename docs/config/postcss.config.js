@@ -50,10 +50,11 @@ const purgecss = purgeCSSPlugin({
         'not-content',
         'copy',
         'btn-copy',
-        // Docs sidebar toggle classes are injected by assets/js/custom.js.
+        // Docs sidebar and off-canvas classes are injected by assets/js/custom.js.
         'docs-page-actions',
         'docs-sidebar-toggle',
         'docs-sidebar-hidden',
+        'offcanvas-scroll-locked',
     ]
 });
 

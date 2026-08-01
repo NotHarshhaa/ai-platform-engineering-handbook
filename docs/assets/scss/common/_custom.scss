@@ -1072,6 +1072,10 @@ body.docs {
         > .container-fluid > .btn { display: grid; width: 2.15rem; height: 2.15rem; margin: 0 .08rem; padding: 0; place-items: center; border: 1px solid #dce6f1; border-radius: .42rem; color: #315372; background: #fff; }
     }
 
+    // Bootstrap keeps closed off-canvas drawers translated offscreen. Remove them
+    // from layout until a transition or open state begins so they cannot widen
+    // the document and create a horizontal page scrollbar.
+    .navbar .offcanvas:not(.show):not(.showing):not(.hiding) { display: none; }
     .navbar .offcanvas.offcanvas-start, .navbar .offcanvas.offcanvas-end { width: 88vw; max-width: 390px; height: 100vh !important; border: 0; background: #f7faff; box-shadow: 0 0 38px rgba(10, 29, 55, .18); }
     .navbar .offcanvas-header { min-height: 4.3rem; padding: 1rem 1.15rem; border-bottom: 1px solid #dce6f1; background: #fff; }
     .navbar .offcanvas-title { color: #183a60; font-size: .92rem; font-weight: 750; letter-spacing: -.02em; }
@@ -1201,9 +1205,66 @@ body.docs {
 // Grid children default to their content's intrinsic width. Reset that behavior for
 // the custom landing pages so long headings, links, and cards cannot widen the
 // viewport at narrow mobile and tablet widths.
-// Keep overflow-x off html/body — it breaks position: sticky for sidebars and navbar.
 html, body {
     max-width: 100%;
+}
+
+// Keep documentation layout children shrinkable without turning a root ancestor
+// into an overflow container, which would break sticky sidebars and the TOC.
+@media (max-width: 1199.98px) {
+    body.docs {
+        .wrap,
+        .content,
+        .row.flex-xl-nowrap,
+        .row.flex-xl-nowrap > *,
+        .container-fw.col,
+        .docs-content { min-width: 0; max-width: 100%; }
+
+        .docs-content {
+            img, video, iframe { max-width: 100%; }
+        }
+    }
+}
+
+// Applied by custom.js during Bootstrap off-canvas lifecycle events. Fixed body
+// positioning keeps the background in place while the drawer remains scrollable.
+html.offcanvas-scroll-locked,
+html.offcanvas-scroll-locked body { overflow: hidden; overscroll-behavior: none; }
+
+body.offcanvas-scroll-locked {
+    position: fixed !important;
+    top: var(--offcanvas-scroll-top, 0);
+    right: 0;
+    left: 0;
+    width: 100%;
+}
+
+// Sticky elements require non-stretching flex parents and no clipping ancestor.
+// Keep the page itself horizontally protected above, while letting navigation
+// remain sticky within the document scroll container.
+@media (min-width: 992px) {
+    body.docs {
+        .row.flex-xl-nowrap,
+        .container-fw.col { align-items: flex-start; }
+
+        .docs-sidebar,
+        .docs-toc {
+            align-self: flex-start;
+            position: sticky;
+            top: var(--docs-sticky-top);
+        }
+
+        .docs-sidebar { height: auto; }
+        .docs-toc { height: auto; }
+    }
+}
+
+@media (max-width: 1199.98px) {
+    body.docs .docs-content .toc-mobile-sticky {
+        position: sticky;
+        top: var(--docs-sticky-top);
+        z-index: 1000;
+    }
 }
 
 .wrap, .content, .handbook-home, .course-index {

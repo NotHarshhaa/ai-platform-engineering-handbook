@@ -102,3 +102,49 @@
     initThemeToggle();
   }
 })();
+
+
+
+// Lock the page behind mobile navigation drawers without preventing the drawer's
+// own `.offcanvas-body` from scrolling. Bootstrap emits these lifecycle events
+// for both the section and main navigation off-canvas elements.
+(() => {
+  const drawerSelector = '#offcanvasNavMain, #offcanvasNavSection';
+  const drawers = document.querySelectorAll(drawerSelector);
+
+  if (!drawers.length) return;
+
+  let lockedScrollY = 0;
+  let isLocked = false;
+
+  const lockPageScroll = () => {
+    if (isLocked) return;
+
+    lockedScrollY = window.scrollY;
+    isLocked = true;
+    document.documentElement.classList.add('offcanvas-scroll-locked');
+    document.body.classList.add('offcanvas-scroll-locked');
+    document.body.style.setProperty('--offcanvas-scroll-top', `-${lockedScrollY}px`);
+  };
+
+  const unlockPageScroll = () => {
+    window.requestAnimationFrame(() => {
+      const hasOpenDrawer = [...drawers].some((drawer) =>
+        drawer.classList.contains('show') || drawer.classList.contains('showing')
+      );
+
+      if (hasOpenDrawer) return;
+
+      document.documentElement.classList.remove('offcanvas-scroll-locked');
+      document.body.classList.remove('offcanvas-scroll-locked');
+      document.body.style.removeProperty('--offcanvas-scroll-top');
+      window.scrollTo(0, lockedScrollY);
+      isLocked = false;
+    });
+  };
+
+  drawers.forEach((drawer) => {
+    drawer.addEventListener('show.bs.offcanvas', lockPageScroll);
+    drawer.addEventListener('hidden.bs.offcanvas', unlockPageScroll);
+  });
+})();
