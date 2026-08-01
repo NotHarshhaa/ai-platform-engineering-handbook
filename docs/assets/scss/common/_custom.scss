@@ -1282,6 +1282,84 @@ html, body {
     }
 }
 
+// Portrait tablets have enough room for generous spacing, but not for the
+// desktop-density catalogue and three-up featured cards. Keep their content
+// readable at 768–991px and avoid compounding the shell and hero insets.
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .handbook-home {
+        .handbook-section { padding-block: clamp(4rem, 7vw, 5rem); }
+        .handbook-hero__actions { margin-bottom: 2.5rem; }
+        .handbook-stats { gap: 1.5rem; }
+        .featured-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .featured-card { min-height: 220px; }
+        .section-heading--compact { align-items: flex-start; }
+    }
+
+    .course-index {
+        .course-index__shell { padding-inline: clamp(1.5rem, 3vw, 2.25rem); }
+        .course-index__hero-grid { padding: clamp(3.5rem, 6vw, 4.5rem) 0; }
+        .course-index__grid { grid-template-columns: minmax(0, 1fr); }
+        .course-index__card { min-height: 0; }
+        .course-index__card-top { align-items: flex-start; }
+        .course-index__count { flex: 0 0 auto; text-align: right; white-space: nowrap; }
+        .course-index__card li a { align-items: flex-start; }
+        .course-index__card li a span { flex: 0 0 auto; }
+        .course-index__bottom-links a { grid-template-columns: 1.4rem minmax(0, 1fr) 1rem; gap: .75rem; }
+    }
+}
+
+// Weekly reading pages are single-column below lg, but their generated code,
+// tables, long titles, and navigation need explicit fit rules at tablet widths.
+body.docs .docs-content {
+    .page-header > div:first-child { min-width: 0; }
+    .page-header h1 { overflow-wrap: anywhere; }
+
+    > .expressive-code,
+    .expressive-code,
+    .expressive-code figure,
+    .expressive-code .highlight,
+    pre,
+    table { min-width: 0; max-width: 100%; }
+
+    .expressive-code { overflow-x: auto; overscroll-behavior-x: contain; }
+    table { overscroll-behavior-x: contain; scrollbar-width: thin; }
+
+    // Hugo emits this ID for the collapsible TOC on reading pages.
+    .toc-mobile-sticky #TableOfContents {
+        ul { margin: 0; padding: 0; list-style: none; }
+        ul ul { margin-left: .6rem; padding-left: .65rem; border-left: 1px solid #cbd9e8; }
+        a { display: block; padding: .42rem .45rem; border-radius: .35rem; color: var(--article-muted); font-size: .78rem; line-height: 1.35; text-decoration: none; }
+        a:hover, a.active { background: #e7f0ff; color: var(--article-accent); text-decoration: none; }
+    }
+}
+
+[data-bs-theme="dark"] body.docs .docs-content .toc-mobile-sticky #TableOfContents {
+    ul ul { border-color: #35516d; }
+    a:hover, a.active { background: #1b3d68; }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    body.docs {
+        .wrap.container-fluid { padding-inline: clamp(1.25rem, 3vw, 1.75rem); }
+        .row.flex-xl-nowrap { --bs-gutter-x: 0; }
+    }
+
+    .docs-content {
+        margin-bottom: 2.5rem;
+        padding: 1.75rem clamp(1.25rem, 3vw, 1.75rem) 2.5rem;
+
+        .page-header { gap: 1rem; margin: 0 0 2.25rem; padding: 1.5rem; }
+        .page-header > div:first-child { flex: 1 1 auto; }
+        .page-header #ai-dropdown { flex: 0 0 auto; }
+        .toc-mobile-sticky { margin-bottom: 1.5rem; }
+        .toc-mobile-sticky details summary,
+        .toc-mobile-sticky #toc a,
+        .toc-mobile-sticky #TableOfContents a { overflow-wrap: anywhere; }
+        .page-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .page-nav > * { min-width: 0; }
+    }
+}
+
 @media (max-width: 767.98px) {
     .handbook-home {
         .handbook-shell { padding-inline: 1rem; }
