@@ -1,2 +1,65 @@
-// Put your custom SCSS variables here
+// Sera / blueprint theme tokens for Doks (Bootstrap SCSS)
+
 $font-family-sans-serif: "Instrument Sans", system-ui, -apple-system, sans-serif;
+
+// Olive monochrome (approx. portfolio OKLCH olive)
+$sera-fg: #1f1f1c;
+$sera-bg: #fafaf8;
+$sera-muted: #6b6b63;
+$sera-border: #e4e4df;
+$sera-card: #ffffff;
+$sera-primary: #2a2a26;
+$sera-primary-fg: #f7f7f4;
+
+$primary: $sera-primary;
+$secondary: #ecece7;
+$info: $sera-primary;
+$body-bg: $sera-bg;
+$body-color: $sera-fg;
+$link-color: $sera-primary;
+$link-hover-color: $sera-fg;
+$headings-color: $sera-fg;
+$border-color: $sera-border;
+$card-border-color: $sera-border;
+
+// Sharp corners everywhere
+$border-radius: 0;
+$border-radius-sm: 0;
+$border-radius-lg: 0;
+$border-radius-xl: 0;
+$border-radius-2xl: 0;
+$border-radius-pill: 0;
+$btn-border-radius: 0;
+$btn-border-radius-sm: 0;
+$btn-border-radius-lg: 0;
+$card-border-radius: 0;
+$input-border-radius: 0;
+$input-border-radius-sm: 0;
+$input-border-radius-lg: 0;
+$dropdown-border-radius: 0;
+$modal-content-border-radius: 0;
+$alert-border-radius: 0;
+$badge-border-radius: 0;
+$nav-pills-border-radius: 0;
+$pagination-border-radius: 0;
+$tooltip-border-radius: 0;
+$popover-border-radius: 0;
+$toast-border-radius: 0;
+$list-group-border-radius: 0;
+$thumbnail-border-radius: 0;
+
+// Dark mode (Doks Bootstrap variables)
+$body-bg-dark: #1c1c19;
+$body-overlay-dark: #242420;
+$border-dark: rgba(255, 255, 255, 0.08);
+$body-color-dark: #e8e8e3;
+$headings-color-dark: #f5f5f0;
+$link-color-dark: #e8e8e3;
+$button-color-dark: #e8e8e3;
+$focus-color-dark: #f5f5f0;
+$light-bg-subtle-dark: #242420;
+$light-border-subtle-dark: rgba(255, 255, 255, 0.1);
+$navbar-dark-color: #a8a89e;
+$navbar-dark-hover-color: #f5f5f0;
+$navbar-dark-active-color: #f5f5f0;
+$dots-dark: #3a3a34;
