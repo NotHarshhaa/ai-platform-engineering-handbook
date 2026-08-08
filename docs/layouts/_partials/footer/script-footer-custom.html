@@ -12,4 +12,4 @@
 {{ end -}}
 */}}
 
-{{ partial "footer/esbuild" (dict "src" "js/custom.js" "load" "async" "transpile" false) -}}
+{{/* custom.js is bundled into app.js via Thulite; do not load it again here */}}

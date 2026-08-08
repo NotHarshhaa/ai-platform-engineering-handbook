@@ -23,6 +23,7 @@
     const pageHeader = document.querySelector('.docs-content .page-header');
 
     if (!sidebar || !pageHeader) return;
+    if (pageHeader.querySelector('.docs-sidebar-toggle')) return;
 
     sidebar.id = 'docs-sidebar';
 
