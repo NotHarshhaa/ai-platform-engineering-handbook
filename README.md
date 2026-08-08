@@ -1,21 +1,28 @@
 # 🚀 **AI Platform Engineering Handbook**
 
-A comprehensive **90-day AI Platform Engineering Handbook**, progressing from DevOps → MLOps → Platform Engineering → GenAI → RAG → Agentic AI → MCP → LLMOps → AI Security → AI Infrastructure → Fine-Tuning → Multimodal AI → AI Product Engineering → Enterprise AI System Design. This is a progression that closely matches the skills expected for modern AI platform and GenAI engineering roles.
+A comprehensive **97-day AI Platform Engineering Handbook**, progressing from DevOps → Python for AI → MLOps → Platform Engineering → GenAI → RAG → Agentic AI → MCP → LLMOps → AI Security → AI Infrastructure → Fine-Tuning → Multimodal AI → AI Product Engineering → Enterprise AI System Design. This is a progression that closely matches the skills expected for modern AI platform and GenAI engineering roles.
 
 ---
 
 ## 📋 **Course Overview**
 
 ✅ Week 1 – Advanced DevOps  
-✅ Week 2 – MLOps Engineering  
-✅ Week 3 – Platform Engineering  
-✅ Week 4 – AI Platform Integration  
-✅ Week 5 – AI Platform Operations  
-✅ Week 6 – Generative AI Engineering  
-✅ Week 7 – Advanced AI Application Deployment  
-✅ Week 8 – Generative AI Platform Operations  
-✅ Week 9 – AI Ops & Monitoring  
-✅ Week 10 – Enterprise AI Engineering
+✅ Week 2 – Python for AI & AI Engineering  
+✅ Week 3 – MLOps Engineering  
+✅ Week 4 – Platform Engineering  
+✅ Week 5 – AI Platform Integration  
+✅ Week 6 – Generative AI Fundamentals  
+✅ Week 7 – Retrieval Augmented Generation (RAG)  
+✅ Week 8 – AI Agents & Agentic AI  
+✅ Week 9 – Agent Memory, Tools & MCP  
+✅ Week 10 – AI Engineering & LLMOps  
+✅ Week 11 – Enterprise Agentic Systems  
+✅ Week 12 – AI Security & AI Red Teaming  
+✅ Week 13 – AI Infrastructure Engineering  
+✅ Week 14 – Fine-Tuning & LLM Customization  
+✅ Week 15 – Multimodal AI Engineering  
+✅ Week 16 – AI Product Engineering & Real-World Projects  
+✅ Week 17 – Enterprise AI Case Studies & System Design
 
 ---
 
@@ -138,7 +145,78 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 2 – MLOps Engineering**
+
+# 📅 **Week 2 – Python for AI & AI Engineering**
+
+
+
+## 🎯 **Focus: Python Foundations for AI & ML Development**
+
+---
+
+
+
+## 🗓 **Day 8–9: Python Programming Fundamentals**
+
+- Python Syntax & Data Types
+- Lists, Tuples, Sets & Dictionaries
+- Conditions & Loops
+- Functions
+- Modules & Packages
+- Exception Handling
+- List & Dictionary Comprehensions
+- Virtual Environments & pip
+- Type Hints
+
+---
+
+
+
+## 🗓 **Day 10–11: Advanced Python for AI**
+
+- Object-Oriented Programming
+- Dataclasses
+- Iterators & Generators
+- Decorators
+- Context Managers
+- Async Python (asyncio)
+- async / await
+- Pydantic & Data Validation
+
+---
+
+
+
+## 🗓 **Day 12–13: Python for Data & ML**
+
+- NumPy Fundamentals
+- Arrays & Vectorization
+- Pandas DataFrames
+- Data Cleaning & Transformation
+- Scikit-learn Fundamentals
+- ML Data Pipelines
+- Model Training & Evaluation
+
+---
+
+
+
+## 🗓 **Day 14: Python for GenAI Applications**
+
+- FastAPI
+- REST API Integration
+- JSON & API Handling
+- LLM API Integration
+- Structured Outputs
+- Embeddings & Vector Database Integration
+- Async LLM Applications
+- Testing with pytest
+
+---
+
+
+
+# 📅 **Week 3 – MLOps Engineering**
 
 
 
@@ -148,7 +226,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 8–9: ML Lifecycle & Experiment Tracking**
+## 🗓 **Day 15–16: ML Lifecycle & Experiment Tracking**
 
 - Machine Learning Lifecycle Overview
 - Problem Framing & Business Understanding
@@ -170,7 +248,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 10–11: Model Packaging & Serving**
+## 🗓 **Day 17–18: Model Packaging & Serving**
 
 - Model Serialization Techniques
 - Model Packaging Strategies
@@ -191,7 +269,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 12–13: CI/CD for Machine Learning**
+## 🗓 **Day 19–20: CI/CD for Machine Learning**
 
 - ML Pipeline Architecture
 - Training Pipeline Automation
@@ -212,7 +290,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 14: Data Validation & Monitoring**
+## 🗓 **Day 21: Data Validation & Monitoring**
 
 - Data Quality Validation Concepts
 - Schema Validation
@@ -232,7 +310,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 3 – Platform Engineering**
+# 📅 **Week 4 – Platform Engineering**
 
 
 
@@ -242,7 +320,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 15–16: Infrastructure as Code (Terraform Advanced)**
+## 🗓 **Day 22–23: Infrastructure as Code (Terraform Advanced)**
 
 - Infrastructure as Code Principles
 - Declarative vs Imperative Infrastructure
@@ -265,7 +343,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 17–18: GitOps & Continuous Delivery**
+## 🗓 **Day 24–25: GitOps & Continuous Delivery**
 
 - GitOps Principles
 - Declarative Infrastructure & Deployments
@@ -287,7 +365,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 19–20: Internal Developer Platform (IDP)**
+## 🗓 **Day 26–27: Internal Developer Platform (IDP)**
 
 - Platform Engineering Fundamentals
 - DevOps vs Platform Engineering
@@ -310,7 +388,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 4 – AI Platform Integration & Production Architecture**
+# 📅 **Week 5 – AI Platform Integration & Production Architecture**
 
 
 
@@ -320,7 +398,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 21–23: End-to-End AI Platform Architecture**
+## 🗓 **Day 28–30: End-to-End AI Platform Architecture**
 
 - Cloud-Native AI System Architecture
 - Microservices Architecture for ML Systems
@@ -343,7 +421,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 24–25: Advanced Deployment Strategies**
+## 🗓 **Day 31–32: Advanced Deployment Strategies**
 
 - Blue-Green Deployment Strategy
 - Canary Deployment Strategy
@@ -363,7 +441,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 26–27: Security & Governance**
+## 🗓 **Day 33–34: Security & Governance**
 
 - DevSecOps Principles
 - Secure CI/CD Pipelines
@@ -385,7 +463,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 28: Documentation & Architecture Design**
+## 🗓 **Day 35: Documentation & Architecture Design**
 
 - Technical Documentation Standards
 - Architecture Decision Records (ADR)
@@ -404,7 +482,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 29: Career Positioning & Branding**
+## 🗓 **Day 36: Career Positioning & Branding**
 
 - Resume Structuring for AI Infrastructure Roles
 - Highlighting DevOps + MLOps Experience
@@ -420,7 +498,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 30: Interview Preparation & System Design**
+## 🗓 **Day 37: Interview Preparation & System Design**
 
 - DevOps Scenario-Based Questions
 - MLOps Architecture Interview Questions
@@ -439,7 +517,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 5 – Generative AI Fundamentals**
+# 📅 **Week 6 – Generative AI Fundamentals**
 
 
 
@@ -447,7 +525,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 31–32: Foundations of Generative AI**
+### 🗓 **Day 38–39: Foundations of Generative AI**
 
 - Evolution of AI → ML → Deep Learning → Generative AI
 - Transformer Architecture
@@ -470,7 +548,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 33–34: Prompt Engineering**
+### 🗓 **Day 40–41: Prompt Engineering**
 
 - Prompt Engineering Fundamentals
 - Zero-shot Prompting
@@ -494,7 +572,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 35: LLM APIs**
+### 🗓 **Day 42: LLM APIs**
 
 - OpenAI APIs
 - Anthropic APIs
@@ -513,7 +591,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 6 – Retrieval Augmented Generation (RAG)**
+# 📅 **Week 7 – Retrieval Augmented Generation (RAG)**
 
 
 
@@ -521,7 +599,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 36–37: RAG Foundations**
+### 🗓 **Day 43–44: RAG Foundations**
 
 - What is RAG
 - Why RAG Exists
@@ -540,7 +618,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 38–39: Vector Databases**
+### 🗓 **Day 45–46: Vector Databases**
 
 - Vector Database Architecture
 - Pinecone
@@ -558,7 +636,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 40: Advanced RAG**
+### 🗓 **Day 47: Advanced RAG**
 
 - Multi-document RAG
 - Parent-Child Retrieval
@@ -576,7 +654,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 7 – AI Agents & Agentic AI**
+# 📅 **Week 8 – AI Agents & Agentic AI**
 
 
 
@@ -584,7 +662,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 41–42: AI Agent Fundamentals**
+### 🗓 **Day 48–49: AI Agent Fundamentals**
 
 - What is an AI Agent
 - AI Agent Architecture
@@ -604,7 +682,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 43–44: Agent Frameworks**
+### 🗓 **Day 50–51: Agent Frameworks**
 
 - LangChain
 - LangGraph
@@ -624,7 +702,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 45: Agent Patterns**
+### 🗓 **Day 52: Agent Patterns**
 
 - ReAct Pattern
 - Planner Pattern
@@ -642,7 +720,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 8 – Agent Memory, Tools & MCP**
+# 📅 **Week 9 – Agent Memory, Tools & MCP**
 
 
 
@@ -650,7 +728,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 46–47: Memory Systems**
+### 🗓 **Day 53–54: Memory Systems**
 
 - Short-term Memory
 - Long-term Memory
@@ -667,7 +745,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 48–49: Tool Calling**
+### 🗓 **Day 55–56: Tool Calling**
 
 - Function Calling
 - Tool Selection
@@ -686,7 +764,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 50: Model Context Protocol (MCP)**
+### 🗓 **Day 57: Model Context Protocol (MCP)**
 
 - MCP Fundamentals
 - MCP Architecture
@@ -706,7 +784,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 9 – AI Engineering & LLMOps**
+# 📅 **Week 10 – AI Engineering & LLMOps**
 
 
 
@@ -714,7 +792,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 51–52: LLMOps Foundations & AI Delivery**
+### 🗓 **Day 58–59: LLMOps Foundations & AI Delivery**
 
 - LLMOps Fundamentals
 - Prompt Versioning
@@ -731,7 +809,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 53–54: AI Observability & Production Monitoring**
+### 🗓 **Day 60–61: AI Observability & Production Monitoring**
 
 - AI Observability
 - LangSmith
@@ -749,7 +827,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 55: AI Safety, Guardrails & Governance**
+### 🗓 **Day 62: AI Safety, Guardrails & Governance**
 
 - AI Guardrails
 - Toxicity Detection
@@ -765,7 +843,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 10 – Enterprise Agentic Systems**
+# 📅 **Week 11 – Enterprise Agentic Systems**
 
 
 
@@ -773,7 +851,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 56–57: Enterprise AI Platform Architecture**
+### 🗓 **Day 63–64: Enterprise AI Platform Architecture**
 
 - Enterprise AI Architecture
 - AI Gateway
@@ -790,7 +868,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 58–59: Enterprise AI Agents & Multi-Agent Systems**
+### 🗓 **Day 65–66: Enterprise AI Agents & Multi-Agent Systems**
 
 - Enterprise Agent Design
 - DevOps Agents
@@ -807,7 +885,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-### 🗓 **Day 60: Production-Ready Agentic System Design**
+### 🗓 **Day 67: Production-Ready Agentic System Design**
 
 - End-to-End Agentic System Design
 - Production Deployment
@@ -824,7 +902,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 11 – AI Security & AI Red Teaming**
+# 📅 **Week 12 – AI Security & AI Red Teaming**
 
 
 
@@ -834,7 +912,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 61–62: AI Security Fundamentals**
+## 🗓 **Day 68–69: AI Security Fundamentals**
 
 - AI Security Principles
 - AI Threat Landscape
@@ -853,7 +931,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 63–64: AI Red Teaming & Defensive Techniques**
+## 🗓 **Day 70–71: AI Red Teaming & Defensive Techniques**
 
 - AI Red Teaming Fundamentals
 - Adversarial Prompt Testing
@@ -872,7 +950,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 65: AI Governance & Compliance**
+## 🗓 **Day 72: AI Governance & Compliance**
 
 - Responsible AI
 - AI Governance Frameworks
@@ -891,7 +969,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 12 – AI Infrastructure Engineering**
+# 📅 **Week 13 – AI Infrastructure Engineering**
 
 
 
@@ -901,7 +979,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 66–67: GPU Computing Fundamentals**
+## 🗓 **Day 73–74: GPU Computing Fundamentals**
 
 - AI Infrastructure Overview
 - GPU Architecture
@@ -920,7 +998,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 68–69: Production AI Serving**
+## 🗓 **Day 75–76: Production AI Serving**
 
 - vLLM
 - TensorRT
@@ -939,7 +1017,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 70: Distributed AI Infrastructure**
+## 🗓 **Day 77: Distributed AI Infrastructure**
 
 - Ray Fundamentals
 - Ray Serve
@@ -958,7 +1036,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 13 – Fine-Tuning & LLM Customization**
+# 📅 **Week 14 – Fine-Tuning & LLM Customization**
 
 
 
@@ -968,7 +1046,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 71–72: Fine-Tuning Fundamentals**
+## 🗓 **Day 78–79: Fine-Tuning Fundamentals**
 
 - Transfer Learning
 - Fine-Tuning Fundamentals
@@ -987,7 +1065,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 73–74: Parameter-Efficient Fine-Tuning (PEFT)**
+## 🗓 **Day 80–81: Parameter-Efficient Fine-Tuning (PEFT)**
 
 - PEFT Fundamentals
 - LoRA
@@ -1006,7 +1084,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 75: Human Feedback & Alignment**
+## 🗓 **Day 82: Human Feedback & Alignment**
 
 - RLHF
 - DPO
@@ -1024,7 +1102,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 14 – Multimodal AI Engineering**
+# 📅 **Week 15 – Multimodal AI Engineering**
 
 
 
@@ -1034,7 +1112,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 76–77: Computer Vision & Image Models**
+## 🗓 **Day 83–84: Computer Vision & Image Models**
 
 - Multimodal AI Fundamentals
 - Vision Transformers (ViT)
@@ -1053,7 +1131,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 78–79: Audio & Video AI**
+## 🗓 **Day 85–86: Audio & Video AI**
 
 - Speech-to-Text
 - Text-to-Speech
@@ -1072,7 +1150,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 80: Production Multimodal Systems**
+## 🗓 **Day 87: Production Multimodal Systems**
 
 - Vision-Language Models
 - Retrieval-Augmented Vision
@@ -1089,7 +1167,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 15 – AI Product Engineering & Real-World Projects**
+# 📅 **Week 16 – AI Product Engineering & Real-World Projects**
 
 
 
@@ -1099,7 +1177,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 81–82: AI Product Development**
+## 🗓 **Day 88–89: AI Product Development**
 
 - AI Product Lifecycle
 - Product Requirements
@@ -1118,7 +1196,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 83–84: Building Enterprise AI Applications**
+## 🗓 **Day 90–91: Building Enterprise AI Applications**
 
 - AI Chatbots
 - AI Copilots
@@ -1137,7 +1215,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 85: Production Deployment & Scaling**
+## 🗓 **Day 92: Production Deployment & Scaling**
 
 - AI Deployment Strategies
 - Load Balancing
@@ -1154,7 +1232,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 16 – Enterprise AI Case Studies & System Design**
+# 📅 **Week 17 – Enterprise AI Case Studies & System Design**
 
 
 
@@ -1164,7 +1242,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 86–87: Enterprise AI System Design**
+## 🗓 **Day 93–94: Enterprise AI System Design**
 
 - AI System Design Fundamentals
 - Enterprise AI Architecture
@@ -1183,7 +1261,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 88–89: Enterprise AI Case Studies**
+## 🗓 **Day 95–96: Enterprise AI Case Studies**
 
 - AI Platform Case Study
 - AI Copilot Case Study
@@ -1200,7 +1278,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 90: Interview Preparation & Capstone**
+## 🗓 **Day 97: Interview Preparation & Capstone**
 
 - AI Engineering Interview Questions
 - LLMOps Interview Questions
@@ -1219,7 +1297,7 @@ A comprehensive **90-day AI Platform Engineering Handbook**, progressing from De
 
 ## 💡 One recommendation
 
-After Week 16, you could add a final section instead of another week:
+After Week 17, you could add a final section instead of another week:
 
 # 🎓 **Capstone Projects**
 
@@ -1244,7 +1322,7 @@ Include 10–15 enterprise-grade projects such as:
 
 ## 🎯 **Learning Outcomes**
 
-Upon completion of this comprehensive multi-week program, you will have:
+Upon completion of this comprehensive 17-week program, you will have:
 
 - **Advanced DevOps Mastery**: Expertise in production-grade CI/CD, container security, advanced Kubernetes, Helm, infrastructure automation, and deployment patterns.
 - **End-to-End MLOps Proficiency**: Full lifecycle ML management—from experimentation, tracking, and model packaging to production deployment, monitoring, and automated retraining.

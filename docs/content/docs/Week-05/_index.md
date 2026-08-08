@@ -1,6 +1,6 @@
 ---
-title: "Week 5 - Generative AI Fundamentals"
-weight: 30
+title: "Week 5 - AI Platform Integration"
+weight: 50
 sidebar:
   collapsed: false
 ---

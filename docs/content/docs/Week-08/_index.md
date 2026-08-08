@@ -1,5 +1,5 @@
 ---
-title: "Week 8 - Agent Memory Systems, Model Context Protocol (MCP), Tool Calling"
+title: "Week 8 - AI Agents & Agentic AI"
 weight: 80
 sidebar:
   collapsed: false

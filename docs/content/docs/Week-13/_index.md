@@ -1,5 +1,5 @@
 ---
-title: "Week 13 - Fine-Tuning & LLM Customization"
+title: "Week 13 - AI Infrastructure Engineering"
 weight: 130
 sidebar:
   collapsed: false
