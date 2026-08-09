@@ -54,7 +54,6 @@ const purgecss = purgeCSSPlugin({
         'docs-page-actions',
         'docs-sidebar-toggle',
         'docs-sidebar-hidden',
-        'offcanvas-scroll-locked',
     ]
 });
 

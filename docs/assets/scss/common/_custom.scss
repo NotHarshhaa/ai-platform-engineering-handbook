@@ -540,10 +540,22 @@ body {
     width: 88vw;
     max-width: 390px;
     height: 100vh !important;
+    max-height: 100vh !important;
     border: 1px solid var(--sera-border);
     border-radius: 0;
     background: var(--sera-card);
     box-shadow: none;
+    z-index: 1060;
+  }
+
+  .offcanvas-backdrop {
+    z-index: 1055;
+  }
+
+  .navbar #offcanvasNavSection .offcanvas-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .navbar .offcanvas-header {
@@ -2968,22 +2980,8 @@ body.docs {
 }
 
 // =============================================================================
-// Offcanvas scroll lock + fit safeguards
+// Offcanvas fit safeguards
 // =============================================================================
-
-html.offcanvas-scroll-locked,
-html.offcanvas-scroll-locked body {
-  overflow: hidden;
-  overscroll-behavior: none;
-}
-
-body.offcanvas-scroll-locked {
-  position: fixed !important;
-  top: var(--offcanvas-scroll-top, 0);
-  right: 0;
-  left: 0;
-  width: 100%;
-}
 
 .wrap,
 .content,
