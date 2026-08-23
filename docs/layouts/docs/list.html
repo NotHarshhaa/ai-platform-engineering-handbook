@@ -11,10 +11,14 @@
         {{ with $firstLesson }}<a class="course-index__button" href="{{ .RelPermalink }}">Begin the handbook <span aria-hidden="true">→</span></a>{{ end }}
       </div>
       <div class="course-index__progress" aria-label="Handbook coverage">
-        <div class="course-index__progress-head"><span>Published curriculum</span><strong>{{ len $weeks }} stages</strong></div>
-        <div class="course-index__bar"><span></span></div>
-        <div class="course-index__progress-meta"><span>DevOps foundations</span><span>Enterprise AI systems</span></div>
-        <div class="course-index__signal-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="course-index__progress-head"><span>Curriculum stages</span><strong>{{ len $weeks }} weeks</strong></div>
+        <div class="course-index__stages">
+          <div class="course-index__stage"><span class="course-index__stage-num">01</span><span class="course-index__stage-name">DevOps & MLOps</span></div>
+          <div class="course-index__stage"><span class="course-index__stage-num">02</span><span class="course-index__stage-name">AI Platform</span></div>
+          <div class="course-index__stage"><span class="course-index__stage-num">03</span><span class="course-index__stage-name">GenAI & RAG</span></div>
+          <div class="course-index__stage"><span class="course-index__stage-num">04</span><span class="course-index__stage-name">Agents & LLMOps</span></div>
+          <div class="course-index__stage"><span class="course-index__stage-num">05</span><span class="course-index__stage-name">Enterprise AI</span></div>
+        </div>
       </div>
     </div>
   </section>
