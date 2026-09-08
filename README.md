@@ -1,6 +1,6 @@
 # 🚀 **AI Platform Engineering Handbook**
 
-A comprehensive **97-day AI Platform Engineering Handbook**, progressing from DevOps → Python for AI → MLOps → Platform Engineering → GenAI → RAG → Agentic AI → MCP → LLMOps → AI Security → AI Infrastructure → Fine-Tuning → Multimodal AI → AI Product Engineering → Enterprise AI System Design. This is a progression that closely matches the skills expected for modern AI platform and GenAI engineering roles.
+A comprehensive **104-day AI Platform Engineering Handbook**, progressing from DevOps → Python for AI → MLOps → Platform Engineering → GenAI → RAG → Agentic AI → MCP → LLMOps → AI Security → AI Infrastructure → Fine-Tuning → Multimodal AI → AI Product Engineering → Forward Deployed Engineering → Enterprise AI System Design. This is a progression that closely matches the skills expected for modern AI platform and GenAI engineering roles.
 
 ---
 
@@ -22,7 +22,8 @@ A comprehensive **97-day AI Platform Engineering Handbook**, progressing from De
 ✅ Week 14 – Fine-Tuning & LLM Customization  
 ✅ Week 15 – Multimodal AI Engineering  
 ✅ Week 16 – AI Product Engineering & Real-World Projects  
-✅ Week 17 – Enterprise AI Case Studies & System Design
+✅ Week 17 – Forward Deployed Engineering  
+✅ Week 18 – Enterprise AI Case Studies & System Design
 
 ---
 
@@ -1232,7 +1233,91 @@ A comprehensive **97-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-# 📅 **Week 17 – Enterprise AI Case Studies & System Design**
+# 📅 **Week 17 – Forward Deployed Engineering**
+
+
+
+## 🎯 **Focus: Customer-Facing AI Engineering & Production Deployment**
+
+---
+
+
+
+## 🗓 **Day 93–94: Customer Problem Discovery & Technical Scoping**
+
+- Forward Deployed Engineering Fundamentals
+- Customer Discovery
+- Understanding Business Problems
+- Requirements Gathering
+- Technical Scoping
+- Translating Business Requirements into Technical Solutions
+- System Constraints & Trade-offs
+- Data & Integration Discovery
+- Solution Architecture
+- Technical Feasibility Analysis
+
+---
+
+
+
+## 🗓 **Day 95–96: Rapid Prototyping & AI Solution Development**
+
+- Rapid Prototyping
+- Proof of Concept (PoC) Development
+- AI Application Development
+- RAG Prototypes
+- Agent Prototypes
+- API & System Integration
+- Working with Customer Data
+- Connecting Enterprise Systems
+- Workflow Automation
+- Iterative Development
+- Demo-Driven Development
+- Customer Feedback Loops
+
+---
+
+
+
+## 🗓 **Day 97–98: Production Deployment & Customer Integration**
+
+- Production Readiness
+- Cloud Deployment
+- Enterprise API Integration
+- Authentication & Authorization
+- Data Security
+- Observability
+- Performance Optimization
+- Reliability & Fault Tolerance
+- Troubleshooting Customer Environments
+- Incident Resolution
+- Deployment & Rollback Strategies
+- Production Support
+
+---
+
+
+
+## 🗓 **Day 99: Customer Engineering & Communication**
+
+- Technical Communication
+- Explaining AI Systems to Customers
+- Architecture Presentations
+- Technical Documentation
+- Architecture Decision Records
+- Writing Implementation Guides
+- Managing Technical Trade-offs
+- Stakeholder Communication
+- Customer Feedback
+- Iterative Solution Improvement
+- Measuring Solution Impact
+- Building Long-Term Customer Trust
+
+---
+
+
+
+# 📅 **Week 18 – Enterprise AI Case Studies & System Design**
 
 
 
@@ -1242,7 +1327,7 @@ A comprehensive **97-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 93–94: Enterprise AI System Design**
+## 🗓 **Day 100–101: Enterprise AI System Design**
 
 - AI System Design Fundamentals
 - Enterprise AI Architecture
@@ -1261,7 +1346,7 @@ A comprehensive **97-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 95–96: Enterprise AI Case Studies**
+## 🗓 **Day 102–103: Enterprise AI Case Studies**
 
 - AI Platform Case Study
 - AI Copilot Case Study
@@ -1278,7 +1363,7 @@ A comprehensive **97-day AI Platform Engineering Handbook**, progressing from De
 
 
 
-## 🗓 **Day 97: Interview Preparation & Capstone**
+## 🗓 **Day 104: Interview Preparation & Capstone**
 
 - AI Engineering Interview Questions
 - LLMOps Interview Questions
@@ -1297,7 +1382,7 @@ A comprehensive **97-day AI Platform Engineering Handbook**, progressing from De
 
 ## 💡 One recommendation
 
-After Week 17, you could add a final section instead of another week:
+After Week 18, you could add a final section instead of another week:
 
 # 🎓 **Capstone Projects**
 
@@ -1322,7 +1407,7 @@ Include 10–15 enterprise-grade projects such as:
 
 ## 🎯 **Learning Outcomes**
 
-Upon completion of this comprehensive 17-week program, you will have:
+Upon completion of this comprehensive 18-week program, you will have:
 
 - **Advanced DevOps Mastery**: Expertise in production-grade CI/CD, container security, advanced Kubernetes, Helm, infrastructure automation, and deployment patterns.
 - **End-to-End MLOps Proficiency**: Full lifecycle ML management—from experimentation, tracking, and model packaging to production deployment, monitoring, and automated retraining.
@@ -1396,5 +1481,3 @@ Stay connected and explore more DevOps content with me:
 ## 📢 **Stay Updated!**
 
 Want to stay up to date with the latest DevOps trends, best practices, and project updates? Follow me on my blogs and social channels!  
-
-Follow Me
