@@ -16,7 +16,7 @@ params:
 ## Introduction
 Welcome to the **AI Platform Engineering Handbook**! This handbook is a comprehensive, production-grade guide designed to bridge the gap between traditional cloud infrastructure and modern AI platforms.
 
-A comprehensive 97-day journey through Advanced DevOps, Python for AI, MLOps, Platform Engineering, Generative AI, RAG, Agentic AI, MCP, LLMOps, AI Security, AI Infrastructure, Fine-Tuning, Multimodal AI, AI Product Engineering, and Enterprise AI System Design.
+A comprehensive 104-day journey through Advanced DevOps, Python for AI, MLOps, Platform Engineering, Generative AI, RAG, Agentic AI, MCP, LLMOps, AI Security, AI Infrastructure, Fine-Tuning, Multimodal AI, AI Product Engineering, Forward Deployed Engineering, and Enterprise AI System Design.
 
 ---
 
@@ -37,6 +37,7 @@ A comprehensive 97-day journey through Advanced DevOps, Python for AI, MLOps, Pl
 - [Week 13](/docs/Week-13/) - AI Infrastructure Engineering
 - [Week 14](/docs/Week-14/) - Fine-Tuning & LLM Customization
 - [Week 16](/docs/Week-16/) - AI Product Engineering & Real-World Projects
+- [Week 17](/docs/Week-17/) - Forward Deployed Engineering
 
 
 ---
