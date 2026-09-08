@@ -1,0 +1,205 @@
+// =============================================================================
+// Utilities: frame corners + hatch hover
+// =============================================================================
+
+@mixin sera-corners($size: 0.7rem, $color: var(--sera-fg), $opacity: 0.45) {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 5;
+    width: $size;
+    height: $size;
+    pointer-events: none;
+    opacity: $opacity;
+  }
+
+  &::before {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid $color;
+    border-left: 2px solid $color;
+  }
+
+  &::after {
+    top: -1px;
+    right: -1px;
+    border-top: 2px solid $color;
+    border-right: 2px solid $color;
+  }
+}
+
+@mixin sera-corners-bottom($size: 0.7rem, $color: var(--sera-fg), $opacity: 0.45) {
+  box-shadow:
+    inset #{$size} 0 0 -#{$size - 2px} transparent,
+    inset 0 #{$size} 0 -#{$size - 2px} transparent;
+  background-image:
+    linear-gradient($color, $color),
+    linear-gradient($color, $color),
+    linear-gradient($color, $color),
+    linear-gradient($color, $color);
+  background-size:
+    2px $size,
+    $size 2px,
+    2px $size,
+    $size 2px;
+  background-position:
+    left bottom,
+    left bottom,
+    right bottom,
+    right bottom;
+  background-repeat: no-repeat;
+}
+
+.sera-frame {
+  position: relative;
+  border: 1px solid var(--sera-border);
+  border-radius: 0;
+  background: var(--sera-card);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 5;
+    width: 0.7rem;
+    height: 0.7rem;
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  &::before {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid var(--sera-fg);
+    border-left: 2px solid var(--sera-fg);
+  }
+
+  &::after {
+    top: -1px;
+    right: -1px;
+    border-top: 2px solid var(--sera-fg);
+    border-right: 2px solid var(--sera-fg);
+  }
+
+  > .sera-frame__br,
+  > .sera-frame__bl {
+    position: absolute;
+    z-index: 5;
+    width: 0.7rem;
+    height: 0.7rem;
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  > .sera-frame__bl {
+    bottom: -1px;
+    left: -1px;
+    border-bottom: 2px solid var(--sera-fg);
+    border-left: 2px solid var(--sera-fg);
+  }
+
+  > .sera-frame__br {
+    right: -1px;
+    bottom: -1px;
+    border-right: 2px solid var(--sera-fg);
+    border-bottom: 2px solid var(--sera-fg);
+  }
+}
+
+// Four-corner frame via box-shadow edges (no extra markup)
+.sera-panel {
+  position: relative;
+  border: 1px solid var(--sera-border);
+  border-radius: 0;
+  background: var(--sera-card);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: 4;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 0 / 0.7rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 0 / 2px 0.7rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 0 / 0.7rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 0 / 2px 0.7rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 100% / 0.7rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 100% / 2px 0.7rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 100% / 0.7rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 100% / 2px 0.7rem no-repeat;
+    opacity: 0.45;
+  }
+}
+
+.sera-hover {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    background-color: var(--sera-hatch-bg);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      var(--sera-hatch) 2px,
+      var(--sera-hatch) 3px
+    );
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    background:
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 0 / 0.55rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 0 / 2px 0.55rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 0 / 0.55rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 0 / 2px 0.55rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 100% / 0.55rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 100% / 2px 0.55rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 100% / 0.55rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 100% / 2px 0.55rem no-repeat;
+  }
+
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  &:hover::before,
+  &:focus-within::before,
+  &:hover::after,
+  &:focus-within::after {
+    opacity: 1;
+  }
+}
+
+.sera-hover[data-sera-label]:hover::after,
+.sera-hover[data-sera-label]:focus-within::after {
+  content: attr(data-sera-label);
+  inset: auto 0 0 auto;
+  width: auto;
+  height: auto;
+  transform: translateY(50%);
+  padding: 0.2rem 0.4rem;
+  background: var(--sera-fg);
+  color: var(--sera-bg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 1;
+}

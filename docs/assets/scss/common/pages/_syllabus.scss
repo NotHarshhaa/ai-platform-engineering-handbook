@@ -1,0 +1,43 @@
+// =============================================================================
+// Syllabus portal styles
+// =============================================================================
+
+.syllabus-portal {
+  ul {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+  }
+
+  > ul > li {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+
+    a {
+      color: var(--sera-fg);
+      text-decoration: underline;
+      text-underline-offset: 0.16em;
+
+      &:hover {
+        color: var(--sera-muted);
+      }
+    }
+  }
+
+  ul ul {
+    padding-left: 1.15rem !important;
+    margin-top: 0.45rem;
+    font-weight: normal;
+    font-size: 0.92rem;
+    color: var(--sera-muted);
+    border-left: 1px solid var(--sera-border);
+
+    li {
+      margin-bottom: 0.45rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

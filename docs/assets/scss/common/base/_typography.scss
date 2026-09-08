@@ -1,0 +1,275 @@
+// =============================================================================
+// Typography & content elements
+// =============================================================================
+
+.docs-content {
+  align-self: flex-start;
+  min-width: 0;
+  margin-top: 1.25rem;
+  margin-bottom: 3rem;
+  padding: clamp(1.75rem, 3vw, 3rem);
+  border: 1px solid var(--sera-border);
+  border-radius: 0;
+  background-color: var(--sera-card);
+  background-image:
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg));
+  background-size:
+    0.75rem 2px,
+    2px 0.75rem,
+    0.75rem 2px,
+    2px 0.75rem,
+    0.75rem 2px,
+    2px 0.75rem,
+    0.75rem 2px,
+    2px 0.75rem;
+  background-position:
+    left top,
+    left top,
+    right top,
+    right top,
+    left bottom,
+    left bottom,
+    right bottom,
+    right bottom;
+  background-repeat: no-repeat;
+  box-shadow: none;
+  color: var(--sera-fg);
+
+  .page-header {
+    gap: 1.5rem;
+    margin: -0.5rem -0.5rem 2.5rem;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-soft);
+  }
+
+  .page-header h1 {
+    max-width: none;
+    margin: 0;
+    color: var(--sera-fg);
+    font-size: clamp(1.85rem, 3vw, 2.85rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .page-header > div:first-child {
+    min-width: 0;
+  }
+
+  .page-header #ai-dropdown .btn {
+    display: grid;
+    width: 2.35rem;
+    height: 2.35rem;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    color: var(--sera-fg);
+    box-shadow: none;
+  }
+
+  .page-header #ai-dropdown .dropdown-toggle::after {
+    display: none;
+  }
+
+  > p,
+  > ul,
+  > ol,
+  > h2,
+  > h3,
+  > h4,
+  > blockquote,
+  > pre {
+    max-width: none;
+    width: 100%;
+  }
+
+  > p {
+    color: color-mix(in srgb, var(--sera-fg) 78%, var(--sera-muted));
+    font-size: 1.015rem;
+    line-height: 1.78;
+  }
+
+  > p + p {
+    margin-top: 1.25rem;
+  }
+
+  > h2,
+  > h3,
+  > h4 {
+    color: var(--sera-fg);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+
+  > h2 {
+    margin-top: 3.25rem;
+    margin-bottom: 1.15rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--sera-border);
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+  }
+
+  > h3 {
+    margin-top: 2.35rem;
+    font-size: 1.25rem;
+  }
+
+  > h4 {
+    margin-top: 1.85rem;
+    font-size: 1.05rem;
+  }
+
+  > hr {
+    height: 1px;
+    margin: 2.2rem 0;
+    border: 0;
+    background: var(--sera-border);
+    opacity: 1;
+  }
+
+  a:not(.btn):not(.dropdown-item) {
+    color: var(--sera-fg);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--sera-fg) 30%, transparent);
+    text-underline-offset: 0.16em;
+  }
+
+  a:not(.btn):not(.dropdown-item):hover {
+    text-decoration-color: currentColor;
+  }
+
+  :not(pre) > code {
+    padding: 0.1rem 0.3rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+    font-size: 0.88em;
+  }
+
+  blockquote {
+    margin: 1.5rem 0;
+    padding: 0.9rem 1.1rem;
+    border-left: 2px solid var(--sera-fg);
+    border-radius: 0;
+    background: var(--sera-soft);
+    color: var(--sera-muted);
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  th {
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+  }
+
+  th,
+  td {
+    padding: 0.65rem 0.8rem;
+    border-color: var(--sera-border);
+  }
+
+  .anchor {
+    color: var(--sera-muted);
+  }
+
+  .page-footer-meta {
+    gap: 1rem;
+    margin: 3.25rem 0 1.5rem;
+    padding: 1rem 0 0;
+    border-top: 1px solid var(--sera-border);
+    color: var(--sera-muted);
+  }
+
+  .page-footer-meta a {
+    color: var(--sera-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .page-footer-meta a:hover {
+    color: var(--sera-fg);
+  }
+
+  > .expressive-code,
+  .expressive-code,
+  .expressive-code figure,
+  .expressive-code .highlight,
+  pre,
+  table {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .expressive-code {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  img,
+  video,
+  iframe {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .docs-content {
+    margin-top: 0;
+    padding: 1.15rem 1rem 2.1rem;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-image: none;
+  }
+
+  .docs-content .page-header {
+    margin: 0 0 1.75rem;
+    padding: 1.2rem;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .docs-content .page-header {
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .docs-content .page-header h1 {
+    font-size: 1.85rem;
+  }
+
+  .docs-content > p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .docs-content > h2 {
+    margin-top: 2.5rem;
+  }
+}

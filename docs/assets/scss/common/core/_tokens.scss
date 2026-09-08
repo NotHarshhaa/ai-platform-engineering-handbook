@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+// =============================================================================
+// Sera design tokens (CSS custom properties)
+// =============================================================================
+
+:root {
+  --sera-bg: #fafaf8;
+  --sera-fg: #1f1f1c;
+  --sera-muted: #6b6b63;
+  --sera-border: #e4e4df;
+  --sera-card: #ffffff;
+  --sera-primary: #2a2a26;
+  --sera-primary-fg: #f7f7f4;
+  --sera-soft: #f3f3ef;
+  --sera-hatch: color-mix(in srgb, var(--sera-fg) 9%, transparent);
+  --sera-hatch-bg: color-mix(in srgb, var(--sera-fg) 3.5%, transparent);
+  --docs-sticky-top: 4.25rem;
+  --bs-border-radius: 0;
+  --bs-border-radius-sm: 0;
+  --bs-border-radius-lg: 0;
+  --bs-border-radius-xl: 0;
+  --bs-border-radius-2xl: 0;
+  --bs-border-radius-pill: 0;
+}
+
+[data-bs-theme='dark'] {
+  --sera-bg: #1c1c19;
+  --sera-fg: #f0f0ea;
+  --sera-muted: #a8a89e;
+  --sera-border: rgba(255, 255, 255, 0.1);
+  --sera-card: #242420;
+  --sera-primary: #f0f0ea;
+  --sera-primary-fg: #1c1c19;
+  --sera-soft: #2a2a26;
+  --sera-hatch: color-mix(in srgb, var(--sera-fg) 12%, transparent);
+  --sera-hatch-bg: color-mix(in srgb, var(--sera-fg) 5%, transparent);
+}
+
+@media (max-width: 991.98px) {
+  :root {
+    --docs-sticky-top: 3.8rem;
+  }
+}

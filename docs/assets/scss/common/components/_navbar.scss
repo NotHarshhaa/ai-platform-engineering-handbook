@@ -1,0 +1,264 @@
+// =============================================================================
+// Navbar header & navigation controls
+// =============================================================================
+
+.sticky-top > .navbar {
+  min-height: 4.25rem;
+  border-bottom: 1px solid var(--sera-border);
+  background: color-mix(in srgb, var(--sera-card) 92%, transparent);
+  box-shadow: none;
+  backdrop-filter: blur(8px);
+
+  .navbar-brand {
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    color: var(--sera-fg);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .navbar-brand::before {
+    display: grid;
+    width: 1.75rem;
+    height: 1.75rem;
+    place-items: center;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+    content: 'AI';
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    box-shadow: none;
+  }
+
+  .navbar-nav {
+    gap: 0.1rem;
+  }
+
+  .navbar-nav .nav-link {
+    position: relative;
+    padding: 0.45rem 0.7rem;
+    border-radius: 0;
+    color: var(--sera-muted);
+    font-size: 0.8rem;
+    font-weight: 650;
+    letter-spacing: 0.04em;
+    transition: color 0.15s ease;
+  }
+
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active {
+    color: var(--sera-fg);
+    background: transparent;
+  }
+
+  .navbar-nav .nav-item .nav-link {
+    position: relative;
+  }
+
+  .navbar-nav .nav-item .nav-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    background-color: var(--sera-hatch-bg);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      var(--sera-hatch) 2px,
+      var(--sera-hatch) 3px
+    );
+  }
+
+  .navbar-nav .nav-item .nav-link:hover::before,
+  .navbar-nav .nav-item .nav-link.active::before {
+    opacity: 1;
+  }
+
+  .navbar-nav .nav-item .nav-link > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @include media-breakpoint-up(lg) {
+    > .container-fluid {
+      display: flex;
+      align-items: center;
+    }
+
+    #offcanvasNavMain {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+    }
+
+    #offcanvasNavMain .offcanvas-body {
+      flex: 1 1 auto;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.35rem;
+    }
+
+    #offcanvasNavMain .navbar-nav {
+      align-items: center;
+      margin: 0 auto 0 0;
+    }
+
+    #searchToggleDesktop,
+    #buttonColorMode,
+    #socialMenu {
+      align-self: center;
+      margin: 0 !important;
+    }
+
+    #socialMenu {
+      display: inline-flex;
+      align-items: center;
+      padding: 0;
+    }
+
+    #socialMenu .nav-item {
+      margin: 0 !important;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  #searchToggleDesktop,
+  #buttonColorMode,
+  #socialMenu .nav-link,
+  #socialMenu .social-link {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    color: var(--sera-muted);
+    background: var(--sera-card);
+    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  }
+
+  #buttonColorMode {
+    position: relative;
+  }
+
+  #searchToggleDesktop svg,
+  #socialMenu .nav-link svg,
+  #socialMenu .social-link svg {
+    display: block;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+  }
+
+  #buttonColorMode svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  #searchToggleDesktop:hover,
+  #buttonColorMode:hover,
+  #socialMenu .nav-link:hover,
+  #socialMenu .social-link:hover {
+    border-color: var(--sera-fg);
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Color mode toggler: fix overlapping moon and sun icons
+// -----------------------------------------------------------------------------
+
+// In dark mode: hide moon, show sun
+[data-bs-theme='dark'] #buttonColorMode svg[data-bs-theme-value='dark'] {
+  display: none !important;
+}
+[data-bs-theme='dark'] #buttonColorMode svg[data-bs-theme-value='light'] {
+  display: block !important;
+}
+
+// In light mode / default: show moon, hide sun
+[data-bs-theme='light'] #buttonColorMode svg[data-bs-theme-value='light'],
+:root:not([data-bs-theme='dark']) #buttonColorMode svg[data-bs-theme-value='light'] {
+  display: none !important;
+}
+[data-bs-theme='light'] #buttonColorMode svg[data-bs-theme-value='dark'],
+:root:not([data-bs-theme='dark']) #buttonColorMode svg[data-bs-theme-value='dark'] {
+  display: block !important;
+}
+
+// -----------------------------------------------------------------------------
+// Mobile navbar
+// -----------------------------------------------------------------------------
+
+@media (max-width: 991.98px) {
+  header.navbar > .container-fluid,
+  header.navbar > .container-fw,
+  header.navbar > .container {
+    flex-wrap: nowrap !important;
+  }
+
+  .sticky-top > .navbar {
+    min-height: 3.8rem;
+
+    .container-fluid {
+      padding-inline: 1rem;
+    }
+
+    .navbar-brand {
+      font-size: 0.9rem !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      flex-shrink: 1 !important;
+      min-width: 0 !important;
+      max-width: calc(100% - 7.5rem);
+    }
+
+    .navbar-brand::before {
+      width: 1.55rem;
+      height: 1.55rem;
+      flex-shrink: 0;
+    }
+
+    > .container-fluid > .btn {
+      display: grid;
+      width: 2.15rem;
+      height: 2.15rem;
+      margin: 0 0.15rem !important;
+      padding: 0 !important;
+      place-items: center;
+      border: 1px solid var(--sera-border);
+      border-radius: 0;
+      color: var(--sera-fg);
+      background: var(--sera-card);
+      flex-shrink: 0;
+
+      svg {
+        width: 1.15rem;
+        height: 1.15rem;
+      }
+    }
+  }
+}

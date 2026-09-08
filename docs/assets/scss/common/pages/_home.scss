@@ -1,0 +1,955 @@
+// =============================================================================
+// Homepage layout & components
+// =============================================================================
+
+.handbook-home {
+  color: var(--sera-fg);
+  overflow-x: clip;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  .handbook-shell {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding-inline: clamp(1.5rem, 2vw, 3rem);
+    min-width: 0;
+  }
+
+  .handbook-section {
+    padding: clamp(4rem, 7vw, 6.5rem) 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
+  .eyebrow,
+  .section-kicker,
+  .roadmap-index,
+  .roadmap-badge,
+  .featured-card__eyebrow {
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    gap: 0.55rem;
+    align-items: center;
+    color: var(--sera-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .eyebrow__signal,
+  .status-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 0;
+    background: var(--sera-fg);
+    box-shadow: none;
+  }
+
+  .section-kicker {
+    color: var(--sera-muted);
+    margin-bottom: 0.85rem;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Hero
+  // ---------------------------------------------------------------------------
+  .handbook-hero {
+    position: relative;
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+    isolation: isolate;
+    overflow: hidden;
+    border-bottom: 1px solid var(--sera-border);
+  }
+
+  .handbook-hero::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    opacity: 0.55;
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--sera-fg) 10%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--sera-fg) 10%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 48px 48px;
+  }
+
+  .handbook-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 720px) minmax(360px, 520px);
+    justify-content: center;
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: center;
+    min-height: 580px;
+    max-width: 1600px;
+    margin-inline: auto;
+    padding: 5rem 0 4.5rem;
+    min-width: 0;
+  }
+
+  .handbook-hero__copy {
+    max-width: 32rem;
+    padding: 1rem 0;
+  }
+
+  .handbook-hero h1 {
+    max-width: 42rem;
+    font-size: clamp(2.6rem, 5vw, 4.6rem);
+    font-weight: 700;
+    letter-spacing: -0.055em;
+    line-height: 1.02;
+    margin-bottom: 1.35rem;
+  }
+
+  .handbook-hero h1 em {
+    color: var(--sera-muted);
+    font-style: normal;
+  }
+
+  .handbook-hero__lede {
+    max-width: 42rem;
+    color: var(--sera-muted);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.65;
+  }
+
+  .handbook-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.85rem 0 2.75rem;
+  }
+
+  .handbook-button {
+    display: inline-flex;
+    gap: 0.7rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0.85rem 1.2rem;
+    border: 1px solid transparent;
+    border-radius: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .handbook-button:hover {
+    text-decoration: none;
+    transform: none;
+  }
+
+  .handbook-button--primary {
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+    border-color: var(--sera-fg);
+  }
+
+  .handbook-button--primary:hover {
+    background: transparent;
+    color: var(--sera-fg);
+  }
+
+  .handbook-button--quiet {
+    border-color: var(--sera-border);
+    color: var(--sera-fg);
+    background: var(--sera-card);
+  }
+
+  .handbook-button--quiet:hover {
+    border-color: var(--sera-fg);
+  }
+
+  .handbook-button--light {
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+    white-space: nowrap;
+  }
+
+  .handbook-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+    margin: 0;
+    text-align: left;
+  }
+
+  .handbook-stats div {
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--sera-border);
+  }
+
+  .handbook-stats dt {
+    font-size: 1.35rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .handbook-stats dd {
+    margin: 0.35rem 0 0;
+    color: var(--sera-muted);
+    font-size: 0.75rem;
+  }
+
+  .handbook-hero__visual {
+    position: relative;
+    min-height: 380px;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    overflow: hidden;
+    box-shadow: none;
+  }
+
+  .hero-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    position: relative;
+    padding: 2.5rem 1.5rem 1.75rem;
+  }
+
+  .hero-stages::before {
+    content: '';
+    position: absolute;
+    inset: 2.5rem 0 1.75rem;
+    width: 1px;
+    margin-inline-start: 0.75rem;
+    background: var(--sera-border);
+  }
+
+  .hero-stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.75rem 1fr;
+    gap: 0.65rem;
+    align-items: start;
+    padding: 0.4rem 0;
+  }
+
+  .hero-stage__num {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    color: var(--sera-muted);
+    font-size: 0.62rem;
+    font-weight: 800;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-stage--active .hero-stage__num {
+    border-color: var(--sera-fg);
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+  }
+
+  .hero-stage__name {
+    display: block;
+    color: var(--sera-fg);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .hero-stage__detail {
+    display: block;
+    grid-column: 2;
+    color: var(--sera-muted);
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .hero-status {
+    margin-top: 1rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    color: var(--sera-muted);
+    font-size: 0.65rem;
+    backdrop-filter: none;
+  }
+
+  .hero-status strong {
+    color: var(--sera-fg);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Intro
+  // ---------------------------------------------------------------------------
+  .handbook-intro {
+    border-bottom: 1px solid var(--sera-border);
+    background: var(--sera-card);
+  }
+
+  .handbook-intro__inner {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 720px;
+    min-width: 0;
+  }
+
+  .handbook-intro h2,
+  .section-heading h2,
+  .handbook-cta h2 {
+    font-size: clamp(1.85rem, 3vw, 2.9rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+  }
+
+  .section-heading__body {
+    max-width: 45rem;
+    color: var(--sera-muted);
+    font-size: 1.02rem;
+    line-height: 1.65;
+  }
+
+  .handbook-intro h2 span {
+    color: var(--sera-muted);
+  }
+
+  .handbook-intro__body {
+    max-width: 680px;
+    color: var(--sera-muted);
+    font-size: 1.02rem;
+    line-height: 1.65;
+    margin-bottom: 0;
+  }
+
+  .handbook-intro .text-link {
+    justify-self: end;
+  }
+
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--sera-fg);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+    white-space: nowrap;
+  }
+
+  .text-link:hover {
+    color: var(--sera-muted);
+    text-decoration: underline;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Roadmap
+  // ---------------------------------------------------------------------------
+  .handbook-roadmap {
+    background: transparent;
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 2.25rem;
+  }
+
+  .section-heading h2 {
+    margin-bottom: 0;
+  }
+
+  .section-heading > p {
+    max-width: 360px;
+    color: var(--sera-muted);
+    line-height: 1.55;
+    margin-bottom: 0.25rem;
+  }
+
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    min-width: 0;
+  }
+
+  .roadmap-card {
+    position: relative;
+    display: flex;
+    min-height: 390px;
+    flex-direction: column;
+    padding: 1.35rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    overflow: visible;
+    transition: none;
+  }
+
+  .roadmap-card:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: var(--sera-hatch-bg);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      var(--sera-hatch) 2px,
+      var(--sera-hatch) 3px
+    );
+  }
+
+  .roadmap-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.4;
+    background:
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 0 / 0.6rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 0 / 2px 0.6rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 0 / 0.6rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 0 / 2px 0.6rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 100% / 0.6rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 100% / 2px 0.6rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 100% / 0.6rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 100% / 2px 0.6rem no-repeat;
+  }
+
+  .roadmap-card--genai,
+  .roadmap-card--agents,
+  .roadmap-card--scale,
+  .roadmap-card--foundation {
+    --card-accent: var(--sera-fg);
+  }
+
+  .roadmap-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .roadmap-index {
+    color: var(--sera-muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .roadmap-badge {
+    padding: 0.28rem 0.45rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .roadmap-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .roadmap-card p {
+    color: var(--sera-muted);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .roadmap-card ul {
+    margin: 0.4rem 0 1.25rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .roadmap-card li {
+    position: relative;
+    padding: 0.35rem 0 0.35rem 0.9rem;
+    border-top: 1px solid var(--sera-border);
+    color: var(--sera-fg);
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  .roadmap-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 0;
+    background: var(--sera-fg);
+  }
+
+  .roadmap-card a {
+    display: inline-flex;
+    gap: 0.4rem;
+    margin-top: auto;
+    color: var(--sera-fg);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+  }
+
+  .roadmap-card a:hover {
+    color: var(--sera-muted);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Focus
+  // ---------------------------------------------------------------------------
+  .handbook-focus {
+    background: var(--sera-card);
+    border-block: 1px solid var(--sera-border);
+  }
+
+  .section-heading--focus {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem 2rem;
+    align-items: end;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-heading--focus > div {
+    max-width: 42rem;
+  }
+
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+    min-width: 0;
+  }
+
+  .focus-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.25rem 1fr 1.5rem;
+    gap: 1rem;
+    padding: 1.35rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+    overflow: visible;
+  }
+
+  .focus-item::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background:
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 0 / 0.6rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 0 / 2px 0.6rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 0 / 0.6rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 0 / 2px 0.6rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 100% / 0.6rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 0 100% / 2px 0.6rem no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 100% / 0.6rem 2px no-repeat,
+      linear-gradient(var(--sera-fg), var(--sera-fg)) 100% 100% / 2px 0.6rem no-repeat;
+    transition: opacity 0.15s ease;
+  }
+
+  .focus-item:hover::before {
+    opacity: 1;
+  }
+
+  .focus-item:hover {
+    border-color: var(--sera-fg);
+  }
+
+  .focus-item__num {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-soft);
+    color: var(--sera-muted);
+    font-size: 0.7rem;
+    font-weight: 800;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .focus-item h3 {
+    margin: 0 0 0.25rem;
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .focus-item p {
+    margin: 0;
+    grid-column: 2;
+    color: var(--sera-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .focus-item b {
+    justify-self: end;
+    color: var(--sera-fg);
+    font-weight: 500;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Featured
+  // ---------------------------------------------------------------------------
+  .handbook-featured {
+    background: transparent;
+  }
+
+  .section-heading--compact {
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+    min-width: 0;
+  }
+
+  .featured-card {
+    position: relative;
+    min-height: 220px;
+    padding: 1.35rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    color: var(--sera-fg);
+    text-decoration: none;
+    overflow: visible;
+    transition: none;
+  }
+
+  .featured-card::after {
+    display: none;
+  }
+
+  .featured-card:hover {
+    color: var(--sera-fg);
+    text-decoration: none;
+    transform: none;
+    box-shadow: none;
+    background-color: var(--sera-hatch-bg);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      var(--sera-hatch) 2px,
+      var(--sera-hatch) 3px
+    );
+  }
+
+  .featured-card__eyebrow {
+    color: var(--sera-muted);
+    font-size: 0.62rem;
+  }
+
+  .featured-card h3 {
+    max-width: 260px;
+    margin: 1.4rem 0 0.6rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .featured-card p {
+    max-width: 280px;
+    color: var(--sera-muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .featured-card__arrow {
+    position: absolute;
+    z-index: 1;
+    right: 1.2rem;
+    bottom: 1.1rem;
+    color: var(--sera-fg);
+    font-size: 1.15rem;
+  }
+
+  // ---------------------------------------------------------------------------
+  // CTA
+  // ---------------------------------------------------------------------------
+  .handbook-cta {
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+    border-top: 1px solid var(--sera-border);
+  }
+
+  .handbook-cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: clamp(3rem, 6vw, 4.25rem) 0;
+    text-align: center;
+  }
+
+  .handbook-cta .section-kicker {
+    color: color-mix(in srgb, var(--sera-bg) 70%, transparent);
+  }
+
+  .handbook-cta h2 {
+    margin: 0;
+    color: var(--sera-bg);
+    font-size: clamp(1.85rem, 3.5vw, 3.2rem);
+  }
+
+  .handbook-cta .handbook-button--light:hover {
+    background: transparent;
+    color: var(--sera-bg);
+    border-color: var(--sera-bg);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Author
+  // ---------------------------------------------------------------------------
+  .handbook-author {
+    background: var(--sera-card);
+    border-top: 1px solid var(--sera-border);
+  }
+
+  .handbook-author__grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: center;
+    min-width: 0;
+  }
+
+  .handbook-author__identity {
+    display: flex;
+    gap: 1.1rem;
+    align-items: center;
+  }
+
+  .handbook-author__monogram,
+  .handbook-author__avatar {
+    display: grid;
+    width: clamp(5rem, 8vw, 6.5rem);
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+    box-shadow: none;
+    font-size: clamp(1.25rem, 2vw, 1.85rem);
+    font-weight: 750;
+    letter-spacing: -0.04em;
+    overflow: hidden;
+    flex: 0 0 auto;
+  }
+
+  .handbook-author__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .handbook-author__identity .section-kicker {
+    margin-bottom: 0.3rem;
+  }
+
+  .handbook-author__role {
+    margin: 0;
+    color: var(--sera-muted);
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .handbook-author__copy h2 {
+    margin-bottom: 0.85rem;
+    color: var(--sera-fg);
+    font-size: clamp(1.85rem, 3vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
+  .handbook-author__copy > p {
+    max-width: 680px;
+    margin-bottom: 1.1rem;
+    color: var(--sera-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .handbook-author__topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .handbook-author__topics span {
+    padding: 0.3rem 0.55rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .handbook-author__github {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding-bottom: 0.15rem;
+    border-bottom: 1px solid var(--sera-border);
+    color: var(--sera-fg);
+    font-size: 0.88rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .handbook-author__github:hover {
+    border-color: var(--sera-fg);
+    color: var(--sera-muted);
+    text-decoration: none;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Responsive Breakpoints
+  // ---------------------------------------------------------------------------
+  @media (max-width: 991.98px) {
+    .handbook-hero__grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      min-height: auto;
+      padding: 4rem 0;
+    }
+
+    .handbook-hero__visual {
+      max-width: 600px;
+      width: 100%;
+      min-height: 340px;
+      margin-inline: auto;
+    }
+
+    .handbook-intro__inner,
+    .handbook-author__grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .handbook-intro__inner .text-link {
+      justify-self: auto;
+    }
+
+    .roadmap-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .handbook-shell {
+      padding-inline: 1rem;
+    }
+
+    .handbook-section {
+      padding: 3.5rem 0;
+    }
+
+    .handbook-hero h1 {
+      font-size: clamp(2.35rem, 12vw, 3.4rem);
+    }
+
+    .handbook-hero__actions {
+      align-items: stretch;
+    }
+
+    .handbook-button {
+      width: 100%;
+    }
+
+    .section-heading,
+    .section-heading--focus,
+    .handbook-cta__inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .section-heading--focus {
+      grid-template-columns: 1fr;
+    }
+
+    .handbook-cta__inner {
+      align-items: center;
+    }
+
+    .roadmap-grid,
+    .featured-grid,
+    .focus-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .roadmap-card,
+    .featured-card {
+      min-height: 0;
+    }
+
+    .handbook-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+}

@@ -1,0 +1,151 @@
+// =============================================================================
+// Global base styles & layout
+// =============================================================================
+
+html,
+body {
+  max-width: 100%;
+}
+
+body {
+  color: var(--sera-fg);
+  background-color: var(--sera-bg);
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--sera-fg) 10%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--sera-fg) 10%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 48px 48px;
+  background-attachment: fixed;
+  background-position: center top;
+}
+
+.container-fw {
+  max-width: none !important;
+  width: 100%;
+  padding-left: clamp(1rem, 2vw, 2rem);
+  padding-right: clamp(1rem, 2vw, 2rem);
+}
+
+// Docs layout widths & breakpoints
+body.docs {
+  .wrap.container-fluid {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: clamp(1rem, 2vw, 2rem);
+  }
+
+  .wrap.container-fluid > .content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .row.flex-xl-nowrap {
+    width: 100%;
+    margin-inline: 0;
+    --bs-gutter-x: #{clamp(1rem, 2vw, 1.75rem)};
+  }
+
+  .container-fw.col {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    justify-content: flex-start !important;
+    gap: clamp(1rem, 2vw, 2rem);
+    padding-inline: 0;
+
+    .docs-toc {
+      margin-left: 0;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  body.docs.docs-sidebar-hidden .container-fw.col {
+    flex: 1 1 0 !important;
+    max-width: none !important;
+  }
+
+  body.docs {
+    .row.flex-xl-nowrap,
+    .container-fw.col {
+      align-items: flex-start;
+    }
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  body.docs .docs-content {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+
+@include media-breakpoint-between(lg, xl) {
+  body.docs .docs-content {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+
+.docs-content.mx-xl-auto {
+  @include media-breakpoint-up(lg) {
+    flex: 0 0 85% !important;
+    max-width: 85% !important;
+  }
+  @include media-breakpoint-up(xl) {
+    flex: 0 0 85% !important;
+    max-width: 85% !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  body.docs {
+    .wrap.container-fluid {
+      padding-inline: clamp(1.25rem, 3vw, 1.75rem);
+    }
+
+    .row.flex-xl-nowrap {
+      --bs-gutter-x: 0;
+    }
+  }
+}
+
+@media (max-width: 1199.98px) {
+  body.docs {
+    .wrap,
+    .content,
+    .row.flex-xl-nowrap,
+    .row.flex-xl-nowrap > *,
+    .container-fw.col,
+    .docs-content {
+      min-width: 0;
+      max-width: 100%;
+    }
+  }
+}
+
+// Layout overflow safeguards
+.wrap,
+.content,
+.handbook-home,
+.course-index {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@supports not (overflow: clip) {
+  .handbook-home,
+  .course-index {
+    overflow-x: hidden;
+  }
+}

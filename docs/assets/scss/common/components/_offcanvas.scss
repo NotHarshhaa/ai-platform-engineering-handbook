@@ -1,0 +1,119 @@
+// =============================================================================
+// Mobile offcanvas navigation drawers
+// =============================================================================
+
+@media (max-width: 991.98px) {
+  .navbar .offcanvas:not(.show):not(.showing):not(.hiding) {
+    display: none;
+  }
+
+  .navbar .offcanvas.offcanvas-start,
+  .navbar .offcanvas.offcanvas-end {
+    width: 88vw;
+    max-width: 390px;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    box-shadow: none;
+    z-index: 1060;
+  }
+
+  .offcanvas-backdrop {
+    z-index: 1055;
+  }
+
+  .navbar #offcanvasNavSection .offcanvas-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.75rem;
+  }
+
+  .navbar .offcanvas-header {
+    min-height: 4rem;
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid var(--sera-border);
+    background: var(--sera-card);
+  }
+
+  .navbar .offcanvas-title {
+    color: var(--sera-fg);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .navbar .offcanvas-header .btn {
+    display: grid;
+    width: 2.1rem;
+    height: 2.1rem;
+    place-items: center;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    color: var(--sera-fg);
+    background: var(--sera-soft);
+  }
+
+  .navbar .offcanvas-body {
+    padding: 0.75rem;
+    background: var(--sera-card);
+  }
+
+  .navbar #offcanvasNavMain .navbar-nav {
+    gap: 0;
+  }
+
+  .navbar #offcanvasNavMain .navbar-nav .nav-item {
+    border-bottom: 1px solid var(--sera-border);
+  }
+
+  .navbar #offcanvasNavMain .navbar-nav .nav-link {
+    padding: 0.9rem 0.85rem;
+    border: 0;
+    border-radius: 0;
+    color: var(--sera-muted);
+    font-size: 0.95rem;
+    font-weight: 650;
+  }
+
+  .navbar #offcanvasNavMain .navbar-nav .nav-link.active,
+  .navbar #offcanvasNavMain .navbar-nav .nav-link:hover {
+    background: transparent;
+    color: var(--sera-fg);
+  }
+
+  .navbar #offcanvasNavMain #buttonColorMode {
+    display: inline-grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 1.25rem 0 0 !important;
+    place-items: center;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    color: var(--sera-fg);
+  }
+
+  .navbar #offcanvasNavMain #socialMenu {
+    margin-top: 0.75rem;
+  }
+
+  .navbar #offcanvasNavMain #socialMenu .nav-link {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0;
+    place-items: center;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    color: var(--sera-fg);
+  }
+
+  .navbar #offcanvasNavSection .doks-sidebar {
+    margin-top: 0 !important;
+  }
+}

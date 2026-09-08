@@ -1,0 +1,191 @@
+// =============================================================================
+// Table of Contents (TOC) - Desktop & Mobile
+// =============================================================================
+
+.docs-toc {
+  align-self: flex-start;
+  position: sticky;
+  top: var(--docs-sticky-top);
+  z-index: 1000;
+  height: auto;
+  max-height: calc(100vh - var(--docs-sticky-top));
+  margin-top: 1.25rem;
+  overflow-y: auto;
+  scrollbar-color: var(--sera-muted) transparent;
+
+  .page-links {
+    padding: 0.9rem 0.75rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background-color: var(--sera-card);
+    background-image:
+      linear-gradient(var(--sera-fg), var(--sera-fg)),
+      linear-gradient(var(--sera-fg), var(--sera-fg)),
+      linear-gradient(var(--sera-fg), var(--sera-fg)),
+      linear-gradient(var(--sera-fg), var(--sera-fg)),
+      linear-gradient(var(--sera-fg), var(--sera-fg)),
+      linear-gradient(var(--sera-fg), var(--sera-fg)),
+      linear-gradient(var(--sera-fg), var(--sera-fg)),
+      linear-gradient(var(--sera-fg), var(--sera-fg));
+    background-size:
+      0.65rem 2px,
+      2px 0.65rem,
+      0.65rem 2px,
+      2px 0.65rem,
+      0.65rem 2px,
+      2px 0.65rem,
+      0.65rem 2px,
+      2px 0.65rem;
+    background-position:
+      left top,
+      left top,
+      right top,
+      right top,
+      left bottom,
+      left bottom,
+      right bottom,
+      right bottom;
+    background-repeat: no-repeat;
+    box-shadow: none;
+  }
+
+  .page-links h3 {
+    margin: 0 0 0.7rem;
+    padding: 0.1rem 0.4rem 0.7rem;
+    border-bottom: 1px solid var(--sera-border);
+    color: var(--sera-muted);
+    font-size: 0.65rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  #toc ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #toc ul ul {
+    margin: 0.1rem 0 0.15rem 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 1px solid var(--sera-border);
+  }
+
+  #toc a {
+    display: block;
+    padding: 0.35rem 0.4rem;
+    border-radius: 0;
+    color: var(--sera-muted);
+    font-size: 0.72rem;
+    line-height: 1.37;
+    text-decoration: none;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
+    &:hover,
+    &.active {
+      color: var(--sera-fg);
+      font-weight: 650;
+      text-decoration: none;
+      background-color: var(--sera-hatch-bg);
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 2px,
+        var(--sera-hatch) 2px,
+        var(--sera-hatch) 3px
+      );
+    }
+  }
+}
+
+.docs-toc::-webkit-scrollbar {
+  width: 4px;
+}
+
+.docs-toc::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: var(--sera-muted);
+}
+
+@include media-breakpoint-up(xl) {
+  body.docs .docs-toc {
+    flex: 0 0 clamp(220px, 15vw, 280px) !important;
+    width: clamp(220px, 15vw, 280px) !important;
+    max-width: none !important;
+    align-self: flex-start;
+    position: sticky;
+    top: var(--docs-sticky-top);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Mobile sticky TOC
+// -----------------------------------------------------------------------------
+
+.docs-content .toc-mobile-sticky {
+  position: sticky;
+  top: var(--docs-sticky-top);
+  z-index: 1000;
+  margin: 0 0 2rem;
+  background: transparent;
+
+  details {
+    overflow: hidden;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-soft);
+    box-shadow: none;
+  }
+
+  details summary {
+    min-height: 2.7rem;
+    padding: 0.7rem 2.5rem 0.7rem 1rem;
+    color: var(--sera-fg);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  details .page-links {
+    max-height: 48vh;
+    padding: 0.35rem 0.55rem 0.7rem;
+    overflow-y: auto;
+    border-top: 1px solid var(--sera-border);
+  }
+
+  #toc ul,
+  #TableOfContents ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #toc ul ul,
+  #TableOfContents ul ul {
+    margin-left: 0.55rem;
+    padding-left: 0.55rem;
+    border-left: 1px solid var(--sera-border);
+  }
+
+  #toc a,
+  #TableOfContents a {
+    display: block;
+    padding: 0.4rem 0.4rem;
+    border-radius: 0;
+    color: var(--sera-muted);
+    font-size: 0.76rem;
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  #toc a:hover,
+  #toc a.active,
+  #TableOfContents a:hover,
+  #TableOfContents a.active {
+    background: var(--sera-hatch-bg);
+    color: var(--sera-fg);
+    text-decoration: none;
+  }
+}

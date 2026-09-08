@@ -1,0 +1,18 @@
+<footer class="footer text-muted">
+  <div class="container-{{ site.Params.doks.containerBreakpoint | default "lg" }}">
+    <div class="row">
+      <div class="col-md-6 text-center text-md-start">
+        <ul class="list-inline mb-0">
+          {{ range .Site.Menus.footer -}}
+            <li class="list-inline-item"><a class="text-muted" href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+          {{- end }}
+        </ul>
+      </div>
+      <div class="col-md-6 text-center text-md-end">
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item">{{ site.Params.footer | default "AI Platform Engineering Handbook &bull; Built by <a class='text-muted' href='https://github.com/NotHarshhaa' target='_blank' rel='noopener noreferrer'>Harshhaa</a>" | safeHTML }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,57 @@
+// =============================================================================
+// Site footer
+// =============================================================================
+
+footer.footer {
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--sera-border);
+  background: var(--sera-card);
+  color: var(--sera-muted);
+  font-size: 0.8rem;
+
+  .container,
+  .container-fluid {
+    padding-inline: clamp(1rem, 2vw, 2rem);
+  }
+
+  .row {
+    align-items: center;
+    row-gap: 0.75rem;
+  }
+
+  ul.list-inline {
+    margin: 0;
+    padding: 0;
+  }
+
+  .list-inline-item {
+    margin-right: 1.25rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  a {
+    color: var(--sera-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--sera-fg);
+      text-decoration: underline;
+      text-underline-offset: 0.14em;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    text-align: center;
+
+    .text-md-start,
+    .text-md-end,
+    .text-lg-start,
+    .text-lg-end {
+      text-align: center !important;
+    }
+  }
+}

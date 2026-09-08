@@ -1,0 +1,443 @@
+// =============================================================================
+// Course index / docs catalogue page
+// =============================================================================
+
+.course-index {
+  color: var(--sera-fg);
+  overflow-x: clip;
+
+  .course-index__shell {
+    width: 100%;
+    margin: 0 auto;
+    padding-inline: clamp(1.5rem, 4vw, 5rem);
+    min-width: 0;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Hero & Progress Box
+  // ---------------------------------------------------------------------------
+  .course-index__hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+    border-bottom: 1px solid var(--sera-border);
+  }
+
+  .course-index__hero::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    opacity: 0.5;
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--sera-fg) 10%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--sera-fg) 10%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 48px 48px;
+  }
+
+  .course-index__hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.65fr);
+    gap: clamp(2.5rem, 8vw, 9rem);
+    align-items: center;
+    min-height: 400px;
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+    min-width: 0;
+  }
+
+  .course-index__eyebrow {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0 0 1rem;
+    color: var(--sera-muted);
+    font-size: 0.68rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .course-index__eyebrow span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 0;
+    background: var(--sera-fg);
+    box-shadow: none;
+  }
+
+  .course-index__eyebrow--dark {
+    color: var(--sera-muted);
+  }
+
+  .course-index h1 {
+    max-width: 740px;
+    margin: 0 0 1.15rem;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.055em;
+    line-height: 1;
+  }
+
+  .course-index h1 em {
+    color: var(--sera-muted);
+    font-style: normal;
+  }
+
+  .course-index__hero p:not(.course-index__eyebrow) {
+    max-width: 600px;
+    margin-bottom: 1.6rem;
+    color: var(--sera-muted);
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+
+  .course-index__button {
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    padding: 0.85rem 1.15rem;
+    border: 1px solid var(--sera-fg);
+    border-radius: 0;
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+    font-size: 0.88rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .course-index__button:hover {
+    background: transparent;
+    color: var(--sera-fg);
+    text-decoration: none;
+    transform: none;
+  }
+
+  .course-index__progress {
+    position: relative;
+    overflow: hidden;
+    padding: 1.25rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    box-shadow: none;
+  }
+
+  .course-index__progress-head {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.74rem;
+    margin-bottom: 1rem;
+  }
+
+  .course-index__progress-head span {
+    color: var(--sera-muted);
+  }
+
+  .course-index__progress-head strong {
+    color: var(--sera-fg);
+    font-weight: 700;
+  }
+
+  .course-index__stages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .course-index__stage {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.74rem;
+  }
+
+  .course-index__stage-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.85rem;
+    height: 1.85rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-soft);
+    color: var(--sera-muted);
+    font-size: 0.6rem;
+    font-weight: 800;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .course-index__stage-name {
+    color: var(--sera-fg);
+    font-weight: 700;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Catalogue Grid & Cards
+  // ---------------------------------------------------------------------------
+  .course-index__catalogue {
+    padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+    background: transparent;
+  }
+
+  .course-index__section-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+
+  .course-index__section-head h2,
+  .course-index__bottom h2 {
+    max-width: 740px;
+    margin: 0;
+    font-size: clamp(1.85rem, 3.2vw, 2.85rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+  }
+
+  .course-index__section-head > p {
+    max-width: 360px;
+    margin: 0;
+    color: var(--sera-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .course-index__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+    min-width: 0;
+  }
+
+  .course-index__card {
+    display: flex;
+    min-height: 240px;
+    flex-direction: column;
+    padding: 1.25rem;
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    transition: none;
+  }
+
+  .course-index__card:nth-child(n) {
+    --card-accent: var(--sera-fg);
+  }
+
+  .course-index__card:hover {
+    box-shadow: none;
+    transform: none;
+    background-color: var(--sera-hatch-bg);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      var(--sera-hatch) 2px,
+      var(--sera-hatch) 3px
+    );
+  }
+
+  .course-index__card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .course-index__week,
+  .course-index__count {
+    font-size: 0.62rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .course-index__week {
+    color: var(--sera-fg);
+  }
+
+  .course-index__count {
+    color: var(--sera-muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .course-index__card h3 {
+    margin: 0 0 0.85rem;
+    color: var(--sera-fg);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .course-index__card ul {
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .course-index__card li {
+    margin: 0;
+    border-top: 1px solid var(--sera-border);
+  }
+
+  .course-index__card li a {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.32rem 0;
+    color: var(--sera-muted);
+    font-size: 0.74rem;
+    line-height: 1.34;
+    text-decoration: none;
+  }
+
+  .course-index__card li a:hover {
+    color: var(--sera-fg);
+  }
+
+  .course-index__card li a span {
+    color: var(--sera-fg);
+  }
+
+  .course-index__explore {
+    display: inline-flex;
+    gap: 0.4rem;
+    margin-top: auto;
+    color: var(--sera-fg);
+    font-size: 0.78rem;
+    font-weight: 750;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+  }
+
+  .course-index__explore:hover {
+    color: var(--sera-muted);
+    text-decoration: underline;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Bottom Links
+  // ---------------------------------------------------------------------------
+  .course-index__bottom {
+    padding: clamp(3rem, 5vw, 4.75rem) 0;
+    background: var(--sera-card);
+    border-top: 1px solid var(--sera-border);
+  }
+
+  .course-index__bottom > .course-index__shell {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: start;
+    min-width: 0;
+  }
+
+  .course-index__bottom-links {
+    border-top: 1px solid var(--sera-border);
+  }
+
+  .course-index__bottom-links a {
+    display: grid;
+    grid-template-columns: 1.8rem 1fr 1rem;
+    gap: 0.85rem;
+    padding: 1rem 0.25rem;
+    border-bottom: 1px solid var(--sera-border);
+    color: var(--sera-fg);
+    text-decoration: none;
+    transition: none;
+  }
+
+  .course-index__bottom-links a:hover {
+    padding-left: 0.25rem;
+    color: var(--sera-fg);
+    text-decoration: none;
+    background-color: var(--sera-hatch-bg);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      var(--sera-hatch) 2px,
+      var(--sera-hatch) 3px
+    );
+  }
+
+  .course-index__bottom-links span {
+    color: var(--sera-muted);
+    font-size: 0.68rem;
+    font-weight: 750;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .course-index__bottom-links strong {
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .course-index__bottom-links b {
+    color: var(--sera-fg);
+    font-weight: 500;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Responsive Breakpoints
+  // ---------------------------------------------------------------------------
+  @media (max-width: 991.98px) {
+    .course-index__hero-grid,
+    .course-index__bottom > .course-index__shell {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .course-index__hero-grid {
+      min-height: auto;
+      padding: 3.5rem 0;
+    }
+
+    .course-index__progress {
+      max-width: 620px;
+    }
+
+    .course-index__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .course-index__shell {
+      padding-inline: 1rem;
+    }
+
+    .course-index__section-head {
+      flex-direction: column;
+      align-items: start;
+      gap: 1rem;
+    }
+
+    .course-index__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .course-index__card {
+      min-height: 0;
+    }
+  }
+}

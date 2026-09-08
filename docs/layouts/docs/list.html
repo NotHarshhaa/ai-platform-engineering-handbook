@@ -1,6 +1,9 @@
 {{ define "main" }}
 {{ $weeks := .Sections.ByWeight }}
-{{ $firstLesson := site.GetPage "/docs/week-01/advanced-git-cicd-engineering" }}
+{{ $firstLesson := false }}
+{{ with index $weeks 0 }}
+  {{ $firstLesson = index .RegularPages.ByWeight 0 }}
+{{ end }}
 <div class="course-index">
   <section class="course-index__hero">
     <div class="course-index__shell course-index__hero-grid">
@@ -49,9 +52,9 @@
     <div class="course-index__shell">
       <div><p class="course-index__eyebrow course-index__eyebrow--dark"><span></span> Learn by building</p><h2>Use the handbook as your platform engineering field guide.</h2></div>
       <div class="course-index__bottom-links">
-        <a href="/docs/week-06/advanced-rag/"><span>01</span><strong>Design grounded RAG systems</strong><b aria-hidden="true">→</b></a>
-        <a href="/docs/week-08/model-context-protocol-mcp/"><span>02</span><strong>Connect agents with MCP</strong><b aria-hidden="true">→</b></a>
-        <a href="/docs/week-12/production-ai-serving/"><span>03</span><strong>Operate performant AI services</strong><b aria-hidden="true">→</b></a>
+        <a href="/docs/week-07/advanced-rag/"><span>01</span><strong>Design grounded RAG systems</strong><b aria-hidden="true">→</b></a>
+        <a href="/docs/week-09/model-context-protocol-mcp/"><span>02</span><strong>Connect agents with MCP</strong><b aria-hidden="true">→</b></a>
+        <a href="/docs/week-13/production-ai-serving/"><span>03</span><strong>Operate performant AI services</strong><b aria-hidden="true">→</b></a>
       </div>
     </div>
   </section>

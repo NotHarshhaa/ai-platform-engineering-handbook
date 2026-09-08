@@ -1,0 +1,271 @@
+// =============================================================================
+// Docs sidebar navigation & toggle
+// =============================================================================
+
+.docs-sidebar .section-nav,
+.doks-sidebar .section-nav {
+  position: relative;
+  padding: 0.75rem;
+  border: 1px solid var(--sera-border);
+  border-radius: 0;
+  background: var(--sera-card);
+  box-shadow: none;
+
+  &::before {
+    display: block;
+    padding: 0.45rem 0.65rem 0.8rem;
+    color: var(--sera-muted);
+    content: 'COURSE NAVIGATION';
+    font-size: 0.65rem;
+    font-weight: 750;
+    letter-spacing: 0.16em;
+  }
+
+  // Frame corners
+  background-image:
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg)),
+    linear-gradient(var(--sera-fg), var(--sera-fg));
+  background-size:
+    0.7rem 2px,
+    2px 0.7rem,
+    0.7rem 2px,
+    2px 0.7rem,
+    0.7rem 2px,
+    2px 0.7rem,
+    0.7rem 2px,
+    2px 0.7rem;
+  background-position:
+    left top,
+    left top,
+    right top,
+    right top,
+    left bottom,
+    left bottom,
+    right bottom,
+    right bottom;
+  background-repeat: no-repeat;
+  background-color: var(--sera-card);
+
+  > ul {
+    margin: 0;
+  }
+
+  details {
+    margin: 0.1rem 0;
+    border: 0;
+  }
+
+  summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 2.45rem;
+    padding: 0.5rem 2rem 0.5rem 0.65rem;
+    border-radius: 0;
+    color: var(--sera-fg);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+    list-style: none;
+    transition: background-color 0.15s ease;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::after {
+      position: absolute;
+      right: 0.75rem;
+      width: 0.4rem;
+      height: 0.4rem;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      content: '';
+      opacity: 0.65;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform 0.15s ease;
+    }
+
+    &:hover {
+      background: var(--sera-soft);
+      color: var(--sera-fg);
+    }
+  }
+
+  details[open] > summary {
+    color: var(--sera-fg);
+
+    &::after {
+      transform: rotate(225deg) translate(-2px, -2px);
+    }
+  }
+
+  ul.list-nested {
+    margin: 0.15rem 0.3rem 0.5rem 0.65rem;
+    padding: 0.1rem 0;
+    border-left: 1px solid var(--sera-border);
+  }
+
+  ul.list-nested li {
+    margin: 0;
+  }
+
+  a {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0.45rem 0.65rem 0.45rem 0.75rem;
+    border-radius: 0;
+    color: var(--sera-muted);
+    font-size: 0.76rem;
+    line-height: 1.38;
+    text-decoration: none;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
+    &:hover {
+      color: var(--sera-fg);
+      text-decoration: none;
+      background-color: var(--sera-hatch-bg);
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 2px,
+        var(--sera-hatch) 2px,
+        var(--sera-hatch) 3px
+      );
+    }
+  }
+
+  li.active > a,
+  a[aria-current='page'] {
+    position: relative;
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+    font-weight: 700;
+
+    &::before {
+      display: none;
+    }
+
+    &:hover {
+      background: var(--sera-fg);
+      color: var(--sera-bg);
+      background-image: none;
+    }
+  }
+}
+
+// Sidebar hide/show toggle button
+.docs-page-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.docs-sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.35rem;
+  padding: 0.48rem 0.7rem;
+  border: 1px solid var(--sera-border);
+  border-radius: 0;
+  background: var(--sera-card);
+  color: var(--sera-fg);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.docs-sidebar-toggle > span:first-child {
+  width: 0.85rem;
+  color: var(--sera-muted);
+  font-size: 1.05rem;
+  line-height: 0.8;
+  text-align: center;
+}
+
+.docs-sidebar-toggle:hover {
+  border-color: var(--sera-fg);
+  background: var(--sera-soft);
+  color: var(--sera-fg);
+}
+
+.docs-sidebar-toggle:focus-visible {
+  outline: 2px solid var(--sera-fg);
+  outline-offset: 2px;
+}
+
+@include media-breakpoint-up(lg) {
+  body.docs .docs-sidebar {
+    flex: 0 0 clamp(260px, 20vw, 320px) !important;
+    width: clamp(260px, 20vw, 320px) !important;
+    max-width: none !important;
+    align-self: flex-start;
+    position: sticky;
+    top: var(--docs-sticky-top);
+    z-index: 1000;
+    height: auto;
+    min-width: 0;
+    max-height: none;
+    overflow: visible;
+  }
+
+  body.docs-sidebar-hidden .docs-sidebar {
+    display: none !important;
+  }
+
+  body.docs-sidebar-hidden .docs-content {
+    flex: 1 1 0 !important;
+    max-width: none !important;
+  }
+
+  .docs-sidebar .section-nav,
+  .docs-sidebar .docs-links {
+    max-height: calc(100vh - var(--docs-sticky-top));
+    margin-right: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sera-muted) transparent;
+  }
+
+  .docs-sidebar .section-nav::-webkit-scrollbar,
+  .docs-sidebar .docs-links::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .docs-sidebar .section-nav::-webkit-scrollbar-thumb,
+  .docs-sidebar .docs-links::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background: var(--sera-muted);
+  }
+
+  .docs-sidebar .section-nav summary,
+  .docs-sidebar .docs-links summary,
+  .docs-sidebar .section-nav a,
+  .docs-sidebar .docs-links a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .docs-sidebar-toggle {
+    display: none;
+  }
+}

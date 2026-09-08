@@ -1,0 +1,123 @@
+// =============================================================================
+// Search modal styling (Sera blueprint aesthetic)
+// =============================================================================
+
+#searchModal {
+  backdrop-filter: blur(8px);
+
+  .modal-dialog {
+    max-width: 680px;
+    margin-top: clamp(2rem, 8vh, 6rem);
+  }
+
+  .modal-content {
+    border: 1px solid var(--sera-border);
+    border-radius: 0;
+    background: var(--sera-card);
+    color: var(--sera-fg);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  }
+
+  .modal-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--sera-border);
+    background: var(--sera-card);
+  }
+
+  .modal-body {
+    padding: 1rem 1.25rem;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: var(--sera-card);
+  }
+
+  .modal-footer {
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--sera-border);
+    background: var(--sera-soft);
+    color: var(--sera-muted);
+    font-size: 0.78rem;
+
+    kbd {
+      padding: 0.2rem 0.4rem;
+      border: 1px solid var(--sera-border);
+      border-radius: 0;
+      background: var(--sera-card);
+      color: var(--sera-fg);
+      box-shadow: none;
+      font-size: 0.72rem;
+    }
+
+    .DocSearch-Label {
+      color: var(--sera-muted);
+      font-size: 0.74rem;
+    }
+  }
+
+  .search-form {
+    width: 100%;
+
+    .search-text {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--sera-border);
+      border-radius: 0;
+      background: var(--sera-soft);
+      color: var(--sera-fg);
+      font-size: 0.95rem;
+
+      &:focus {
+        border-color: var(--sera-fg);
+        background: var(--sera-card);
+        color: var(--sera-fg);
+        box-shadow: none;
+        outline: none;
+      }
+
+      &::placeholder {
+        color: var(--sera-muted);
+      }
+    }
+  }
+
+  .search-result {
+    .card {
+      margin-bottom: 0.65rem !important;
+      border: 1px solid var(--sera-border);
+      border-radius: 0;
+      background: var(--sera-card);
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+
+      &:hover {
+        border-color: var(--sera-fg);
+        background-color: var(--sera-hatch-bg);
+      }
+    }
+
+    .card-body {
+      padding: 0.85rem 1rem;
+    }
+
+    .title {
+      font-size: 0.92rem;
+      font-weight: 700;
+
+      a {
+        color: var(--sera-fg);
+        text-decoration: none;
+      }
+    }
+
+    .content {
+      margin-top: 0.35rem;
+      color: var(--sera-muted);
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+  }
+
+  .message {
+    color: var(--sera-muted);
+    font-size: 0.88rem;
+  }
+}
