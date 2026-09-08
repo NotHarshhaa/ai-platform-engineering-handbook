@@ -29,8 +29,7 @@ body {
 .container-fw {
   max-width: none !important;
   width: 100%;
-  padding-left: clamp(1rem, 2vw, 2rem);
-  padding-right: clamp(1rem, 2vw, 2rem);
+  padding-inline: var(--sera-container-pad);
 }
 
 // Docs layout widths & breakpoints
@@ -38,7 +37,7 @@ body.docs {
   .wrap.container-fluid {
     width: 100%;
     max-width: 100%;
-    padding-inline: clamp(1rem, 2vw, 2rem);
+    padding-inline: var(--sera-container-pad) !important;
   }
 
   .wrap.container-fluid > .content {
@@ -49,21 +48,40 @@ body.docs {
   .row.flex-xl-nowrap {
     width: 100%;
     margin-inline: 0;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
     --bs-gutter-x: #{clamp(1rem, 2vw, 1.75rem)};
   }
 
   .container-fw.col {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
     flex: 1 1 0 !important;
     width: auto !important;
     max-width: none !important;
     margin-inline: 0 !important;
-    justify-content: flex-start !important;
-    gap: clamp(1rem, 2vw, 2rem);
-    padding-inline: 0;
+    padding-inline: 0 !important;
+    gap: clamp(1.25rem, 2vw, 2rem) !important;
+    min-width: 0 !important;
 
     .docs-toc {
       margin-left: 0;
     }
+  }
+
+  .docs-content {
+    order: 1 !important;
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .docs-toc {
+    order: 2 !important;
+    align-self: flex-start !important;
+    margin-top: 0 !important;
   }
 }
 
@@ -99,19 +117,21 @@ body.docs {
 
 .docs-content.mx-xl-auto {
   @include media-breakpoint-up(lg) {
-    flex: 0 0 85% !important;
-    max-width: 85% !important;
+    flex: 1 1 0 !important;
+    max-width: 960px !important;
+    margin-inline: auto !important;
   }
   @include media-breakpoint-up(xl) {
-    flex: 0 0 85% !important;
-    max-width: 85% !important;
+    flex: 1 1 0 !important;
+    max-width: 960px !important;
+    margin-inline: auto !important;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
   body.docs {
     .wrap.container-fluid {
-      padding-inline: clamp(1.25rem, 3vw, 1.75rem);
+      padding-inline: var(--sera-container-pad) !important;
     }
 
     .row.flex-xl-nowrap {

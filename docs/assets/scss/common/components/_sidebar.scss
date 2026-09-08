@@ -211,17 +211,18 @@
 
 @include media-breakpoint-up(lg) {
   body.docs .docs-sidebar {
-    flex: 0 0 clamp(260px, 20vw, 320px) !important;
-    width: clamp(260px, 20vw, 320px) !important;
-    max-width: none !important;
+    flex: 0 0 clamp(260px, 20vw, 300px) !important;
+    width: clamp(260px, 20vw, 300px) !important;
+    max-width: 300px !important;
     align-self: flex-start;
     position: sticky;
-    top: var(--docs-sticky-top);
+    top: var(--docs-sticky-offset);
     z-index: 1000;
     height: auto;
     min-width: 0;
-    max-height: none;
+    max-height: calc(100vh - var(--docs-sticky-offset) - 1.5rem);
     overflow: visible;
+    margin-top: 0 !important;
   }
 
   body.docs-sidebar-hidden .docs-sidebar {
@@ -235,7 +236,7 @@
 
   .docs-sidebar .section-nav,
   .docs-sidebar .docs-links {
-    max-height: calc(100vh - var(--docs-sticky-top));
+    max-height: calc(100vh - var(--docs-sticky-offset) - 1.5rem);
     margin-right: 0;
     overflow-x: hidden;
     overflow-y: auto;

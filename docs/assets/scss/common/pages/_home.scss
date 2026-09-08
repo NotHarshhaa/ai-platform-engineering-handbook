@@ -16,7 +16,7 @@
     width: 100%;
     max-width: none;
     margin: 0 auto;
-    padding-inline: clamp(1.5rem, 2vw, 3rem);
+    padding-inline: var(--sera-container-pad);
     min-width: 0;
   }
 
@@ -52,8 +52,11 @@
 
   .eyebrow__signal,
   .status-dot {
+    display: inline-block;
+    vertical-align: middle;
     width: 0.4rem;
     height: 0.4rem;
+    margin-right: 0.4rem;
     border-radius: 0;
     background: var(--sera-fg);
     box-shadow: none;
@@ -98,14 +101,14 @@
 
   .handbook-hero__grid {
     display: grid;
-    grid-template-columns: minmax(0, 720px) minmax(360px, 520px);
-    justify-content: center;
-    gap: clamp(2.5rem, 6vw, 6rem);
+    grid-template-columns: minmax(0, 1.25fr) minmax(320px, 480px);
+    justify-content: space-between;
+    gap: clamp(2rem, 4.5vw, 5rem);
     align-items: center;
-    min-height: 580px;
-    max-width: 1600px;
+    min-height: 520px;
+    max-width: 1440px;
     margin-inline: auto;
-    padding: 5rem 0 4.5rem;
+    padding: 4.5rem 0 4rem;
     min-width: 0;
   }
 
@@ -236,10 +239,12 @@
   .hero-stages::before {
     content: '';
     position: absolute;
-    inset: 2.5rem 0 1.75rem;
+    top: 2.75rem;
+    bottom: 2.5rem;
+    left: calc(1.5rem + 0.875rem);
     width: 1px;
-    margin-inline-start: 0.75rem;
     background: var(--sera-border);
+    z-index: 0;
   }
 
   .hero-stage {
@@ -868,12 +873,18 @@
   // ---------------------------------------------------------------------------
   // Responsive Breakpoints
   // ---------------------------------------------------------------------------
+  @media (max-width: 1199.98px) {
+    .roadmap-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   @media (max-width: 991.98px) {
     .handbook-hero__grid {
       grid-template-columns: 1fr;
-      gap: 1.25rem;
+      gap: 2rem;
       min-height: auto;
-      padding: 4rem 0;
+      padding: 3.5rem 0;
     }
 
     .handbook-hero__visual {
@@ -893,14 +904,20 @@
       justify-self: auto;
     }
 
-    .roadmap-grid {
+    .featured-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 880px) {
+    .focus-grid {
+      grid-template-columns: 1fr;
     }
   }
 
   @media (max-width: 767.98px) {
     .handbook-shell {
-      padding-inline: 1rem;
+      padding-inline: var(--sera-container-pad);
     }
 
     .handbook-section {

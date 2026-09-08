@@ -3,13 +3,14 @@
 // =============================================================================
 
 .docs-toc {
+  order: 2 !important;
   align-self: flex-start;
   position: sticky;
-  top: var(--docs-sticky-top);
+  top: var(--docs-sticky-offset);
   z-index: 1000;
   height: auto;
-  max-height: calc(100vh - var(--docs-sticky-top));
-  margin-top: 1.25rem;
+  max-height: calc(100vh - var(--docs-sticky-offset) - 1.5rem);
+  margin-top: 0 !important;
   overflow-y: auto;
   scrollbar-color: var(--sera-muted) transparent;
 
@@ -110,12 +111,15 @@
 
 @include media-breakpoint-up(xl) {
   body.docs .docs-toc {
-    flex: 0 0 clamp(220px, 15vw, 280px) !important;
-    width: clamp(220px, 15vw, 280px) !important;
-    max-width: none !important;
-    align-self: flex-start;
-    position: sticky;
-    top: var(--docs-sticky-top);
+    order: 2 !important;
+    flex: 0 0 clamp(220px, 15vw, 260px) !important;
+    width: clamp(220px, 15vw, 260px) !important;
+    max-width: 260px !important;
+    align-self: flex-start !important;
+    position: sticky !important;
+    top: var(--docs-sticky-offset) !important;
+    max-height: calc(100vh - var(--docs-sticky-offset) - 1.5rem) !important;
+    margin-top: 0 !important;
   }
 }
 

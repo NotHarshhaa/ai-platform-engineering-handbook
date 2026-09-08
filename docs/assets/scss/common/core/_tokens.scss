@@ -15,7 +15,9 @@
   --sera-soft: #f3f3ef;
   --sera-hatch: color-mix(in srgb, var(--sera-fg) 9%, transparent);
   --sera-hatch-bg: color-mix(in srgb, var(--sera-fg) 3.5%, transparent);
+  --sera-container-pad: clamp(1rem, 2.5vw, 2.5rem);
   --docs-sticky-top: 4.25rem;
+  --docs-sticky-offset: calc(var(--docs-sticky-top) + 1.25rem);
   --bs-border-radius: 0;
   --bs-border-radius-sm: 0;
   --bs-border-radius-lg: 0;
@@ -40,5 +42,13 @@
 @media (max-width: 991.98px) {
   :root {
     --docs-sticky-top: 3.8rem;
+    --docs-sticky-offset: calc(var(--docs-sticky-top) + 0.75rem);
+    --sera-container-pad: 1.25rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --sera-container-pad: 1rem;
   }
 }

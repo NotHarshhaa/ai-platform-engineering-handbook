@@ -9,7 +9,7 @@
   .course-index__shell {
     width: 100%;
     margin: 0 auto;
-    padding-inline: clamp(1.5rem, 4vw, 5rem);
+    padding-inline: var(--sera-container-pad);
     min-width: 0;
   }
 
@@ -68,6 +68,8 @@
   }
 
   .course-index__eyebrow span {
+    display: inline-block;
+    vertical-align: middle;
     width: 0.4rem;
     height: 0.4rem;
     border-radius: 0;
@@ -423,7 +425,7 @@
 
   @media (max-width: 767.98px) {
     .course-index__shell {
-      padding-inline: 1rem;
+      padding-inline: var(--sera-container-pad);
     }
 
     .course-index__section-head {

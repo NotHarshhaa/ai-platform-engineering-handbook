@@ -11,7 +11,7 @@ footer.footer {
 
   .container,
   .container-fluid {
-    padding-inline: clamp(1rem, 2vw, 2rem);
+    padding-inline: var(--sera-container-pad) !important;
   }
 
   .row {

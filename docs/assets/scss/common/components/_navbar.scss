@@ -9,6 +9,10 @@
   box-shadow: none;
   backdrop-filter: blur(8px);
 
+  > .container-fluid {
+    padding-inline: var(--sera-container-pad) !important;
+  }
+
   .navbar-brand {
     display: inline-flex;
     gap: 0.65rem;
@@ -223,7 +227,7 @@
     min-height: 3.8rem;
 
     .container-fluid {
-      padding-inline: 1rem;
+      padding-inline: var(--sera-container-pad) !important;
     }
 
     .navbar-brand {

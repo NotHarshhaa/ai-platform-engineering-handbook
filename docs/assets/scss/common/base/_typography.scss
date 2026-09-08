@@ -5,7 +5,7 @@
 .docs-content {
   align-self: flex-start;
   min-width: 0;
-  margin-top: 1.25rem;
+  margin-top: 0;
   margin-bottom: 3rem;
   padding: clamp(1.75rem, 3vw, 3rem);
   border: 1px solid var(--sera-border);
@@ -44,7 +44,7 @@
 
   .page-header {
     gap: 1.5rem;
-    margin: -0.5rem -0.5rem 2.5rem;
+    margin: 0 0 2rem;
     padding: clamp(1.25rem, 2.5vw, 2rem);
     border: 1px solid var(--sera-border);
     border-radius: 0;
