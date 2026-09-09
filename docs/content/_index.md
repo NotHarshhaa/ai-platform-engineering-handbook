@@ -36,6 +36,7 @@ A comprehensive 104-day journey through Advanced DevOps, Python for AI, MLOps, P
 - [Week 12](/docs/Week-12/) - AI Security & AI Red Teaming
 - [Week 13](/docs/Week-13/) - AI Infrastructure Engineering
 - [Week 14](/docs/Week-14/) - Fine-Tuning & LLM Customization
+- [Week 15](/docs/Week-15/) - Multimodal AI Engineering
 - [Week 16](/docs/Week-16/) - AI Product Engineering & Real-World Projects
 - [Week 17](/docs/Week-17/) - Forward Deployed Engineering
 
