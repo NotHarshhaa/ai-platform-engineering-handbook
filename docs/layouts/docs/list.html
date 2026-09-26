@@ -1,4 +1,5 @@
 {{ define "main" }}
+{{ if .Sections }}
 {{ $weeks := .Sections.ByWeight }}
 {{ $firstLesson := false }}
 {{ with index $weeks 0 }}
@@ -59,4 +60,65 @@
     </div>
   </section>
 </div>
+{{ else }}
+{{/* Week (leaf) section: render the week's module syllabus */}}
+{{ $modules := .RegularPages.ByWeight }}
+{{ $weekNum := replaceRE "^Week ([0-9]+).*" "$1" .Title }}
+<div class="course-index course-index--week">
+  <section class="course-index__hero">
+    <div class="course-index__shell course-index__hero-grid">
+      <div>
+        <p class="course-index__eyebrow"><span></span> AI Platform Engineering Handbook{{ if $weekNum }} · Week {{ $weekNum }}{{ end }}</p>
+        <h1>{{ replaceRE "^Week [0-9]+ - " "" .Title }}</h1>
+        <p>{{ with .Description }}{{ . }}{{ else }}Work through each module below to build and operate the systems introduced this week.{{ end }}</p>
+        {{ with index $modules 0 }}<a class="course-index__button" href="{{ .RelPermalink }}">Start the first module <span aria-hidden="true">→</span></a>{{ end }}
+      </div>
+      <div class="course-index__progress" aria-label="Week coverage">
+        <div class="course-index__progress-head"><span>This week</span><strong>{{ len $modules }} modules</strong></div>
+        <div class="course-index__stages">
+          {{ range $i, $m := $modules }}
+          <div class="course-index__stage"><span class="course-index__stage-num">{{ printf "%02d" (add $i 1) }}</span><a class="course-index__stage-name" href="{{ $m.RelPermalink }}">{{ $m.Title }}</a></div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="course-index__catalogue">
+    <div class="course-index__shell">
+      <div class="course-index__section-head">
+        <div><p class="course-index__eyebrow course-index__eyebrow--dark"><span></span> Modules</p><h2>What you will build this week.</h2></div>
+        <p>Each module connects the concepts to hands-on systems you will deploy and operate.</p>
+      </div>
+      <div class="course-index__grid">
+        {{ range $i, $m := $modules }}
+        <article class="course-index__card">
+          <div class="course-index__card-top"><span class="course-index__week">Module {{ printf "%02d" (add $i 1) }}</span><span class="course-index__count">Week {{ $weekNum }}</span></div>
+          <h3><a href="{{ $m.RelPermalink }}">{{ $m.Title }}</a></h3>
+          {{ $desc := $m.Description }}{{ if and $desc (not (hasPrefix $desc "AI Platform Engineering Handbook - Week")) }}<p class="course-index__module-desc">{{ $desc }}</p>{{ end }}
+          <a class="course-index__explore" href="{{ $m.RelPermalink }}">Open module <span aria-hidden="true">→</span></a>
+        </article>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <section class="course-index__bottom">
+    <div class="course-index__shell">
+      <div><p class="course-index__eyebrow course-index__eyebrow--dark"><span></span> Keep going</p><h2>Continue the curriculum.</h2></div>
+      <div class="course-index__bottom-links">
+        <a href="/docs/"><span>01</span><strong>Back to all 17 weeks</strong><b aria-hidden="true">→</b></a>
+        {{ $found := false }}
+        {{ $nextWeek := false }}
+        {{ with .Parent }}
+          {{ range .Sections.ByWeight }}
+            {{ if $found }}{{ if not $nextWeek }}{{ $nextWeek = . }}{{ end }}{{ else if eq . $ }}{{ $found = true }}{{ end }}
+          {{ end }}
+        {{ end }}
+        {{ with $nextWeek }}<a href="{{ .RelPermalink }}"><span>02</span><strong>Jump to the next week</strong><b aria-hidden="true">→</b></a>{{ end }}
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}
 {{ end }}

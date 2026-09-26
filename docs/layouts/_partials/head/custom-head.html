@@ -1,1 +1,37 @@
 <!-- Custom head -->
+<script>
+// Bootstrap ScrollSpy resolves TOC links with querySelector(), which rejects
+// IDs that start with a digit (e.g. headings like "1. Git Internals" -> #1-git-internals).
+// Normalize those IDs and every matching anchor before ScrollSpy initializes.
+(function () {
+  function normalizeHeadingAnchors() {
+    var renamed = {};
+    document.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').forEach(function (h) {
+      var id = h.getAttribute('id');
+      if (id && /^[0-9]/.test(id)) {
+        var fixed = 's' + id;
+        h.setAttribute('id', fixed);
+        renamed[id] = fixed;
+      }
+    });
+    if (Object.keys(renamed).length === 0) return;
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      var href = a.getAttribute('href').slice(1);
+      if (renamed[href]) a.setAttribute('href', '#' + renamed[href]);
+    });
+
+    if (location.hash && renamed[decodeURIComponent(location.hash.slice(1))]) {
+      history.replaceState(null, '', '#' + renamed[decodeURIComponent(location.hash.slice(1))]);
+      var el = document.getElementById(renamed[decodeURIComponent(location.hash.slice(1))]);
+      if (el) el.scrollIntoView();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', normalizeHeadingAnchors, { once: true });
+  } else {
+    normalizeHeadingAnchors();
+  }
+})();
+</script>

@@ -108,3 +108,28 @@
 
 // Mobile offcanvas: rely on Bootstrap's built-in scroll lock (custom position:fixed
 // locking conflicted with offcanvas open/close and left the page stuck).
+
+// TOC highlighting: with valid heading IDs Bootstrap ScrollSpy marks the TOC
+// anchor itself as active via the activate event. Mirror the event onto the
+// matching TOC link when the event reports a section element instead.
+(() => {
+  const highlightToc = (event) => {
+    const target = event.relatedTarget;
+    if (!target) return;
+
+    if (target.matches && target.matches('#toc a, #TableOfContents a')) {
+      if (target.classList.contains('active')) return;
+    }
+
+    const id = target.id || (target.hash ? target.hash.slice(1) : '');
+    if (!id) return;
+
+    document.querySelectorAll('#toc a.active, #TableOfContents a.active').forEach((link) => {
+      link.classList.remove('active');
+    });
+    const link = document.querySelector(`#toc a[href="#${id}"], #TableOfContents a[href="#${id}"]`);
+    if (link) link.classList.add('active');
+  };
+
+  document.addEventListener('activate.bs.scrollspy', highlightToc);
+})();

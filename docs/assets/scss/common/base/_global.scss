@@ -169,3 +169,13 @@ body.docs {
     overflow-x: hidden;
   }
 }
+
+// Bootstrap rows carry negative gutter margins (up to -24px); on small screens
+// the container's inline padding can be smaller than that, pushing content past
+// the viewport and creating horizontal scroll. Shrink the gutters instead.
+@media (max-width: 767.98px) {
+  .wrap.container-fluid .row,
+  footer.footer .row {
+    --bs-gutter-x: 1rem;
+  }
+}

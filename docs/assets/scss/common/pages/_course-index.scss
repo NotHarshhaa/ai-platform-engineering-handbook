@@ -443,3 +443,34 @@
     }
   }
 }
+
+// -----------------------------------------------------------------------------
+// Week (leaf section) syllabus additions
+// -----------------------------------------------------------------------------
+.course-index--week {
+  .course-index__stage-name {
+    text-decoration: none;
+
+    &:hover {
+      color: var(--sera-muted);
+      text-decoration: underline;
+      text-underline-offset: 0.14em;
+    }
+  }
+
+  .course-index__card h3 a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--sera-muted);
+    }
+  }
+
+  .course-index__module-desc {
+    margin: 0 0 1rem;
+    color: var(--sera-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+}
