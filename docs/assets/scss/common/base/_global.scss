@@ -10,6 +10,17 @@ body {
 body {
   color: var(--sera-fg);
   background-color: var(--sera-bg);
+}
+
+// Grid backdrop on a fixed pseudo-element instead of background-attachment:
+// fixed, which repaints the whole layer on every scroll frame, is ignored on
+// iOS Safari, and tiles sticky content in full-page captures.
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background-image:
     linear-gradient(
       to right,
@@ -22,8 +33,33 @@ body {
       transparent 1px
     );
   background-size: 48px 48px;
-  background-attachment: fixed;
   background-position: center top;
+}
+
+// Anchor jumps must not land headings underneath the sticky navbar.
+h1[id],
+h2[id],
+h3[id],
+h4[id],
+h5[id],
+h6[id] {
+  scroll-margin-top: calc(var(--docs-sticky-top) + 1rem);
+}
+
+// Pin the footer to the bottom of the viewport on short pages (blog, privacy).
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body > .wrap {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+body > footer.footer {
+  flex-shrink: 0;
 }
 
 .container-fw {

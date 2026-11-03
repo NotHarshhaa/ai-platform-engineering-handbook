@@ -108,7 +108,8 @@
     min-height: 520px;
     max-width: 1440px;
     margin-inline: auto;
-    padding: 4.5rem 0 4rem;
+    // padding-block only: the shorthand would wipe .handbook-shell's padding-inline
+    padding-block: 4.5rem 4rem;
     min-width: 0;
   }
 
@@ -185,9 +186,12 @@
     border-color: var(--sera-fg);
   }
 
+  // Inverted against the CTA band (--sera-fg), so the button uses the page
+  // background; base state would otherwise be invisible (fg on fg).
   .handbook-button--light {
-    background: var(--sera-fg);
-    color: var(--sera-bg);
+    background: var(--sera-bg);
+    color: var(--sera-fg);
+    border-color: var(--sera-bg);
     white-space: nowrap;
   }
 
@@ -884,7 +888,7 @@
       grid-template-columns: 1fr;
       gap: 2rem;
       min-height: auto;
-      padding: 3.5rem 0;
+      padding-block: 3.5rem;
     }
 
     .handbook-hero__visual {

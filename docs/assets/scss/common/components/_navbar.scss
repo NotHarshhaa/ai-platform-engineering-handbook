@@ -252,6 +252,25 @@
   display: block !important;
 }
 
+// Auto mode follows the OS preference too: with colorMode = auto the document
+// attribute stays "auto", so the rules above always show the moon icon even
+// when the rendered theme is dark.
+:root[data-bs-theme='auto'] #buttonColorMode svg[data-bs-theme-value='light'] {
+  display: none !important;
+}
+:root[data-bs-theme='auto'] #buttonColorMode svg[data-bs-theme-value='dark'] {
+  display: block !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-bs-theme='auto'] #buttonColorMode svg[data-bs-theme-value='dark'] {
+    display: none !important;
+  }
+  :root[data-bs-theme='auto'] #buttonColorMode svg[data-bs-theme-value='light'] {
+    display: block !important;
+  }
+}
+
 // -----------------------------------------------------------------------------
 // Mobile navbar
 // -----------------------------------------------------------------------------
@@ -270,8 +289,12 @@
       padding-inline: var(--sera-container-pad) !important;
     }
 
+    // Block display so text-overflow: ellipsis works — as an inline-flex
+    // container the title is an anonymous flex item and clips without it.
     .navbar-brand {
+      display: block !important;
       font-size: 0.9rem !important;
+      line-height: 2.2rem;
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
@@ -281,8 +304,11 @@
     }
 
     .navbar-brand::before {
+      display: inline-grid;
       width: 1.55rem;
       height: 1.55rem;
+      margin-right: 0.5rem;
+      vertical-align: middle;
       flex-shrink: 0;
     }
 

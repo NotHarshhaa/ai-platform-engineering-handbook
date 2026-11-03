@@ -122,6 +122,14 @@
     font-size: clamp(1.4rem, 2vw, 1.8rem);
   }
 
+  // Content already separates sections with `---`; without this the h2's own
+  // border-top stacks with the hr into a doubled-rule "empty box" look.
+  > hr + h2 {
+    margin-top: 1.85rem;
+    padding-top: 0;
+    border-top: 0;
+  }
+
   > h3 {
     margin-top: 2.35rem;
     font-size: 1.25rem;
