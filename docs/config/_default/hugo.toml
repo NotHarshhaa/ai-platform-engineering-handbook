@@ -2,7 +2,8 @@ title = "AI Platform Engineering Handbook"
 baseurl = "http://localhost/"
 disableAliases = true
 disableHugoGeneratorInject = true
-# disableKinds = ["taxonomy", "term"]
+# Taxonomy/term pages only served the removed blog demo; docs use none.
+disableKinds = ["taxonomy", "term"]
 enableEmoji = true
 enableGitInfo = false
 enableRobotsTXT = true
