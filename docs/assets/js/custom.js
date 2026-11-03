@@ -132,6 +132,73 @@
       '<div class="docs-progress__bar" style="width: ' + pct + '%"></div></div>';
   };
 
+  // Progress boxes on the course pages (docs index: whole handbook; week
+  // pages: that week only, counted from the module links beside the box).
+  const renderProgressBoxes = () => {
+    const state = readState();
+    document.querySelectorAll('[data-handbook-progress]').forEach((box) => {
+      let done = 0;
+      let total = parseInt(box.dataset.totalModules, 10) || 0;
+      if (box.dataset.progress === 'week') {
+        // The week's module links are siblings of the box inside the hero
+        // progress panel, so search the panel rather than the box itself.
+        const links = [...box.parentElement.querySelectorAll('a[href]')].filter((a) => isModulePath(a.getAttribute('href')));
+        done = links.filter((a) => state[a.getAttribute('href')]).length;
+        total = total || links.length;
+      } else {
+        done = Object.keys(state).filter(isModulePath).length;
+      }
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      box.innerHTML =
+        '<div class="docs-progress__head"><span>' + done + ' of ' + total + ' modules</span><strong>' + pct + '%</strong></div>' +
+        '<div class="docs-progress__track" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '">' +
+        '<div class="docs-progress__bar" style="width: ' + pct + '%"></div></div>';
+    });
+  };
+
+  // Completed-module markers on the course catalogue and week pages.
+  const markCourseLinks = () => {
+    const state = readState();
+    document.querySelectorAll('.course-index a[href]').forEach((a) => {
+      const href = a.getAttribute('href');
+      if (!isModulePath(href)) return;
+      const complete = Boolean(state[href]);
+      a.classList.toggle('is-complete', complete);
+      const stage = a.closest('.course-index__stage');
+      if (stage) stage.classList.toggle('is-complete', complete);
+    });
+  };
+
+  // "Continue where you left off" row on the course index.
+  const renderContinue = () => {
+    const slot = document.querySelector('[data-handbook-continue]');
+    if (!slot) return;
+    let last = null;
+    try {
+      last = JSON.parse(window.localStorage.getItem('handbook-last') || 'null');
+    } catch {
+      return;
+    }
+    if (!last || !isModulePath(last.href || '')) return;
+    slot.innerHTML =
+      '<a class="course-index__continue" href="' + last.href + '">Continue where you left off: <strong>' +
+      last.title + '</strong><span aria-hidden="true">→</span></a>';
+  };
+
+  // Remember the most recent module for the continue row.
+  const rememberLastModule = () => {
+    const path = normalizePath();
+    if (!isModulePath(path)) return;
+    try {
+      window.localStorage.setItem('handbook-last', JSON.stringify({
+        href: path,
+        title: document.title.replace(/ \| .*$/, '')
+      }));
+    } catch {
+      // The continue row simply stays empty when storage is unavailable.
+    }
+  };
+
   const initCompleteToggle = () => {
     const header = document.querySelector('.docs-content .page-header');
     const path = normalizePath();
@@ -173,12 +240,18 @@
       writeState(state);
       setDone(nowDone);
       renderSidebarProgress();
+      renderProgressBoxes();
+      markCourseLinks();
     });
   };
 
   const init = () => {
     initCompleteToggle();
+    rememberLastModule();
     renderSidebarProgress();
+    renderProgressBoxes();
+    markCourseLinks();
+    renderContinue();
   };
 
   if (document.readyState === 'loading') {
@@ -227,6 +300,58 @@
     document.addEventListener('DOMContentLoaded', initReadingProgress, { once: true });
   } else {
     initReadingProgress();
+  }
+})();
+
+// Keyboard navigation between modules: ← / → (or J / K) follow the prev/next
+// cards at the end of each module. Guarded so typing and open overlays win.
+(() => {
+  const initKeyNav = () => {
+    const nav = document.querySelector('.docs-content .page-nav');
+    if (!nav) return;
+
+    // The theme renders the previous card first and the next card last (the
+    // next card is the right-aligned one when both exist).
+    const prev = nav.querySelector('.card:not(.text-end) a');
+    const next = nav.querySelector('.card.text-end a');
+    if (!prev && !next) return;
+
+    if (prev) prev.setAttribute('title', 'Previous module (←)');
+    if (next) next.setAttribute('title', 'Next module (→)');
+
+    document.addEventListener('keydown', (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (document.querySelector('.modal.show, .offcanvas.show')) return;
+
+      const target = event.target;
+      if (target && (target.isContentEditable || /^(input|textarea|select)$/i.test(target.tagName))) return;
+
+      const go = (link) => {
+        if (!link) return;
+        event.preventDefault();
+        window.location.href = link.href;
+      };
+
+      if (event.key === 'ArrowLeft') {
+        // Arrows also scroll focused elements (e.g. code blocks); only take
+        // them over when nothing in particular has focus.
+        if (target && target !== document.body && target !== document.documentElement && target !== document) return;
+        go(prev);
+      } else if (event.key === 'ArrowRight') {
+        if (target && target !== document.body && target !== document.documentElement && target !== document) return;
+        go(next);
+      } else if (event.key === 'j' || event.key === 'J') {
+        go(next);
+      } else if (event.key === 'k' || event.key === 'K') {
+        go(prev);
+      }
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initKeyNav, { once: true });
+  } else {
+    initKeyNav();
   }
 })();
 

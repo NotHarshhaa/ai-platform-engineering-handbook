@@ -58,6 +58,11 @@
   transition: width 0.3s ease;
 }
 
+// Standalone progress boxes on the course pages (no sidebar box padding)
+.docs-progress--standalone {
+  margin: 0.8rem 0 0;
+}
+
 // Completion checkbox on each module link in the sidebar
 .docs-sidebar .section-nav a {
   display: flex;

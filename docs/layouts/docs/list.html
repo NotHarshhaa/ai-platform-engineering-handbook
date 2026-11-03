@@ -5,6 +5,13 @@
 {{ with index $weeks 0 }}
   {{ $firstLesson = index .RegularPages.ByWeight 0 }}
 {{ end }}
+{{ $allModules := 0 }}
+{{ $totalMinutes := 0 }}
+{{ range $weeks }}
+  {{ $allModules = add $allModules (len .RegularPages) }}
+  {{ range .RegularPages }}{{ $totalMinutes = add $totalMinutes .ReadingTime }}{{ end }}
+{{ end }}
+{{ $hours := math.Ceil (div (float $totalMinutes) 60.0) }}
 <div class="course-index">
   <section class="course-index__hero">
     <div class="course-index__shell course-index__hero-grid">
@@ -16,6 +23,8 @@
       </div>
       <div class="course-index__progress" aria-label="Handbook coverage">
         <div class="course-index__progress-head"><span>Curriculum stages</span><strong>{{ len $weeks }} weeks</strong></div>
+        <div class="docs-progress docs-progress--standalone" data-handbook-progress data-progress="total" data-total-modules="{{ $allModules }}"></div>
+        <p class="course-index__progress-meta">{{ $allModules }} modules · ≈ {{ int $hours }} h of material</p>
         <div class="course-index__stages">
           <div class="course-index__stage"><span class="course-index__stage-num">01</span><span class="course-index__stage-name">DevOps & MLOps</span></div>
           <div class="course-index__stage"><span class="course-index__stage-num">02</span><span class="course-index__stage-name">AI Platform</span></div>
@@ -23,6 +32,7 @@
           <div class="course-index__stage"><span class="course-index__stage-num">04</span><span class="course-index__stage-name">Agents & LLMOps</span></div>
           <div class="course-index__stage"><span class="course-index__stage-num">05</span><span class="course-index__stage-name">Enterprise AI</span></div>
         </div>
+        <div class="course-index__continue-slot" data-handbook-continue></div>
       </div>
     </div>
   </section>
@@ -40,7 +50,7 @@
           <div class="course-index__card-top"><span class="course-index__week">{{ .Title }}</span><span class="course-index__count">{{ len $topics }} modules</span></div>
           <h3>{{ replaceRE "^Week [0-9]+ - " "" .Title }}</h3>
           <ul>
-            {{ range first 3 $topics }}<li><a href="{{ .RelPermalink }}">{{ .Title }} <span aria-hidden="true">↗</span></a></li>{{ end }}
+            {{ range first 3 $topics }}<li><a href="{{ .RelPermalink }}">{{ .Title }}<span class="course-index__check" aria-hidden="true"></span><span aria-hidden="true">↗</span></a></li>{{ end }}
           </ul>
           <a class="course-index__explore" href="{{ .RelPermalink }}">View week <span aria-hidden="true">→</span></a>
         </article>
@@ -75,6 +85,7 @@
       </div>
       <div class="course-index__progress" aria-label="Week coverage">
         <div class="course-index__progress-head"><span>This week</span><strong>{{ len $modules }} modules</strong></div>
+        <div class="docs-progress docs-progress--standalone" data-handbook-progress data-progress="week" data-total-modules="{{ len $modules }}"></div>
         <div class="course-index__stages">
           {{ range $i, $m := $modules }}
           <div class="course-index__stage"><span class="course-index__stage-num">{{ printf "%02d" (add $i 1) }}</span><a class="course-index__stage-name" href="{{ $m.RelPermalink }}">{{ $m.Title }}</a></div>

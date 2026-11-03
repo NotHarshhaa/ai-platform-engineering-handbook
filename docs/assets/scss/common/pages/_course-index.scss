@@ -188,6 +188,91 @@
     font-weight: 700;
   }
 
+  // Completed modules: the numbered chip inverts, matching the sidebar state
+  .course-index__stage.is-complete .course-index__stage-num {
+    border-color: var(--sera-fg);
+    background: var(--sera-fg);
+    color: var(--sera-bg);
+  }
+
+  // Check chip on catalogue card links for completed modules
+  .course-index__card li a .course-index__check {
+    display: none;
+    position: relative;
+    width: 0.72rem;
+    height: 0.72rem;
+    flex: 0 0 auto;
+    align-self: center;
+    border: 1px solid var(--sera-fg);
+    background: var(--sera-fg);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0.12rem;
+      top: 0.2rem;
+      width: 0.32rem;
+      height: 0.17rem;
+      border-left: 1.5px solid var(--sera-bg);
+      border-bottom: 1.5px solid var(--sera-bg);
+      transform: rotate(-45deg);
+    }
+  }
+
+  .course-index__card li a.is-complete {
+    color: var(--sera-fg);
+
+    .course-index__check {
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+  }
+
+  // "Continue where you left off" row (populated from localStorage)
+  .course-index__continue-slot:empty {
+    display: none;
+  }
+
+  .course-index__continue {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.9rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--sera-border);
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+    font-size: 0.74rem;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+
+    strong {
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    span {
+      flex: 0 0 auto;
+      margin-left: auto;
+    }
+
+    &:hover {
+      border-color: var(--sera-fg);
+      text-decoration: none;
+    }
+  }
+
+  .course-index__progress-meta {
+    margin: 0.6rem 0 0;
+    color: var(--sera-muted);
+    font-size: 0.66rem;
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
   // ---------------------------------------------------------------------------
   // Catalogue Grid & Cards
   // ---------------------------------------------------------------------------
@@ -309,13 +394,17 @@
 
   .course-index__card li a {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 0.5rem;
     padding: 0.32rem 0;
     color: var(--sera-muted);
     font-size: 0.74rem;
     line-height: 1.34;
     text-decoration: none;
+
+    > span:last-child {
+      margin-left: auto;
+    }
   }
 
   .course-index__card li a:hover {
