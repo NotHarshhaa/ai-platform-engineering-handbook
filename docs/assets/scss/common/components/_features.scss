@@ -1,0 +1,278 @@
+// =============================================================================
+// Reader features: reading progress, course completion tracking, to-top
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Reading progress bar (fixed under the top edge, above the sticky navbar)
+// -----------------------------------------------------------------------------
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  height: 2px;
+  background: var(--sera-fg);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+// -----------------------------------------------------------------------------
+// Course progress summary inside the sidebar navigation box
+// -----------------------------------------------------------------------------
+.docs-sidebar .section-nav .docs-progress {
+  margin: 0.55rem 0.65rem 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--sera-border);
+}
+
+.docs-progress__head {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--sera-muted);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.docs-progress__head strong {
+  color: var(--sera-fg);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.docs-progress__track {
+  height: 3px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  background: var(--sera-border);
+}
+
+.docs-progress__bar {
+  height: 100%;
+  background: var(--sera-fg);
+  transition: width 0.3s ease;
+}
+
+// Completion checkbox on each module link in the sidebar
+.docs-sidebar .section-nav a {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+
+  &::before {
+    content: '';
+    flex: 0 0 auto;
+    width: 0.72rem;
+    height: 0.72rem;
+    margin-top: 0.24rem;
+    border: 1px solid color-mix(in srgb, var(--sera-muted) 65%, transparent);
+    background: transparent;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  // Drawn check mark, revealed when the module is complete
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0.48rem;
+    width: 0.34rem;
+    height: 0.18rem;
+    border-left: 1.5px solid var(--sera-bg);
+    border-bottom: 1.5px solid var(--sera-bg);
+    opacity: 0;
+    transform: rotate(-45deg);
+  }
+
+  &.is-complete::before {
+    border-color: var(--sera-fg);
+    background: var(--sera-fg);
+  }
+
+  &.is-complete::after {
+    opacity: 1;
+  }
+}
+
+// The active (current page) link is inverted; keep its check readable there
+.docs-sidebar .section-nav li.active > a.is-complete,
+.docs-sidebar .section-nav a[aria-current='page'].is-complete {
+  &::before {
+    border-color: var(--sera-bg);
+    background: var(--sera-bg);
+  }
+
+  &::after {
+    border-color: var(--sera-fg);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// "Mark complete" toggle in the docs page header
+// -----------------------------------------------------------------------------
+.docs-complete-toggle {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  min-height: 2.35rem;
+  padding: 0.48rem 0.7rem;
+  border: 1px solid var(--sera-border);
+  border-radius: 0;
+  background: var(--sera-card);
+  color: var(--sera-fg);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--sera-fg);
+    background: var(--sera-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sera-fg);
+    outline-offset: 2px;
+  }
+}
+
+.docs-complete-toggle__icon {
+  display: grid;
+  width: 1rem;
+  height: 1rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--sera-muted) 65%, transparent);
+  color: var(--sera-fg);
+}
+
+.docs-complete-toggle__icon svg {
+  width: 0.7rem;
+  height: 0.7rem;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.docs-complete-toggle.is-complete {
+  border-color: var(--sera-fg);
+  background: var(--sera-soft);
+
+  .docs-complete-toggle__icon {
+    border-color: var(--sera-fg);
+    background: var(--sera-fg);
+  }
+
+  .docs-complete-toggle__icon svg {
+    color: var(--sera-bg);
+    opacity: 1;
+  }
+}
+
+// The sidebar toggle shares the header actions row; its glyph is now an SVG
+.docs-sidebar-toggle__icon {
+  display: grid;
+  width: 0.85rem;
+  place-items: center;
+  color: var(--sera-muted);
+}
+
+.docs-sidebar-toggle__icon svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+// -----------------------------------------------------------------------------
+// Page header meta (week / module / reading time)
+// -----------------------------------------------------------------------------
+.docs-content .page-header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin: 0.65rem 0 0;
+  color: var(--sera-muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  span + span::before {
+    content: '\00B7';
+    margin-right: 0.2rem;
+  }
+}
+
+// On small screens the header actions ("Mark complete", the AI menu) no longer
+// fit beside the title; without wrapping, the title flex item is crushed to a
+// single character per line.
+@include media-breakpoint-down(lg) {
+  .docs-content .page-header {
+    flex-wrap: wrap;
+    row-gap: 0.9rem;
+
+    > div:first-child {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Back-to-top button (theme partial, restyled for the blueprint look)
+// -----------------------------------------------------------------------------
+.fixed-bottom-right {
+  padding: 0;
+}
+
+#toTop {
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0 !important;
+  place-items: center;
+  border: 1px solid var(--sera-border);
+  border-radius: 0 !important;
+  background: var(--sera-card);
+  color: var(--sera-fg);
+  box-shadow: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.35rem);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s, border-color 0.15s ease, background-color 0.15s ease;
+
+  &.fade {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  &:hover {
+    border-color: var(--sera-fg);
+    background: var(--sera-soft);
+    color: var(--sera-fg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sera-fg);
+    outline-offset: 2px;
+  }
+
+  svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+}
+
+// Keep the button clear of the footer links on small screens
+@media (max-width: 767.98px) {
+  .fixed-bottom-right {
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
