@@ -18,12 +18,11 @@
     }
   };
 
-  // Drawn icons (tabler outline) instead of text glyphs so they match the
-  // theme's icon set in weight and stroke.
-  const ICON_SHOW =
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" /></svg>';
-  const ICON_HIDE =
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>';
+  // Drawn icons (tabler outline) so they match the theme's icon set in weight
+  // and stroke. The sidebar toggle uses a panel glyph on both states — the
+  // label carries the action, and an X glyph read like a close button.
+  const ICON_SIDEBAR =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="0" /><path d="M9 4v16" /><path d="M13 12h4" /></svg>';
 
   const initSidebarToggle = () => {
     const sidebar = document.querySelector('.docs-sidebar');
@@ -53,7 +52,7 @@
       document.body.classList.toggle('docs-sidebar-hidden', isHidden);
       button.setAttribute('aria-expanded', String(!isHidden));
       button.setAttribute('aria-label', isHidden ? 'Show course navigation sidebar' : 'Hide course navigation sidebar');
-      icon.innerHTML = isHidden ? ICON_SHOW : ICON_HIDE;
+      icon.innerHTML = ICON_SIDEBAR;
       label.textContent = isHidden ? 'Show navigation' : 'Hide navigation';
     };
 

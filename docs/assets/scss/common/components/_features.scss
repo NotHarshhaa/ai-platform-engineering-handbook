@@ -176,6 +176,21 @@
   }
 }
 
+// Keep the header action cluster on an even rhythm (the theme gives the AI
+// dropdown a stray left margin that breaks the group's gap).
+.docs-page-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  #ai-dropdown {
+    margin: 0 !important;
+  }
+
+  #ai-dropdown .btn {
+    align-self: center;
+  }
+}
+
 // The sidebar toggle shares the header actions row; its glyph is now an SVG
 .docs-sidebar-toggle__icon {
   display: grid;

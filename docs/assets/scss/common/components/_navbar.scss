@@ -312,6 +312,19 @@
       flex-shrink: 0;
     }
 
+    // On small phones the single-line title can only truncate mid-word, which
+    // reads broken. Wrap it into a balanced two-line wordmark instead.
+    @media (max-width: 480px) {
+      .navbar-brand {
+        font-size: 0.64rem !important;
+        letter-spacing: 0.12em;
+        line-height: 1.45;
+        white-space: normal !important;
+        text-overflow: clip !important;
+        text-wrap: balance;
+      }
+    }
+
     > .container-fluid > .btn {
       display: grid;
       width: 2.15rem;
