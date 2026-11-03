@@ -260,6 +260,7 @@
   .course-index__card-top {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     gap: 0.5rem;
     margin-bottom: 1.15rem;
   }
@@ -273,10 +274,15 @@
   }
 
   .course-index__week {
+    min-width: 0;
     color: var(--sera-fg);
   }
 
+  // Keep the module count on one line; the week label wraps instead
   .course-index__count {
+    flex: 0 0 auto;
+    text-align: right;
+    white-space: nowrap;
     color: var(--sera-muted);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }

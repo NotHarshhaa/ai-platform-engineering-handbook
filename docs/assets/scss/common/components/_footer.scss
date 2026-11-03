@@ -3,7 +3,9 @@
 // =============================================================================
 
 footer.footer {
-  padding: 1.75rem 0;
+  // Extra bottom clearance so the floating to-top button never covers the
+  // footer text at full scroll.
+  padding: 1.75rem 0 4.75rem;
   border-top: 1px solid var(--sera-border);
   background: var(--sera-card);
   color: var(--sera-muted);
@@ -44,8 +46,20 @@ footer.footer {
     }
   }
 
-  @media (max-width: 767.98px) {
+  // Below lg the two columns stack and center; side-by-side columns squeeze
+  // the copyright into a mid-name wrap on tablet widths.
+  @media (max-width: 991.98px) {
     text-align: center;
+
+    .row {
+      flex-direction: column;
+      row-gap: 0.9rem;
+    }
+
+    .row > * {
+      width: 100%;
+      max-width: 100%;
+    }
 
     .text-md-start,
     .text-md-end,
