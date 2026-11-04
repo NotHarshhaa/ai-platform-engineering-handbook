@@ -1,0 +1,249 @@
+// =============================================================================
+// Code Blocks - Technical Blueprint / Terminal Design
+// =============================================================================
+
+:root {
+  --code-bg: #f5f5f1;
+  --code-header-bg: #eaeae4;
+  --code-border: var(--sera-border);
+  --code-fg: #1f1f1c;
+  --code-muted: #6b6b63;
+  --code-scrollbar-thumb: #d0d0c8;
+}
+
+[data-bs-theme='dark'] {
+  --code-bg: #131310;
+  --code-header-bg: #1c1c18;
+  --code-border: rgba(255, 255, 255, 0.1);
+  --code-fg: #f0f0ea;
+  --code-muted: #9e9e94;
+  --code-scrollbar-thumb: rgba(255, 255, 255, 0.16);
+}
+
+.code-block {
+  margin: 1.6rem 0;
+  border: 1px solid var(--code-border);
+  border-radius: 0;
+  background: var(--code-bg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--sera-fg) 35%, transparent);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Top Header Bar
+// -----------------------------------------------------------------------------
+.code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.85rem;
+  min-height: 2.2rem;
+  background: var(--code-header-bg);
+  border-bottom: 1px solid var(--code-border);
+  user-select: none;
+}
+
+.code-block__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+// Terminal-style window dots (technical muted appearance)
+.code-block__dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+
+  .dot {
+    display: inline-block;
+    width: 0.52rem;
+    height: 0.52rem;
+    border-radius: 50%;
+    opacity: 0.85;
+
+    &.dot--red {
+      background: #ef4444;
+    }
+    &.dot--amber {
+      background: #f59e0b;
+    }
+    &.dot--green {
+      background: #10b981;
+    }
+  }
+}
+
+.code-block__title {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--code-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// -----------------------------------------------------------------------------
+// Copy Button
+// -----------------------------------------------------------------------------
+.code-block__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.6rem;
+  min-height: 1.65rem;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--code-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: all 0.15s ease;
+
+  svg {
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+    flex: 0 0 0.8rem;
+  }
+
+  .icon-check {
+    display: none;
+  }
+
+  &:hover {
+    color: var(--sera-fg);
+    background: color-mix(in srgb, var(--sera-fg) 8%, transparent);
+    border-color: var(--code-border);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sera-fg);
+    outline-offset: 1px;
+  }
+
+  &.is-copied {
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.08);
+
+    .icon-copy {
+      display: none;
+    }
+    .icon-check {
+      display: block;
+      color: #10b981;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Code Block Body & Typography
+// -----------------------------------------------------------------------------
+.code-block__body {
+  position: relative;
+  background: var(--code-bg);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--code-scrollbar-thumb) transparent;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--code-scrollbar-thumb);
+    border-radius: 3px;
+  }
+
+  // Hide Doks legacy copy button if inserted inside .highlight
+  .copy {
+    display: none !important;
+  }
+
+  .highlight {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  pre {
+    margin: 0 !important;
+    padding: 1.05rem 1.25rem !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow-x: auto;
+  }
+
+  pre code {
+    display: block;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    color: var(--code-fg) !important;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", "Cascadia Code", Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+    font-size: 0.85rem !important;
+    line-height: 1.65 !important;
+    letter-spacing: -0.01em;
+    tab-size: 2;
+  }
+
+  .chroma {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+// Diagram code blocks (e.g. Git trees, architecture ASCII diagrams)
+.code-block.is-diagram {
+  .code-block__body pre code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    line-height: 1.45 !important;
+    letter-spacing: 0;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 575.98px) {
+  .code-block {
+    margin: 1.25rem 0;
+  }
+
+  .code-block__header {
+    padding: 0.35rem 0.65rem;
+  }
+
+  .code-block__body pre {
+    padding: 0.85rem 0.9rem !important;
+  }
+
+  .code-block__body pre code {
+    font-size: 0.79rem !important;
+    line-height: 1.55 !important;
+  }
+}

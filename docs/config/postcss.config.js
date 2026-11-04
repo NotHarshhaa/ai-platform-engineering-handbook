@@ -69,10 +69,44 @@ const purgecss = purgeCSSPlugin({
             'docs-progress__track',
             'docs-progress__bar',
             'docs-progress--standalone',
-            'course-index__continue'
+            'course-index__continue',
+            // Code block classes
+            'code-block',
+            'code-block__header',
+            'code-block__meta',
+            'code-block__dots',
+            'code-block__title',
+            'code-block__copy',
+            'code-block__copy-text',
+            'code-block__body',
+            'is-copied',
+            'is-diagram',
+            'dot',
+            'dot--red',
+            'dot--amber',
+            'dot--green',
+            'icon-copy',
+            'icon-check'
         ],
-        deep: [/^docs-complete-toggle/, /^docs-sidebar-toggle/, /^docs-page-actions/, /^docs-progress/, /^course-index/],
-        greedy: [/^docs-complete-toggle/, /^docs-sidebar/, /^docs-page-actions/, /^docs-progress/, /is-complete/, /reading-progress/]
+        deep: [
+            /^docs-complete-toggle/,
+            /^docs-sidebar-toggle/,
+            /^docs-page-actions/,
+            /^docs-progress/,
+            /^course-index/,
+            /^code-block/
+        ],
+        greedy: [
+            /^docs-complete-toggle/,
+            /^docs-sidebar/,
+            /^docs-page-actions/,
+            /^docs-progress/,
+            /is-complete/,
+            /reading-progress/,
+            /^code-block/,
+            /is-copied/,
+            /is-diagram/
+        ]
     }
 });
 

@@ -416,3 +416,62 @@
 
     document.addEventListener('activate.bs.scrollspy', highlightToc);
 })();
+
+
+// Universal code block copy button
+(() => {
+  const initCodeCopy = () => {
+    document.querySelectorAll('.code-block__copy').forEach((button) => {
+      if (button.dataset.copyBound === 'true') return;
+      button.dataset.copyBound = 'true';
+
+      button.addEventListener('click', async () => {
+        const block = button.closest('.code-block');
+        if (!block) return;
+        const code = block.querySelector('.code-block__body code') || block.querySelector('pre');
+        if (!code) return;
+
+        const text = code.innerText || code.textContent || '';
+        const label = button.querySelector('.code-block__copy-text');
+
+        const onSuccess = () => {
+          button.classList.add('is-copied');
+          if (label) label.textContent = 'Copied!';
+          setTimeout(() => {
+            button.classList.remove('is-copied');
+            if (label) label.textContent = 'Copy';
+          }, 2000);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          try {
+            await navigator.clipboard.writeText(text);
+            onSuccess();
+            return;
+          } catch {
+            // fallback below
+          }
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          onSuccess();
+        } finally {
+          textarea.remove();
+        }
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCodeCopy, { once: true });
+  } else {
+    initCodeCopy();
+  }
+})();

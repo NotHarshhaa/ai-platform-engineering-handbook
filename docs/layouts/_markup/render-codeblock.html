@@ -1,0 +1,54 @@
+{{- $lang := .Type | lower -}}
+{{- $title := .Attributes.title -}}
+{{- $isDiagram := or (in .Inner "-->") (in .Inner "->") (in .Inner "\\") (in .Inner "/ ") (in .Inner "+--") (in .Inner "|--") -}}
+
+{{- $label := "CODE" -}}
+{{- with $title -}}
+  {{- $label = . -}}
+{{- else with $lang -}}
+  {{- if eq . "bash" -}}{{- $label = "BASH" -}}
+  {{- else if or (eq . "sh") (eq . "shell") -}}{{- $label = "TERMINAL" -}}
+  {{- else if eq . "python" -}}{{- $label = "PYTHON" -}}
+  {{- else if or (eq . "yaml") (eq . "yml") -}}{{- $label = "YAML" -}}
+  {{- else if eq . "json" -}}{{- $label = "JSON" -}}
+  {{- else if or (eq . "dockerfile") (eq . "docker") -}}{{- $label = "DOCKER" -}}
+  {{- else if eq . "sql" -}}{{- $label = "SQL" -}}
+  {{- else if or (eq . "javascript") (eq . "js") -}}{{- $label = "JAVASCRIPT" -}}
+  {{- else if or (eq . "typescript") (eq . "ts") -}}{{- $label = "TYPESCRIPT" -}}
+  {{- else -}}{{- $label = upper . -}}
+  {{- end -}}
+{{- else -}}
+  {{- if $isDiagram -}}
+    {{- $label = "DIAGRAM" -}}
+  {{- else -}}
+    {{- $label = "TEXT" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $result := transform.HighlightCodeBlock . -}}
+
+<div class="code-block{{ with $lang }} lang-{{ . }}{{ end }}{{ if and (not $lang) $isDiagram }} is-diagram{{ end }}">
+  <div class="code-block__header">
+    <div class="code-block__meta">
+      <span class="code-block__dots" aria-hidden="true">
+        <span class="dot dot--red"></span>
+        <span class="dot dot--amber"></span>
+        <span class="dot dot--green"></span>
+      </span>
+      <span class="code-block__title">{{ $label }}</span>
+    </div>
+    <button type="button" class="code-block__copy" aria-label="Copy code to clipboard" title="Copy code">
+      <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="1"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span class="code-block__copy-text">Copy</span>
+    </button>
+  </div>
+  <div class="code-block__body">
+    {{ $result.Wrapped }}
+  </div>
+</div>
