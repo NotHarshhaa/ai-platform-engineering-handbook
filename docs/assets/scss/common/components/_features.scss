@@ -82,12 +82,20 @@
             background-color 0.15s ease;
     }
 
-    // Drawn check mark, revealed when the module is complete
+    // Drawn check mark, revealed when the module is complete. Absolute
+    // offsets are relative to the link's padding box. The box (::before)
+    // sits at the link's left padding — 1rem, the theme's
+    // `.section-nav ul.list-nested li a` rule out-specifies our padding
+    // shorthand — and 0.45rem padding + 0.24rem margin from the top, and is
+    // 0.72rem square. Centering the 0.34rem x 0.18rem check in that box
+    // gives left 1.19rem / top 0.96rem — anything higher or further left
+    // draws the check outside the box, invisible against the card
+    // background.
     &::after {
         content: "";
         position: absolute;
-        left: 0.75rem;
-        top: 0.48rem;
+        left: 1.19rem;
+        top: 0.96rem;
         width: 0.34rem;
         height: 0.18rem;
         border-left: 1.5px solid var(--sera-bg);

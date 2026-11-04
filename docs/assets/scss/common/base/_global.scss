@@ -7,6 +7,20 @@ body {
   max-width: 100%;
 }
 
+// The site never shows a horizontal scrollbar at any width: stray overflow is
+// clipped at the root. `clip` is used deliberately — unlike `hidden` it does
+// not turn the element into a scroll container, so sticky navbar/sidebar/TOC
+// keep working; the fallback keeps older browsers equally scrollbar-free.
+html {
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  html {
+    overflow-x: hidden;
+  }
+}
+
 body {
   color: var(--sera-fg);
   background-color: var(--sera-bg);

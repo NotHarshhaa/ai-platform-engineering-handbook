@@ -161,18 +161,15 @@
   background: var(--code-bg);
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--code-scrollbar-thumb) transparent;
+  // Wide code scrolls horizontally (wheel, trackpad, touch swipe), but the
+  // scrollbar itself is hidden so no horizontal bar shows up anywhere on the
+  // site. The pre inside is the element that actually scrolls, so both need
+  // the treatment.
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
-    height: 6px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: var(--code-scrollbar-thumb);
-    border-radius: 3px;
+    display: none;
   }
 
   // Hide Doks legacy copy button if inserted inside .highlight
@@ -194,6 +191,12 @@
     border: none !important;
     border-radius: 0 !important;
     overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   pre code {

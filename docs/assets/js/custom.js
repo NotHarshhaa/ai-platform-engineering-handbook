@@ -172,7 +172,11 @@
             return;
         }
         if (!last || !isModulePath(last.href || '')) return;
-        slot.innerHTML = '<a class="course-index__continue" href="' + last.href + '">Continue where you left off: <strong>' + last.title + '</strong><span aria-hidden="true">→</span></a>';
+        // The stored title is untrusted input (page titles contain "&" and
+        // localStorage is writable), so escape it before the innerHTML build.
+        const escapeHtml = (value) =>
+            String(value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        slot.innerHTML = '<a class="course-index__continue" href="' + escapeHtml(last.href) + '">Continue where you left off: <strong>' + escapeHtml(last.title || '') + '</strong><span aria-hidden="true">→</span></a>';
     };
 
     // Remember the most recent module for the continue row.

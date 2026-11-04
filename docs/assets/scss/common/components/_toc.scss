@@ -11,6 +11,9 @@
   height: auto;
   max-height: calc(100vh - var(--docs-sticky-offset) - 1.5rem);
   margin-top: 0 !important;
+  // overflow-y: auto would implicitly turn overflow-x into auto as well and
+  // let the TOC sprout its own horizontal scrollbar; clip stray overflow.
+  overflow-x: clip;
   overflow-y: auto;
   scrollbar-color: var(--sera-muted) transparent;
 
@@ -155,6 +158,7 @@
   details .page-links {
     max-height: 48vh;
     padding: 0.35rem 0.55rem 0.7rem;
+    overflow-x: clip;
     overflow-y: auto;
     border-top: 1px solid var(--sera-border);
   }

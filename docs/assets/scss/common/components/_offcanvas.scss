@@ -70,6 +70,7 @@
     flex-direction: column;
     padding: 0 0 unquote('max(1rem, env(safe-area-inset-bottom))');
     background: var(--sera-card);
+    overflow-x: clip;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
@@ -252,6 +253,7 @@
   }
 
   .navbar #offcanvasNavSection .offcanvas-body {
+    overflow-x: clip;
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;

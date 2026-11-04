@@ -67,5 +67,11 @@
     > * {
       min-width: 0;
     }
+
+    // Weeks open with a next-only (or end with a prev-only) card; it would
+    // otherwise sit in one column of the two-column grid.
+    > :only-child {
+      grid-column: 1 / -1;
+    }
   }
 }

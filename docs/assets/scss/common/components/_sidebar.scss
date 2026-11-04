@@ -150,7 +150,10 @@
     color: var(--sera-bg);
     font-weight: 700;
 
-    &::before {
+    // The empty checkbox square is noise on the inverted current-page link,
+    // but a completed module keeps its box so its state stays visible there;
+    // _features.scss inverts box and check colors for that case.
+    &:not(.is-complete)::before {
       display: none;
     }
 

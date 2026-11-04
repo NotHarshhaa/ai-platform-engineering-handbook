@@ -209,8 +209,9 @@
     &::after {
       content: '';
       position: absolute;
-      left: 0.12rem;
-      top: 0.2rem;
+      // Centered in the 0.72rem box: (0.36 - half width, 0.36 - half height)
+      left: 0.2rem;
+      top: 0.27rem;
       width: 0.32rem;
       height: 0.17rem;
       border-left: 1.5px solid var(--sera-bg);
