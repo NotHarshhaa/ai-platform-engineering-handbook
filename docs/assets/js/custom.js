@@ -1,400 +1,393 @@
 // Documentation sidebar toggle
 (() => {
-  const storageKey = 'docs-sidebar-hidden';
+    const storageKey = 'docs-sidebar-hidden';
 
-  const getStoredState = () => {
-    try {
-      return window.localStorage.getItem(storageKey) === 'true';
-    } catch {
-      return false;
-    }
-  };
-
-  const storeState = (isHidden) => {
-    try {
-      window.localStorage.setItem(storageKey, String(isHidden));
-    } catch {
-      // The control still works when storage is unavailable or blocked.
-    }
-  };
-
-  // Drawn icons (tabler outline) so they match the theme's icon set in weight
-  // and stroke. The sidebar toggle uses a panel glyph on both states — the
-  // label carries the action, and an X glyph read like a close button.
-  const ICON_SIDEBAR =
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="0" /><path d="M9 4v16" /><path d="M13 12h4" /></svg>';
-
-  const initSidebarToggle = () => {
-    const sidebar = document.querySelector('.docs-sidebar');
-    const pageHeader = document.querySelector('.docs-content .page-header');
-
-    if (!sidebar || !pageHeader) return;
-    if (pageHeader.querySelector('.docs-sidebar-toggle')) return;
-
-    sidebar.id = 'docs-sidebar';
-
-    const button = document.createElement('button');
-    const icon = document.createElement('span');
-    const label = document.createElement('span');
-    button.type = 'button';
-    button.className = 'docs-sidebar-toggle';
-    button.setAttribute('aria-controls', sidebar.id);
-    icon.setAttribute('aria-hidden', 'true');
-    icon.className = 'docs-sidebar-toggle__icon';
-    button.append(icon, label);
-
-    const actions = pageHeader.querySelector('#ai-dropdown')?.parentElement || document.createElement('div');
-    actions.classList.add('docs-page-actions');
-    if (!actions.isConnected) pageHeader.append(actions);
-    actions.append(button);
-
-    const setSidebarState = (isHidden) => {
-      document.body.classList.toggle('docs-sidebar-hidden', isHidden);
-      button.setAttribute('aria-expanded', String(!isHidden));
-      button.setAttribute('aria-label', isHidden ? 'Show course navigation sidebar' : 'Hide course navigation sidebar');
-      icon.innerHTML = ICON_SIDEBAR;
-      label.textContent = isHidden ? 'Show navigation' : 'Hide navigation';
+    const getStoredState = () => {
+        try {
+            return window.localStorage.getItem(storageKey) === 'true';
+        } catch {
+            return false;
+        }
     };
 
-    setSidebarState(getStoredState());
+    const storeState = (isHidden) => {
+        try {
+            window.localStorage.setItem(storageKey, String(isHidden));
+        } catch {
+            // The control still works when storage is unavailable or blocked.
+        }
+    };
 
-    button.addEventListener('click', () => {
-      const isHidden = !document.body.classList.contains('docs-sidebar-hidden');
-      setSidebarState(isHidden);
-      storeState(isHidden);
-    });
-  };
+    // Drawn icons (tabler outline) so they match the theme's icon set in weight
+    // and stroke. The sidebar toggle uses a panel glyph on both states — the
+    // label carries the action, and an X glyph read like a close button.
+    const ICON_SIDEBAR = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="0" /><path d="M9 4v16" /><path d="M13 12h4" /></svg>';
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSidebarToggle, { once: true });
-  } else {
-    initSidebarToggle();
-  }
+    const initSidebarToggle = () => {
+        const sidebar = document.querySelector('.docs-sidebar');
+        const pageHeader = document.querySelector('.docs-content .page-header');
+
+        if (!sidebar || !pageHeader) return;
+        if (pageHeader.querySelector('.docs-sidebar-toggle')) return;
+
+        sidebar.id = 'docs-sidebar';
+
+        const button = document.createElement('button');
+        const icon = document.createElement('span');
+        const label = document.createElement('span');
+        button.type = 'button';
+        button.className = 'docs-sidebar-toggle';
+        button.setAttribute('aria-controls', sidebar.id);
+        icon.setAttribute('aria-hidden', 'true');
+        icon.className = 'docs-sidebar-toggle__icon';
+        button.append(icon, label);
+
+        const actions = pageHeader.querySelector('#ai-dropdown')?.parentElement || document.createElement('div');
+        actions.classList.add('docs-page-actions');
+        if (!actions.isConnected) pageHeader.append(actions);
+        actions.append(button);
+
+        const setSidebarState = (isHidden) => {
+            document.body.classList.toggle('docs-sidebar-hidden', isHidden);
+            button.setAttribute('aria-expanded', String(!isHidden));
+            button.setAttribute('aria-label', isHidden ? 'Show course navigation sidebar' : 'Hide course navigation sidebar');
+            icon.innerHTML = ICON_SIDEBAR;
+            label.textContent = isHidden ? 'Show navigation' : 'Hide navigation';
+        };
+
+        setSidebarState(getStoredState());
+
+        button.addEventListener('click', () => {
+            const isHidden = !document.body.classList.contains('docs-sidebar-hidden');
+            setSidebarState(isHidden);
+            storeState(isHidden);
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSidebarToggle, { once: true });
+    } else {
+        initSidebarToggle();
+    }
 })();
 
 // Course progress: mark modules complete, reflect state in the sidebar and
 // show an overall progress figure. Stored in localStorage; no backend.
 (() => {
-  const STORAGE_KEY = 'handbook-progress';
-  const CHECK_SVG =
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l6 6L20 6" /></svg>';
+    const STORAGE_KEY = 'handbook-progress';
+    const CHECK_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l6 6L20 6" /></svg>';
 
-  const readState = () => {
-    try {
-      const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
-      return parsed && typeof parsed === 'object' ? parsed : {};
-    } catch {
-      return {};
-    }
-  };
-
-  const writeState = (state) => {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch {
-      // The toggle still works per page view when storage is blocked.
-    }
-  };
-
-  const normalizePath = () => {
-    let path = window.location.pathname;
-    if (!path.endsWith('/')) path += '/';
-    return path;
-  };
-
-  const isModulePath = (path) => /^\/docs\/week-\d+\/[^/]+\/$/.test(path);
-
-  const renderSidebarProgress = () => {
-    const nav = document.querySelector('.docs-sidebar .section-nav');
-    if (!nav) return;
-
-    const links = [...nav.querySelectorAll('a[href]')].filter((a) => isModulePath(a.getAttribute('href')));
-    if (!links.length) return;
-
-    const state = readState();
-    let done = 0;
-    links.forEach((a) => {
-      const complete = Boolean(state[a.getAttribute('href')]);
-      a.classList.toggle('is-complete', complete);
-      if (complete) done += 1;
-    });
-
-    let box = nav.querySelector('.docs-progress');
-    if (!box) {
-      box = document.createElement('div');
-      box.className = 'docs-progress';
-      nav.prepend(box);
-    }
-    const pct = Math.round((done / links.length) * 100);
-    box.innerHTML =
-      '<div class="docs-progress__head"><span>' + done + ' of ' + links.length + ' modules</span><strong>' + pct + '%</strong></div>' +
-      '<div class="docs-progress__track" role="progressbar" aria-label="Handbook progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '">' +
-      '<div class="docs-progress__bar" style="width: ' + pct + '%"></div></div>';
-  };
-
-  // Progress boxes on the course pages (docs index: whole handbook; week
-  // pages: that week only, counted from the module links beside the box).
-  const renderProgressBoxes = () => {
-    const state = readState();
-    document.querySelectorAll('[data-handbook-progress]').forEach((box) => {
-      let done = 0;
-      let total = parseInt(box.dataset.totalModules, 10) || 0;
-      if (box.dataset.progress === 'week') {
-        // The week's module links are siblings of the box inside the hero
-        // progress panel, so search the panel rather than the box itself.
-        const links = [...box.parentElement.querySelectorAll('a[href]')].filter((a) => isModulePath(a.getAttribute('href')));
-        done = links.filter((a) => state[a.getAttribute('href')]).length;
-        total = total || links.length;
-      } else {
-        done = Object.keys(state).filter(isModulePath).length;
-      }
-      const pct = total ? Math.round((done / total) * 100) : 0;
-      box.innerHTML =
-        '<div class="docs-progress__head"><span>' + done + ' of ' + total + ' modules</span><strong>' + pct + '%</strong></div>' +
-        '<div class="docs-progress__track" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '">' +
-        '<div class="docs-progress__bar" style="width: ' + pct + '%"></div></div>';
-    });
-  };
-
-  // Completed-module markers on the course catalogue and week pages.
-  const markCourseLinks = () => {
-    const state = readState();
-    document.querySelectorAll('.course-index a[href]').forEach((a) => {
-      const href = a.getAttribute('href');
-      if (!isModulePath(href)) return;
-      const complete = Boolean(state[href]);
-      a.classList.toggle('is-complete', complete);
-      const stage = a.closest('.course-index__stage');
-      if (stage) stage.classList.toggle('is-complete', complete);
-    });
-  };
-
-  // "Continue where you left off" row on the course index.
-  const renderContinue = () => {
-    const slot = document.querySelector('[data-handbook-continue]');
-    if (!slot) return;
-    let last = null;
-    try {
-      last = JSON.parse(window.localStorage.getItem('handbook-last') || 'null');
-    } catch {
-      return;
-    }
-    if (!last || !isModulePath(last.href || '')) return;
-    slot.innerHTML =
-      '<a class="course-index__continue" href="' + last.href + '">Continue where you left off: <strong>' +
-      last.title + '</strong><span aria-hidden="true">→</span></a>';
-  };
-
-  // Remember the most recent module for the continue row.
-  const rememberLastModule = () => {
-    const path = normalizePath();
-    if (!isModulePath(path)) return;
-    try {
-      window.localStorage.setItem('handbook-last', JSON.stringify({
-        href: path,
-        title: document.title.replace(/ \| .*$/, '')
-      }));
-    } catch {
-      // The continue row simply stays empty when storage is unavailable.
-    }
-  };
-
-  const initCompleteToggle = () => {
-    const header = document.querySelector('.docs-content .page-header');
-    const path = normalizePath();
-    if (!header || !isModulePath(path) || header.querySelector('.docs-complete-toggle')) return;
-
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'docs-complete-toggle';
-    const icon = document.createElement('span');
-    icon.className = 'docs-complete-toggle__icon';
-    icon.setAttribute('aria-hidden', 'true');
-    icon.innerHTML = CHECK_SVG;
-    const label = document.createElement('span');
-    label.className = 'docs-complete-toggle__label';
-    button.append(icon, label);
-
-    const actions = header.querySelector('.docs-page-actions') || (() => {
-      const div = document.createElement('div');
-      div.className = 'docs-page-actions';
-      header.append(div);
-      return div;
-    })();
-    actions.prepend(button);
-
-    const setDone = (done) => {
-      button.classList.toggle('is-complete', done);
-      button.setAttribute('aria-pressed', String(done));
-      button.setAttribute('aria-label', done ? 'Module completed; select to mark as not complete' : 'Mark this module as complete');
-      label.textContent = done ? 'Completed' : 'Mark complete';
+    const readState = () => {
+        try {
+            const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
+            return parsed && typeof parsed === 'object' ? parsed : {};
+        } catch {
+            return {};
+        }
     };
 
-    setDone(Boolean(readState()[path]));
+    const writeState = (state) => {
+        try {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch {
+            // The toggle still works per page view when storage is blocked.
+        }
+    };
 
-    button.addEventListener('click', () => {
-      const state = readState();
-      const nowDone = !state[path];
-      if (nowDone) state[path] = true;
-      else delete state[path];
-      writeState(state);
-      setDone(nowDone);
-      renderSidebarProgress();
-      renderProgressBoxes();
-      markCourseLinks();
-    });
-  };
+    const normalizePath = () => {
+        let path = window.location.pathname;
+        if (!path.endsWith('/')) path += '/';
+        return path;
+    };
 
-  const init = () => {
-    initCompleteToggle();
-    rememberLastModule();
-    renderSidebarProgress();
-    renderProgressBoxes();
-    markCourseLinks();
-    renderContinue();
-  };
+    const isModulePath = (path) => /^\/docs\/week-\d+\/[^/]+\/$/.test(path);
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-  } else {
-    init();
-  }
+    const renderSidebarProgress = () => {
+        const nav = document.querySelector('.docs-sidebar .section-nav');
+        if (!nav) return;
+
+        const links = [...nav.querySelectorAll('a[href]')].filter((a) => isModulePath(a.getAttribute('href')));
+        if (!links.length) return;
+
+        const state = readState();
+        let done = 0;
+        links.forEach((a) => {
+            const complete = Boolean(state[a.getAttribute('href')]);
+            a.classList.toggle('is-complete', complete);
+            if (complete) done += 1;
+        });
+
+        let box = nav.querySelector('.docs-progress');
+        if (!box) {
+            box = document.createElement('div');
+            box.className = 'docs-progress';
+            nav.prepend(box);
+        }
+        const pct = Math.round((done / links.length) * 100);
+        box.innerHTML = '<div class="docs-progress__head"><span>' + done + ' of ' + links.length + ' modules</span><strong>' + pct + '%</strong></div>' + '<div class="docs-progress__track" role="progressbar" aria-label="Handbook progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '">' + '<div class="docs-progress__bar" style="width: ' + pct + '%"></div></div>';
+    };
+
+    // Progress boxes on the course pages (docs index: whole handbook; week
+    // pages: that week only, counted from the module links beside the box).
+    const renderProgressBoxes = () => {
+        const state = readState();
+        document.querySelectorAll('[data-handbook-progress]').forEach((box) => {
+            let done = 0;
+            let total = parseInt(box.dataset.totalModules, 10) || 0;
+            if (box.dataset.progress === 'week') {
+                // The week's module links are siblings of the box inside the hero
+                // progress panel, so search the panel rather than the box itself.
+                const links = [...box.parentElement.querySelectorAll('a[href]')].filter((a) => isModulePath(a.getAttribute('href')));
+                done = links.filter((a) => state[a.getAttribute('href')]).length;
+                total = total || links.length;
+            } else {
+                done = Object.keys(state).filter(isModulePath).length;
+            }
+            const pct = total ? Math.round((done / total) * 100) : 0;
+            box.innerHTML = '<div class="docs-progress__head"><span>' + done + ' of ' + total + ' modules</span><strong>' + pct + '%</strong></div>' + '<div class="docs-progress__track" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '">' + '<div class="docs-progress__bar" style="width: ' + pct + '%"></div></div>';
+        });
+    };
+
+    // Completed-module markers on the course catalogue and week pages.
+    const markCourseLinks = () => {
+        const state = readState();
+        document.querySelectorAll('.course-index a[href]').forEach((a) => {
+            const href = a.getAttribute('href');
+            if (!isModulePath(href)) return;
+            const complete = Boolean(state[href]);
+            a.classList.toggle('is-complete', complete);
+            const stage = a.closest('.course-index__stage');
+            if (stage) stage.classList.toggle('is-complete', complete);
+        });
+    };
+
+    // "Continue where you left off" row on the course index.
+    const renderContinue = () => {
+        const slot = document.querySelector('[data-handbook-continue]');
+        if (!slot) return;
+        let last = null;
+        try {
+            last = JSON.parse(window.localStorage.getItem('handbook-last') || 'null');
+        } catch {
+            return;
+        }
+        if (!last || !isModulePath(last.href || '')) return;
+        slot.innerHTML = '<a class="course-index__continue" href="' + last.href + '">Continue where you left off: <strong>' + last.title + '</strong><span aria-hidden="true">→</span></a>';
+    };
+
+    // Remember the most recent module for the continue row.
+    const rememberLastModule = () => {
+        const path = normalizePath();
+        if (!isModulePath(path)) return;
+        try {
+            window.localStorage.setItem(
+                'handbook-last',
+                JSON.stringify({
+                    href: path,
+                    title: document.title.replace(/ \| .*$/, '')
+                })
+            );
+        } catch {
+            // The continue row simply stays empty when storage is unavailable.
+        }
+    };
+
+    const initCompleteToggle = () => {
+        const header = document.querySelector('.docs-content .page-header');
+        const path = normalizePath();
+        if (!header || !isModulePath(path) || header.querySelector('.docs-complete-toggle')) return;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'docs-complete-toggle';
+        const icon = document.createElement('span');
+        icon.className = 'docs-complete-toggle__icon';
+        icon.setAttribute('aria-hidden', 'true');
+        icon.innerHTML = CHECK_SVG;
+        const label = document.createElement('span');
+        label.className = 'docs-complete-toggle__label';
+        button.append(icon, label);
+
+        const actions =
+            header.querySelector('.docs-page-actions') ||
+            (() => {
+                const div = document.createElement('div');
+                div.className = 'docs-page-actions';
+                header.append(div);
+                return div;
+            })();
+        actions.prepend(button);
+
+        const setDone = (done) => {
+            button.classList.toggle('is-complete', done);
+            button.setAttribute('aria-pressed', String(done));
+            button.setAttribute('aria-label', done ? 'Module completed; select to mark as not complete' : 'Mark this module as complete');
+            label.textContent = done ? 'Completed' : 'Mark complete';
+        };
+
+        setDone(Boolean(readState()[path]));
+
+        button.addEventListener('click', () => {
+            const state = readState();
+            const nowDone = !state[path];
+            if (nowDone) state[path] = true;
+            else delete state[path];
+            writeState(state);
+            setDone(nowDone);
+            renderSidebarProgress();
+            renderProgressBoxes();
+            markCourseLinks();
+        });
+    };
+
+    const init = () => {
+        initCompleteToggle();
+        rememberLastModule();
+        renderSidebarProgress();
+        renderProgressBoxes();
+        markCourseLinks();
+        renderContinue();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+        init();
+    }
 })();
 
 // Reading progress bar: fills as the reader moves through the article.
 (() => {
-  const initReadingProgress = () => {
-    const content = document.querySelector('.docs-content');
-    if (!content || document.querySelector('.reading-progress')) return;
+    const initReadingProgress = () => {
+        const content = document.querySelector('.docs-content');
+        if (!content || document.querySelector('.reading-progress')) return;
 
-    const bar = document.createElement('div');
-    bar.className = 'reading-progress';
-    bar.setAttribute('aria-hidden', 'true');
-    document.body.append(bar);
+        const bar = document.createElement('div');
+        bar.className = 'reading-progress';
+        bar.setAttribute('aria-hidden', 'true');
+        document.body.append(bar);
 
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const rect = content.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      if (total <= 0) {
-        bar.style.transform = 'scaleX(0)';
-        return;
-      }
-      const done = Math.min(Math.max(-rect.top, 0), total);
-      bar.style.transform = 'scaleX(' + done / total + ')';
+        let ticking = false;
+        const update = () => {
+            ticking = false;
+            const rect = content.getBoundingClientRect();
+            const total = rect.height - window.innerHeight;
+            if (total <= 0) {
+                bar.style.transform = 'scaleX(0)';
+                return;
+            }
+            const done = Math.min(Math.max(-rect.top, 0), total);
+            bar.style.transform = 'scaleX(' + done / total + ')';
+        };
+        const requestUpdate = () => {
+            if (!ticking) {
+                ticking = true;
+                window.requestAnimationFrame(update);
+            }
+        };
+
+        window.addEventListener('scroll', requestUpdate, { passive: true });
+        window.addEventListener('resize', requestUpdate, { passive: true });
+        update();
     };
-    const requestUpdate = () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(update);
-      }
-    };
 
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate, { passive: true });
-    update();
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initReadingProgress, { once: true });
-  } else {
-    initReadingProgress();
-  }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReadingProgress, { once: true });
+    } else {
+        initReadingProgress();
+    }
 })();
 
 // Keyboard navigation between modules: ← / → (or J / K) follow the prev/next
 // cards at the end of each module. Guarded so typing and open overlays win.
 (() => {
-  const initKeyNav = () => {
-    const nav = document.querySelector('.docs-content .page-nav');
-    if (!nav) return;
+    const initKeyNav = () => {
+        const nav = document.querySelector('.docs-content .page-nav');
+        if (!nav) return;
 
-    // The theme renders the previous card first and the next card last (the
-    // next card is the right-aligned one when both exist).
-    const prev = nav.querySelector('.card:not(.text-end) a');
-    const next = nav.querySelector('.card.text-end a');
-    if (!prev && !next) return;
+        // The theme renders the previous card first and the next card last (the
+        // next card is the right-aligned one when both exist).
+        const prev = nav.querySelector('.card:not(.text-end) a');
+        const next = nav.querySelector('.card.text-end a');
+        if (!prev && !next) return;
 
-    if (prev) prev.setAttribute('title', 'Previous module (←)');
-    if (next) next.setAttribute('title', 'Next module (→)');
+        if (prev) prev.setAttribute('title', 'Previous module (←)');
+        if (next) next.setAttribute('title', 'Next module (→)');
 
-    document.addEventListener('keydown', (event) => {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
-      if (document.querySelector('.modal.show, .offcanvas.show')) return;
+        document.addEventListener('keydown', (event) => {
+            if (event.altKey || event.ctrlKey || event.metaKey) return;
+            if (document.querySelector('.modal.show, .offcanvas.show')) return;
 
-      const target = event.target;
-      if (target && (target.isContentEditable || /^(input|textarea|select)$/i.test(target.tagName))) return;
+            const target = event.target;
+            if (target && (target.isContentEditable || /^(input|textarea|select)$/i.test(target.tagName))) return;
 
-      const go = (link) => {
-        if (!link) return;
-        event.preventDefault();
-        window.location.href = link.href;
-      };
+            const go = (link) => {
+                if (!link) return;
+                event.preventDefault();
+                window.location.href = link.href;
+            };
 
-      if (event.key === 'ArrowLeft') {
-        // Arrows also scroll focused elements (e.g. code blocks); only take
-        // them over when nothing in particular has focus.
-        if (target && target !== document.body && target !== document.documentElement && target !== document) return;
-        go(prev);
-      } else if (event.key === 'ArrowRight') {
-        if (target && target !== document.body && target !== document.documentElement && target !== document) return;
-        go(next);
-      } else if (event.key === 'j' || event.key === 'J') {
-        go(next);
-      } else if (event.key === 'k' || event.key === 'K') {
-        go(prev);
-      }
-    });
-  };
+            if (event.key === 'ArrowLeft') {
+                // Arrows also scroll focused elements (e.g. code blocks); only take
+                // them over when nothing in particular has focus.
+                if (target && target !== document.body && target !== document.documentElement && target !== document) return;
+                go(prev);
+            } else if (event.key === 'ArrowRight') {
+                if (target && target !== document.body && target !== document.documentElement && target !== document) return;
+                go(next);
+            } else if (event.key === 'j' || event.key === 'J') {
+                go(next);
+            } else if (event.key === 'k' || event.key === 'K') {
+                go(prev);
+            }
+        });
+    };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initKeyNav, { once: true });
-  } else {
-    initKeyNav();
-  }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initKeyNav, { once: true });
+    } else {
+        initKeyNav();
+    }
 })();
 
 // Theme toggle — handle clicks on the button itself so icon styling cannot break it.
 (() => {
-  const initThemeToggle = () => {
-    const button = document.getElementById('buttonColorMode');
-    if (!button || button.dataset.themeToggleBound === 'true') return;
+    const initThemeToggle = () => {
+        const button = document.getElementById('buttonColorMode');
+        if (!button || button.dataset.themeToggleBound === 'true') return;
 
-    button.dataset.themeToggleBound = 'true';
+        button.dataset.themeToggleBound = 'true';
 
-    const resolveTheme = () => {
-      const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
-      if (current === 'auto') {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      return current;
+        const resolveTheme = () => {
+            const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            if (current === 'auto') {
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            return current;
+        };
+
+        const setTheme = (theme) => {
+            document.documentElement.setAttribute('data-bs-theme', theme);
+            try {
+                window.localStorage.setItem('theme', theme);
+            } catch {
+                // Theme still switches when storage is unavailable.
+            }
+            document.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+        };
+
+        button.addEventListener('click', () => {
+            const next = resolveTheme() === 'dark' ? 'light' : 'dark';
+            setTheme(next);
+        });
     };
 
-    const setTheme = (theme) => {
-      document.documentElement.setAttribute('data-bs-theme', theme);
-      try {
-        window.localStorage.setItem('theme', theme);
-      } catch {
-        // Theme still switches when storage is unavailable.
-      }
-      document.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
-    };
-
-    button.addEventListener('click', () => {
-      const next = resolveTheme() === 'dark' ? 'light' : 'dark';
-      setTheme(next);
-    });
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initThemeToggle, { once: true });
-  } else {
-    initThemeToggle();
-  }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initThemeToggle, { once: true });
+    } else {
+        initThemeToggle();
+    }
 })();
-
-
 
 // Mobile offcanvas: rely on Bootstrap's built-in scroll lock (custom position:fixed
 // locking conflicted with offcanvas open/close and left the page stuck).
@@ -403,23 +396,23 @@
 // anchor itself as active via the activate event. Mirror the event onto the
 // matching TOC link when the event reports a section element instead.
 (() => {
-  const highlightToc = (event) => {
-    const target = event.relatedTarget;
-    if (!target) return;
+    const highlightToc = (event) => {
+        const target = event.relatedTarget;
+        if (!target) return;
 
-    if (target.matches && target.matches('#toc a, #TableOfContents a')) {
-      if (target.classList.contains('active')) return;
-    }
+        if (target.matches && target.matches('#toc a, #TableOfContents a')) {
+            if (target.classList.contains('active')) return;
+        }
 
-    const id = target.id || (target.hash ? target.hash.slice(1) : '');
-    if (!id) return;
+        const id = target.id || (target.hash ? target.hash.slice(1) : '');
+        if (!id) return;
 
-    document.querySelectorAll('#toc a.active, #TableOfContents a.active').forEach((link) => {
-      link.classList.remove('active');
-    });
-    const link = document.querySelector(`#toc a[href="#${id}"], #TableOfContents a[href="#${id}"]`);
-    if (link) link.classList.add('active');
-  };
+        document.querySelectorAll('#toc a.active, #TableOfContents a.active').forEach((link) => {
+            link.classList.remove('active');
+        });
+        const link = document.querySelector(`#toc a[href="#${id}"], #TableOfContents a[href="#${id}"]`);
+        if (link) link.classList.add('active');
+    };
 
-  document.addEventListener('activate.bs.scrollspy', highlightToc);
+    document.addEventListener('activate.bs.scrollspy', highlightToc);
 })();
