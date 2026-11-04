@@ -272,6 +272,91 @@
 }
 
 // -----------------------------------------------------------------------------
+// Handbook progress ring: completion indicator linking to the course index.
+// Styled like the neighboring icon buttons; the % label hides on small screens.
+// -----------------------------------------------------------------------------
+
+.handbook-ring {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 0.45rem;
+  align-items: center;
+  height: 2.15rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--sera-border);
+  border-radius: 0;
+  background: var(--sera-card);
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--sera-fg);
+    background: var(--sera-soft);
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sera-fg);
+    outline-offset: 2px;
+  }
+}
+
+.handbook-ring__svg {
+  display: block;
+  width: 1.15rem;
+  height: 1.15rem;
+  transform: rotate(-90deg);
+}
+
+.handbook-ring__track {
+  fill: none;
+  stroke: var(--sera-border);
+  stroke-width: 3.5;
+}
+
+.handbook-ring__bar {
+  fill: none;
+  stroke: var(--sera-fg);
+  stroke-width: 3.5;
+  stroke-dasharray: 97.4;
+  stroke-dashoffset: 97.4;
+  transition: stroke-dashoffset 0.35s ease;
+}
+
+.handbook-ring__label {
+  color: var(--sera-fg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+// Desktop: the ring leads the right-hand action cluster and takes over the
+// auto margin that previously pushed the search button right.
+@include media-breakpoint-up(lg) {
+  #offcanvasNavMain .offcanvas-body > .handbook-ring {
+    margin-left: auto;
+  }
+
+  #offcanvasNavMain .offcanvas-body > #searchToggleDesktop {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .handbook-ring.d-lg-none {
+    width: 2.15rem;
+    padding: 0;
+    justify-content: center;
+
+    .handbook-ring__label {
+      display: none;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Mobile navbar
 // -----------------------------------------------------------------------------
 
@@ -300,7 +385,8 @@
       text-overflow: ellipsis !important;
       flex-shrink: 1 !important;
       min-width: 0 !important;
-      max-width: calc(100% - 7.5rem);
+      // Room for the progress ring plus the three icon buttons.
+      max-width: calc(100% - 9.9rem);
     }
 
     .navbar-brand::before {

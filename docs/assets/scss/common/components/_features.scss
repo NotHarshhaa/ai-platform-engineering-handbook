@@ -128,9 +128,10 @@
 }
 
 // -----------------------------------------------------------------------------
-// "Mark complete" toggle in the docs page header
+// "Mark complete" / "Bookmark" toggles in the docs page header
 // -----------------------------------------------------------------------------
-.docs-complete-toggle {
+.docs-complete-toggle,
+.docs-bookmark-toggle {
     display: inline-flex;
     gap: 0.5rem;
     align-items: center;
@@ -180,7 +181,6 @@
         border-color 0.15s ease,
         background-color 0.15s ease;
 }
-
 .docs-complete-toggle__icon svg {
     display: block;
     width: 0.75rem;
@@ -212,6 +212,49 @@
 }
 
 .docs-complete-toggle__label {
+    display: inline-block;
+    line-height: 1;
+}
+
+// Bookmark star: outlined by default, filled when the module is saved.
+.docs-bookmark-toggle__icon {
+    display: inline-flex;
+    width: 1.05rem;
+    height: 1.05rem;
+    flex: 0 0 1.05rem;
+    align-items: center;
+    justify-content: center;
+    color: var(--sera-muted);
+    transition: color 0.15s ease;
+}
+
+.docs-bookmark-toggle__icon svg {
+    display: block;
+    width: 0.85rem;
+    height: 0.85rem;
+    fill: transparent;
+    transition: fill 0.15s ease, transform 0.15s ease;
+}
+
+.docs-bookmark-toggle:hover .docs-bookmark-toggle__icon {
+    color: var(--sera-fg);
+}
+
+.docs-bookmark-toggle.is-bookmarked {
+    border-color: var(--sera-fg);
+    background: var(--sera-soft);
+
+    .docs-bookmark-toggle__icon {
+        color: var(--sera-fg);
+    }
+
+    .docs-bookmark-toggle__icon svg {
+        fill: currentColor;
+        transform: scale(1.08);
+    }
+}
+
+.docs-bookmark-toggle__label {
     display: inline-block;
     line-height: 1;
 }
@@ -285,7 +328,8 @@
 }
 
 @include media-breakpoint-down(sm) {
-    .docs-complete-toggle {
+    .docs-complete-toggle,
+    .docs-bookmark-toggle {
         min-height: 2.2rem;
         padding: 0.4rem 0.6rem;
         font-size: 0.68rem;

@@ -33,6 +33,7 @@
           <div class="course-index__stage"><span class="course-index__stage-num">05</span><span class="course-index__stage-name">Enterprise AI</span></div>
         </div>
         <div class="course-index__continue-slot" data-handbook-continue></div>
+        <div class="course-index__bookmark-slot" data-handbook-bookmarks></div>
       </div>
     </div>
   </section>
@@ -46,7 +47,7 @@
       <div class="course-index__grid">
         {{ range $weeks }}
         {{ $topics := .RegularPages.ByWeight }}
-        <article class="course-index__card">
+        <article class="course-index__card" data-total-modules="{{ len $topics }}">
           <div class="course-index__card-top"><span class="course-index__week">{{ .Title }}</span><span class="course-index__count">{{ len $topics }} modules</span></div>
           <h3>{{ replaceRE "^Week [0-9]+ - " "" .Title }}</h3>
           <ul>

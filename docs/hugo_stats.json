@@ -98,6 +98,7 @@
       "content",
       "course-index",
       "course-index--week",
+      "course-index__bookmark-slot",
       "course-index__bottom",
       "course-index__bottom-links",
       "course-index__button",

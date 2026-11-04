@@ -241,6 +241,9 @@
             renderSidebarProgress();
             renderProgressBoxes();
             markCourseLinks();
+            // Signals for the other reader features (navbar ring, card badges)
+            // that derive from the same progress state.
+            document.dispatchEvent(new CustomEvent('handbook:progress'));
         });
     };
 
@@ -478,4 +481,293 @@
   } else {
     initCodeCopy();
   }
+})();
+
+// Navbar progress ring: a compact handbook-completion indicator next to the
+// navbar actions, linked to the course index. Rendered twice (desktop actions
+// row and mobile top bar) and updated live via the handbook:progress event.
+(() => {
+    const STORAGE_KEY = 'handbook-progress';
+    const RING_CIRCUMFERENCE = 97.4; // r = 15.5 on a 36 viewBox
+
+    const isModulePath = (path) => /^\/docs\/week-\d+\/[^/]+\/$/.test(path);
+
+    const readState = () => {
+        try {
+            const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
+            return parsed && typeof parsed === 'object' ? parsed : {};
+        } catch {
+            return {};
+        }
+    };
+
+    const getTotal = () => {
+        const attr = parseInt(document.body.dataset.handbookTotalModules, 10);
+        if (attr > 0) return attr;
+        const nav = document.querySelector('.docs-sidebar .section-nav');
+        if (nav) return [...nav.querySelectorAll('a[href]')].filter((a) => isModulePath(a.getAttribute('href'))).length;
+        return 0;
+    };
+
+    const buildRing = () => {
+        const ring = document.createElement('a');
+        ring.className = 'handbook-ring';
+        ring.href = '/docs/';
+        ring.innerHTML =
+            '<svg class="handbook-ring__svg" viewBox="0 0 36 36" aria-hidden="true">' +
+            '<circle class="handbook-ring__track" cx="18" cy="18" r="15.5"></circle>' +
+            '<circle class="handbook-ring__bar" cx="18" cy="18" r="15.5"></circle>' +
+            '</svg>' +
+            '<span class="handbook-ring__label">0%</span>';
+        return ring;
+    };
+
+    const render = () => {
+        const rings = document.querySelectorAll('.handbook-ring');
+        if (!rings.length) return;
+        const done = Object.keys(readState()).filter(isModulePath).length;
+        const total = getTotal();
+        const pct = total ? Math.round((done / total) * 100) : 0;
+        rings.forEach((ring) => {
+            ring.querySelector('.handbook-ring__bar').style.strokeDashoffset = String(RING_CIRCUMFERENCE * (1 - pct / 100));
+            const label = ring.querySelector('.handbook-ring__label');
+            if (label) label.textContent = pct + '%';
+            const text = total ? 'Handbook progress: ' + pct + '% (' + done + ' of ' + total + ' modules complete)' : 'Handbook progress';
+            ring.title = text;
+            ring.setAttribute('aria-label', text);
+        });
+    };
+
+    const init = () => {
+        // Desktop: inside the collapsed-offcanvas row, ahead of the search button.
+        const desktopBody = document.querySelector('#offcanvasNavMain .offcanvas-body');
+        if (desktopBody && !desktopBody.querySelector('.handbook-ring')) {
+            const ring = buildRing();
+            ring.classList.add('d-none', 'd-lg-inline-flex');
+            const search = document.getElementById('searchToggleDesktop');
+            if (search) desktopBody.insertBefore(ring, search);
+            else desktopBody.append(ring);
+        }
+        // Mobile: in the top bar, ahead of the mobile search button.
+        const container = document.querySelector('header.navbar > div[class*="container"]');
+        if (container && !container.querySelector(':scope > .handbook-ring')) {
+            const ring = buildRing();
+            ring.classList.add('d-lg-none');
+            const anchor = document.getElementById('searchToggleMobile');
+            if (anchor) container.insertBefore(ring, anchor);
+            else container.append(ring);
+        }
+        render();
+    };
+
+    document.addEventListener('handbook:progress', render);
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+        init();
+    }
+})();
+
+// Week badges on the course cards: the catalogue cards show "N/M done" for
+// their week; the week-page module cards show a completed chip when their
+// module is marked complete.
+(() => {
+    const STORAGE_KEY = 'handbook-progress';
+    const CHECK_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l6 6L20 6" /></svg>';
+
+    const isModulePath = (path) => /^\/docs\/week-\d+\/[^/]+\/$/.test(path);
+    const isWeekPath = (path) => /^\/docs\/week-\d+\/$/.test(path);
+
+    const readState = () => {
+        try {
+            const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
+            return parsed && typeof parsed === 'object' ? parsed : {};
+        } catch {
+            return {};
+        }
+    };
+
+    const ensureBadge = (card) => {
+        let badge = card.querySelector(':scope > .course-index__card-top > .course-index__badge');
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'course-index__badge';
+            const top = card.querySelector('.course-index__card-top');
+            const count = top ? top.querySelector('.course-index__count') : null;
+            if (count) top.insertBefore(badge, count);
+            else if (top) top.append(badge);
+            else return null;
+        }
+        return badge;
+    };
+
+    const render = () => {
+        const state = readState();
+        document.querySelectorAll('.course-index__card').forEach((card) => {
+            const explore = card.querySelector('.course-index__explore[href]');
+            const weekHref = explore ? explore.getAttribute('href') : '';
+            const moduleLink = card.querySelector('h3 a[href]');
+            const moduleHref = moduleLink ? moduleLink.getAttribute('href') : '';
+
+            if (isWeekPath(weekHref)) {
+                const total = parseInt(card.dataset.totalModules, 10) || 0;
+                const done = Object.keys(state).filter((h) => h.startsWith(weekHref) && isModulePath(h)).length;
+                const complete = total > 0 && done === total;
+                if (!total) return;
+                const badge = ensureBadge(card);
+                if (!badge) return;
+                badge.innerHTML = '<b>' + done + '</b>&#8202;/&#8202;' + total + ' done';
+                badge.dataset.state = complete ? 'done' : 'open';
+                badge.setAttribute('aria-label', done + ' of ' + total + ' modules complete');
+                card.classList.toggle('is-complete', complete);
+            } else if (isModulePath(moduleHref)) {
+                const complete = Boolean(state[moduleHref]);
+                card.classList.toggle('is-complete', complete);
+                const badge = ensureBadge(card);
+                if (!badge) return;
+                if (complete) {
+                    badge.innerHTML = CHECK_SVG + '<span>Completed</span>';
+                    badge.dataset.state = 'done';
+                } else {
+                    badge.remove();
+                }
+            }
+        });
+    };
+
+    document.addEventListener('handbook:progress', render);
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', render, { once: true });
+    } else {
+        render();
+    }
+})();
+
+// Bookmarks: save modules with a star toggle in the page header; the handbook
+// index renders the saved list from localStorage. No backend.
+(() => {
+    const STORAGE_KEY = 'handbook-bookmarks';
+    const STAR_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.75l-6.172 3.655l1.179 -6.873l-5.004 -4.867l6.9 -1.002l3.097 -6.163l3.096 6.163l6.9 1.002l-5.004 4.867l1.179 6.873z" /></svg>';
+
+    const isModulePath = (path) => /^\/docs\/week-\d+\/[^/]+\/$/.test(path);
+
+    const normalizePath = () => {
+        let path = window.location.pathname;
+        if (!path.endsWith('/')) path += '/';
+        return path;
+    };
+
+    const readState = () => {
+        try {
+            const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
+            return parsed && typeof parsed === 'object' ? parsed : {};
+        } catch {
+            return {};
+        }
+    };
+
+    const writeState = (state) => {
+        try {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch {
+            // The toggle still works per page view when storage is blocked.
+        }
+    };
+
+    const escapeHtml = (value) =>
+        String(value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    const initBookmarkToggle = () => {
+        const header = document.querySelector('.docs-content .page-header');
+        const path = normalizePath();
+        if (!header || !isModulePath(path) || header.querySelector('.docs-bookmark-toggle')) return;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'docs-bookmark-toggle';
+        const icon = document.createElement('span');
+        icon.className = 'docs-bookmark-toggle__icon';
+        icon.setAttribute('aria-hidden', 'true');
+        icon.innerHTML = STAR_SVG;
+        const label = document.createElement('span');
+        label.className = 'docs-bookmark-toggle__label';
+        button.append(icon, label);
+
+        const actions =
+            header.querySelector('.docs-page-actions') ||
+            (() => {
+                const div = document.createElement('div');
+                div.className = 'docs-page-actions';
+                header.append(div);
+                return div;
+            })();
+        const complete = actions.querySelector('.docs-complete-toggle');
+        if (complete) complete.after(button);
+        else actions.prepend(button);
+
+        const setSaved = (saved) => {
+            button.classList.toggle('is-bookmarked', saved);
+            button.setAttribute('aria-pressed', String(saved));
+            button.setAttribute('aria-label', saved ? 'Saved to bookmarks; select to remove' : 'Bookmark this module');
+            button.title = saved ? 'Remove from bookmarks' : 'Bookmark this module';
+            label.textContent = saved ? 'Saved' : 'Bookmark';
+        };
+
+        setSaved(Boolean(readState()[path]));
+
+        button.addEventListener('click', () => {
+            const state = readState();
+            const nowSaved = !state[path];
+            if (nowSaved) state[path] = document.title.replace(/ \| .*$/, '');
+            else delete state[path];
+            writeState(state);
+            setSaved(nowSaved);
+        });
+    };
+
+    const renderBookmarkList = () => {
+        const slot = document.querySelector('[data-handbook-bookmarks]');
+        if (!slot) return;
+        const entries = Object.entries(readState()).filter(([href]) => isModulePath(href));
+        if (!entries.length) {
+            slot.innerHTML = '';
+            return;
+        }
+        slot.innerHTML =
+            '<div class="course-index__bookmarks"><div class="course-index__bookmarks-head">Your bookmarks</div>' +
+            entries
+                .map(
+                    ([href, title]) =>
+                        '<div class="course-index__bookmark" data-href="' + escapeHtml(href) + '">' +
+                        '<a href="' + escapeHtml(href) + '"><span class="course-index__bookmark-star">' + STAR_SVG + '</span><strong>' + escapeHtml(title || href) + '</strong></a>' +
+                        '<button type="button" class="course-index__bookmark-remove" aria-label="Remove bookmark: ' + escapeHtml(title || href) + '">&times;</button>' +
+                        '</div>'
+                )
+                .join('') +
+            '</div>';
+
+        slot.querySelectorAll('.course-index__bookmark-remove').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const row = btn.closest('.course-index__bookmark');
+                if (!row) return;
+                const state = readState();
+                delete state[row.dataset.href];
+                writeState(state);
+                renderBookmarkList();
+            });
+        });
+    };
+
+    const init = () => {
+        initBookmarkToggle();
+        renderBookmarkList();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+        init();
+    }
 })();
