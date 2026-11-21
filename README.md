@@ -2,6 +2,8 @@
 
 A comprehensive **104-day AI Platform Engineering Handbook**, progressing from DevOps → Python for AI → MLOps → Platform Engineering → GenAI → RAG → Agentic AI → MCP → LLMOps → AI Security → AI Infrastructure → Fine-Tuning → Multimodal AI → AI Product Engineering → Forward Deployed Engineering → Enterprise AI System Design. This is a progression that closely matches the skills expected for modern AI platform and GenAI engineering roles.
 
+![AI Platform Engineering Handbook](./docs/assets/images/banner.png)
+
 ---
 
 ## 📋 **Course Overview**
