@@ -23,6 +23,8 @@ Think of it as similar in spirit to a company's shared front reception desk or a
 
 Why is centralizing things like this so valuable? Because it means all of the shared concerns we are about to cover throughout the rest of this explanation, such as authentication, rate limiting, cost tracking, and caching, can be implemented and enforced consistently in exactly one central place, rather than needing to be separately and redundantly implemented, correctly, inside every individual application across the entire organization. If a new security requirement comes up, or a new model provider needs to be added, it can be handled once, centrally, at the gateway level, and every connected application across the organization then automatically benefits from that one change, without each of them needing to be separately updated.
 
+One open-source implementation is [Bifrost](https://github.com/maximhq/bifrost), an OpenAI-compatible gateway that centralizes multi-provider routing, failover, load balancing, virtual keys, budgets, and observability.
+
 ---
 
 ## 3. Multi-Model Routing
